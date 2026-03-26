@@ -1,0 +1,8 @@
+{
+  "id": "01",
+  "date": "2026-03-27",
+  "best_trial": "001",
+  "candidate_trials": ["001"],
+  "selection_reason": "최초 baseline 제출. 비교 대상 없음.",
+  "submission_file": "submissions/sub_01/trial_001_lgbm_baseline.csv"
+}

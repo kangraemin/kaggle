@@ -1,0 +1,9 @@
+{
+  "id": "007",
+  "status": "done",
+  "val_score": 0.8912,
+  "best_iteration": null,
+  "top_features": ["cross_h1_lag1", "cross_h3_lag1", "cross_h25_lag1", "lag_2", "cross_h10_lag1"],
+  "notes": "cross_horizon feature들이 top importance 독점. lag_1이 아니라 cross_h1_lag1이 1위.",
+  "conclusion": "cross-horizon lag feature가 핵심 신호. 단독 lag_1보다 강력."
+}

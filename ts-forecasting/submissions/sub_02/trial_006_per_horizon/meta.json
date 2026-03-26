@@ -1,0 +1,10 @@
+{
+  "id": "006",
+  "name": "per_horizon",
+  "base_trial": "002",
+  "created_at": "2026-03-27",
+  "hypothesis": "horizon별로 별도 모델을 학습하면 각 horizon의 특성을 더 잘 반영할 수 있다.",
+  "changes": ["horizon별 separate model 학습"],
+  "rationale": "단일 모델이 모든 horizon을 동시에 예측하는 것보다 전문화된 모델이 유리할 수 있음.",
+  "expected_impact": "medium"
+}

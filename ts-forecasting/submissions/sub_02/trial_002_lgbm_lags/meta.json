@@ -1,0 +1,10 @@
+{
+  "id": "002",
+  "name": "lgbm_lags",
+  "base_trial": "001",
+  "created_at": "2026-03-27",
+  "hypothesis": "lag 1~20과 rolling mean/std를 추가하면 시계열 패턴을 학습할 수 있다.",
+  "changes": ["lag 1~20 추가", "rolling mean/std 추가"],
+  "rationale": "baseline이 너무 낮아 시계열 자기상관 feature가 필수임을 확인.",
+  "expected_impact": "high"
+}

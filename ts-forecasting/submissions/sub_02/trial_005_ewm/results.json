@@ -1,0 +1,9 @@
+{
+  "id": "005",
+  "status": "done",
+  "val_score": 0.8433,
+  "best_iteration": 120,
+  "top_features": ["lag_1", "lag_2", "roll_mean_5"],
+  "notes": "EWM이 rolling mean 대비 미미한 차이. 사실상 동일.",
+  "conclusion": "EWM은 rolling mean 대비 추가 가치 없음."
+}

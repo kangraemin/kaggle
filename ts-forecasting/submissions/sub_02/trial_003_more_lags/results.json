@@ -1,0 +1,9 @@
+{
+  "id": "003",
+  "status": "done",
+  "val_score": 0.8422,
+  "best_iteration": 112,
+  "top_features": ["lag_1", "lag_2", "roll_mean_5"],
+  "notes": "lag_50, lag_100 importance 낮음. EWM ≈ rolling mean.",
+  "conclusion": "longer lags와 EWM은 효과 없음. trial_002 대비 개선 없음."
+}

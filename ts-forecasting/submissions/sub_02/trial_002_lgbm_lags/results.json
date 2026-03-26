@@ -1,0 +1,9 @@
+{
+  "id": "002",
+  "status": "done",
+  "val_score": 0.8432,
+  "best_iteration": null,
+  "top_features": ["lag_1", "lag_2", "roll_mean_5"],
+  "notes": "lag_1 feature importance >> 나머지. 시리즈가 AR(1) 구조.",
+  "conclusion": "lag_1이 압도적 신호. 시리즈는 AR(1)-like."
+}

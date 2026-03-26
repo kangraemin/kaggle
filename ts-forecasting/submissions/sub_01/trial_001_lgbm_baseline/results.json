@@ -1,0 +1,9 @@
+{
+  "id": "001",
+  "status": "done",
+  "val_score": 0.1163,
+  "best_iteration": null,
+  "top_features": [],
+  "notes": "raw features만으로는 점수가 매우 낮음.",
+  "conclusion": "시계열 lag feature 없이는 경쟁력 없음."
+}

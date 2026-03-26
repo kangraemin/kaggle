@@ -1,0 +1,10 @@
+{
+  "id": "005",
+  "name": "ewm",
+  "base_trial": "002",
+  "created_at": "2026-03-27",
+  "hypothesis": "EWM(span 5, 20, 50)이 rolling mean보다 최근 값에 더 민감하게 반응해 성능을 높일 것이다.",
+  "changes": ["EWM span 5, 20, 50 추가"],
+  "rationale": "rolling mean은 과거 가중치가 동일. EWM은 최근에 더 집중.",
+  "expected_impact": "low"
+}

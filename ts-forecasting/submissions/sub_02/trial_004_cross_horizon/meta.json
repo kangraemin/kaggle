@@ -1,0 +1,10 @@
+{
+  "id": "004",
+  "name": "cross_horizon",
+  "base_trial": "002",
+  "created_at": "2026-03-27",
+  "hypothesis": "같은 ts_index의 다른 horizon y_target을 feature로 쓰면 horizon 간 상관관계를 포착할 수 있다.",
+  "changes": ["같은 ts_index의 다른 horizon y_target을 lag feature로 추가"],
+  "rationale": "horizon들이 동일 시점 데이터에서 파생되므로 상관관계가 있을 가능성.",
+  "expected_impact": "high"
+}

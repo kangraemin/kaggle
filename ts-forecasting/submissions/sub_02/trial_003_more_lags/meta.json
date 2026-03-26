@@ -1,0 +1,10 @@
+{
+  "id": "003",
+  "name": "more_lags",
+  "base_trial": "002",
+  "created_at": "2026-03-27",
+  "hypothesis": "더 긴 lag(50, 100)와 EWM이 장기 패턴을 추가로 포착할 것이다.",
+  "changes": ["lag 50, 100 추가", "EWM span 5, 20, 50 추가"],
+  "rationale": "trial_002에서 lag_1이 압도적이었음. 더 긴 기억이 필요한지 검증.",
+  "expected_impact": "medium"
+}

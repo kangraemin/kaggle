@@ -1,4 +1,5 @@
 *.parquet
+*.log
 *.csv
 *.feather
 *.pkl
