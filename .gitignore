@@ -1,0 +1,12 @@
+*.parquet
+*.csv
+*.feather
+*.pkl
+*.joblib
+*.h5
+*.model
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+.env
+data/
