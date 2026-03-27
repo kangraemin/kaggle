@@ -164,9 +164,10 @@ def train_lgbm(X_tr, y_tr, w_tr, X_val, y_val, w_val,
             'verbose': -1,
             'n_jobs': -1,
         }
-    dtrain = lgb.Dataset(X_tr,  label=y_tr,  weight=w_tr,  categorical_feature=cat)
+    dtrain = lgb.Dataset(X_tr,  label=y_tr,  weight=w_tr,  categorical_feature=cat,
+                         free_raw_data=True)
     dval   = lgb.Dataset(X_val, label=y_val, weight=w_val, categorical_feature=cat,
-                         reference=dtrain)
+                         reference=dtrain, free_raw_data=True)
     model = lgb.train(
         params, dtrain,
         num_boost_round=num_boost_round,
@@ -191,7 +192,8 @@ def retrain_full(X_all, y_all, w_all, best_iter, params=None):
             'verbose': -1,
             'n_jobs': -1,
         }
-    dall = lgb.Dataset(X_all, label=y_all, weight=w_all, categorical_feature=cat)
+    dall = lgb.Dataset(X_all, label=y_all, weight=w_all, categorical_feature=cat,
+                       free_raw_data=True)
     return lgb.train(params, dall, num_boost_round=best_iter)
 
 

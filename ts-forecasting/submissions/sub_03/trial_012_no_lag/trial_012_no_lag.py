@@ -36,14 +36,19 @@ def main():
     print("\nTop 15 feature importance:")
     print(imp.head(15))
 
-    # 5) Retrain full
-    X_full = prepare_X(train)
-    model_full = retrain_full(X_full, train.y_target.values,
-                              train.weight.values, model.best_iteration)
-
-    # 6) Free train memory, then load test
+    # 5) Free val/tr before retrain to reduce peak memory
     best_iter = model.best_iteration
-    del train, tr, val, X_tr, X_val, X_full, model
+    del tr, val, X_tr, X_val, model
+    gc.collect()
+
+    # 6) Retrain full
+    y_full = train.y_target.values
+    w_full = train.weight.values
+    X_full = prepare_X(train)
+    del train
+    gc.collect()
+    model_full = retrain_full(X_full, y_full, w_full, best_iter)
+    del X_full, y_full, w_full
     gc.collect()
     print(f"\nMemory freed. Loading test...")
 
