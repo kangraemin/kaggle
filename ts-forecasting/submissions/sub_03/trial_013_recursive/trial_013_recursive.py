@@ -11,7 +11,7 @@ from utils import *
 LAG_COLS  = [1, 2, 3, 5, 10, 20]
 ROLL_WINS = [5, 10, 20]
 MAX_HIST  = 20
-MEM_LIMIT_GB = 1.0  # 남은 RAM이 이 이하면 종료
+MEM_LIMIT_GB = 2.0  # 남은 RAM이 이 이하면 종료
 
 
 def check_memory(label=''):
@@ -64,7 +64,7 @@ def compute_lag_features_vectorized(df, hist, key_cols):
     l10 = df['lag_10']
     df['trend_1_5']  = (l1 - l5)  / 5.0
     df['trend_1_10'] = (l1 - l10) / 10.0
-    return df
+    return df, keys  # keys 재사용을 위해 반환
 
 
 def recursive_predict(model, df, hist_init, key_cols):
@@ -74,15 +74,16 @@ def recursive_predict(model, df, hist_init, key_cols):
 
     for ts_idx, grp in df_sorted.groupby('ts_index', sort=True):
         grp = grp.copy()
-        grp = compute_lag_features_vectorized(grp, hist, key_cols)
+        grp, keys = compute_lag_features_vectorized(grp, hist, key_cols)
         preds = model.predict(prepare_X(grp))
 
-        for i, (_, row) in enumerate(grp.iterrows()):
-            k = tuple(row[c] for c in key_cols)
-            all_preds[row['id']] = preds[i]
+        # iterrows 대신 numpy — 훨씬 빠르고 메모리 적음
+        ids = grp['id'].values
+        for i, k in enumerate(keys):
+            all_preds[ids[i]] = float(preds[i])
             if k not in hist:
                 hist[k] = []
-            hist[k].append(preds[i])
+            hist[k].append(float(preds[i]))
             if len(hist[k]) > MAX_HIST:
                 hist[k].pop(0)
 
