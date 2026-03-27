@@ -1,0 +1,19 @@
+{
+  "id": "002",
+  "status": "done",
+  "val_score": 0.91619,
+  "top_features": {
+    "TotalCharges": 2538.4,
+    "MonthlyCharges": 2282.4,
+    "ChargeGap": 2098.0,
+    "AvgMonthlyCharge": 1940.6,
+    "ChargeRatio": 1768.6,
+    "tenure": 1595.2,
+    "PaymentMethod": 596.4,
+    "Contract": 442.4,
+    "Dependents": 275.8,
+    "PaperlessBilling": 271.2
+  },
+  "notes": "",
+  "conclusion": ""
+}

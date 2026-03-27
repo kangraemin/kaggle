@@ -1,0 +1,19 @@
+{
+  "id": "001",
+  "status": "done",
+  "val_score": 0.91613,
+  "top_features": {
+    "TotalCharges": 5261.2,
+    "MonthlyCharges": 4932.8,
+    "tenure": 3834.6,
+    "PaymentMethod": 1331.8,
+    "Contract": 786.6,
+    "gender": 553.0,
+    "MultipleLines": 536.6,
+    "PaperlessBilling": 522.8,
+    "Dependents": 488.4,
+    "SeniorCitizen": 445.0
+  },
+  "notes": "TotalCharges, MonthlyCharges, tenure 압도적. 범주형은 Contract, PaymentMethod 순. gender 등 인구통계는 낮음.",
+  "conclusion": "raw features만으로 0.916. 수치형 3개가 대부분의 신호를 담고 있음. 다음: charges/tenure 비율 등 interaction feature + target encoding."
+}

@@ -1,0 +1,7 @@
+{
+  "id": "005",
+  "status": "done",
+  "val_score": null,
+  "notes": "trial_001 + trial_002 test preds 단순 평균. OOF 없어서 val score 추정 불가.",
+  "conclusion": ""
+}

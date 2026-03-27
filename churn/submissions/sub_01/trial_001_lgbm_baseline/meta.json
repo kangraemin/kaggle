@@ -1,0 +1,14 @@
+{
+  "id": "001",
+  "name": "lgbm_baseline",
+  "base_trial": null,
+  "created_at": "2026-03-27",
+  "hypothesis": "raw features만으로 LightGBM 기본 세팅이 어느 정도 AUC를 낼 수 있는지 확인한다.",
+  "changes": [
+    "LabelEncoding for categorical features",
+    "LightGBM default params",
+    "Stratified 5-Fold CV"
+  ],
+  "rationale": "첫 trial이므로 feature engineering 없이 순수 raw features + LGBM으로 베이스라인 점수를 확보한다.",
+  "expected_impact": "medium"
+}
