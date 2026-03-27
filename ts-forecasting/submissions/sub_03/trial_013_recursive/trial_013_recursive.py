@@ -1,6 +1,7 @@
 """Trial 013: recursive prediction (vectorized) — lag features를 step-by-step으로 채움"""
 import gc
 import sys
+import psutil
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 import numpy as np
@@ -10,6 +11,17 @@ from utils import *
 LAG_COLS  = [1, 2, 3, 5, 10, 20]
 ROLL_WINS = [5, 10, 20]
 MAX_HIST  = 20
+MEM_LIMIT_GB = 1.0  # 남은 RAM이 이 이하면 종료
+
+
+def check_memory(label=''):
+    avail_gb = psutil.virtual_memory().available / 1024**3
+    if label:
+        print(f"[MEM] {label}: {avail_gb:.1f} GB free", flush=True)
+    if avail_gb < MEM_LIMIT_GB:
+        print(f"[MEM] 위험 ({avail_gb:.1f} GB) — 강제 종료", flush=True)
+        sys.exit(1)
+    return avail_gb
 
 
 def add_target_encoding(combined):
@@ -75,7 +87,11 @@ def recursive_predict(model, df, hist_init, key_cols):
                 hist[k].pop(0)
 
         if ts_idx % 200 == 0:
-            print(f"  ts_index {ts_idx}...", flush=True)
+            avail = psutil.virtual_memory().available / 1024**3
+            print(f"  ts_index {ts_idx}... ({avail:.1f} GB free)", flush=True)
+            if avail < MEM_LIMIT_GB:
+                print(f"[MEM] 위험 — 강제 종료", flush=True)
+                sys.exit(1)
 
     df['prediction'] = df['id'].map(all_preds)
     return df
@@ -97,6 +113,7 @@ def main():
     test_f  = combined[combined['weight'].isna()].copy()
     del combined
     gc.collect()
+    check_memory('after feature engineering')
 
     tr  = train_f[train_f.ts_index <= CUTOFF]
     val = train_f[train_f.ts_index >  CUTOFF]
@@ -123,6 +140,7 @@ def main():
     best_iter = model.best_iteration
     del tr, val, X_tr, X_val, model, val_result, hist_val
     gc.collect()
+    check_memory('after val, before retrain')
 
     # Build test history before freeing train_f
     print("\nBuilding test history...")
@@ -137,6 +155,7 @@ def main():
     model_full = retrain_full(X_full, y_full, w_full, best_iter)
     del X_full, y_full, w_full
     gc.collect()
+    check_memory('after retrain')
 
     print("Recursive test prediction...")
     test_result = recursive_predict(model_full, test_f, hist_test, KEY)
