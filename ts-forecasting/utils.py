@@ -1,7 +1,9 @@
 """Shared utilities for all trials."""
+import gc
 import numpy as np
 import pandas as pd
 import lightgbm as lgb
+import pyarrow.parquet as pq
 from pathlib import Path
 
 DATA_DIR = Path(__file__).parent
@@ -16,18 +18,72 @@ def weighted_rmse_score(y_target, y_pred, w):
     return float(np.sqrt(1.0 - clipped))
 
 
-def load_data():
+def _downcast(df):
+    for col in df.select_dtypes('float64').columns:
+        df[col] = df[col].astype('float32')
+    for col in df.select_dtypes('int64').columns:
+        df[col] = df[col].astype('int32')
+    for col in ['code', 'sub_code', 'sub_category']:
+        if col in df.columns and df[col].dtype == object:
+            df[col] = df[col].astype('category')
+    return df
+
+
+def read_parquet_lean(path, columns=None):
+    """Row group 단위로 읽어서 즉시 downcast → 메모리 절약.
+    self_destruct=True로 arrow 메모리 즉시 해제."""
+    pf = pq.ParquetFile(path)
+    chunks = []
+    for i in range(pf.metadata.num_row_groups):
+        table = pf.read_row_group(i, columns=columns)
+        chunk = table.to_pandas(self_destruct=True)
+        del table
+        _downcast(chunk)
+        chunks.append(chunk)
+    del pf
+    gc.collect()
+    result = pd.concat(chunks, ignore_index=True)
+    del chunks
+    gc.collect()
+    return result
+
+
+def load_data(columns=None):
+    """Load train/test parquet."""
     print("Loading data...")
-    train = pd.read_parquet(DATA_DIR / 'train.parquet')
-    test  = pd.read_parquet(DATA_DIR / 'test.parquet')
+    train = read_parquet_lean(DATA_DIR / 'train.parquet', columns=columns)
+    test_cols = [c for c in (columns or []) if c not in ('y_target', 'weight')] or None
+    test = read_parquet_lean(DATA_DIR / 'test.parquet', columns=test_cols)
+    print(f"  train: {train.shape}, {train.memory_usage(deep=True).sum()/1024**2:.0f} MB")
+    print(f"  test:  {test.shape}, {test.memory_usage(deep=True).sum()/1024**2:.0f} MB")
     return train, test
 
 
+def load_train(columns=None):
+    """Load only train parquet (for memory-constrained envs)."""
+    print("Loading train...")
+    train = read_parquet_lean(DATA_DIR / 'train.parquet', columns=columns)
+    print(f"  train: {train.shape}, {train.memory_usage(deep=True).sum()/1024**2:.0f} MB")
+    return train
+
+
+def load_test(columns=None):
+    """Load only test parquet (for memory-constrained envs)."""
+    print("Loading test...")
+    test = read_parquet_lean(DATA_DIR / 'test.parquet', columns=columns)
+    print(f"  test: {test.shape}, {test.memory_usage(deep=True).sum()/1024**2:.0f} MB")
+    return test
+
+
 def combine_train_test(train, test):
-    test['y_target'] = np.nan
-    test['weight']   = np.nan
-    combined = pd.concat([train, test], ignore_index=True)
-    combined = combined.sort_values(KEY + ['ts_index']).reset_index(drop=True)
+    """Combine train and test."""
+    test['y_target'] = np.float32(np.nan)
+    test['weight']   = np.float32(np.nan)
+    combined = pd.concat([train, test], ignore_index=True, copy=False)
+    del train, test
+    gc.collect()
+    combined.sort_values(KEY + ['ts_index'], inplace=True)
+    combined.reset_index(drop=True, inplace=True)
     return combined
 
 
