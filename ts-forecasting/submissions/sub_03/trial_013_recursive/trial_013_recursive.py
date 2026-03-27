@@ -1,4 +1,5 @@
 """Trial 013: recursive prediction (vectorized) — lag features를 step-by-step으로 채움"""
+import gc
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
@@ -83,6 +84,8 @@ def recursive_predict(model, df, hist_init, key_cols):
 def main():
     train, test = load_data()
     combined = combine_train_test(train, test)
+    del train, test
+    gc.collect()
 
     print("Engineering features...")
     combined = add_base_lags(combined, lags=LAG_COLS)
@@ -92,15 +95,18 @@ def main():
 
     train_f = combined[combined['weight'].notna()].copy()
     test_f  = combined[combined['weight'].isna()].copy()
+    del combined
+    gc.collect()
 
     tr  = train_f[train_f.ts_index <= CUTOFF]
     val = train_f[train_f.ts_index >  CUTOFF]
     print(f"Train: {len(tr)}, Val: {len(val)}")
 
-    model = train_lgbm(prepare_X(tr), tr.y_target.values, tr.weight.values,
-                       prepare_X(val), val.y_target.values, val.weight.values)
+    X_tr, X_val = prepare_X(tr), prepare_X(val)
+    model = train_lgbm(X_tr, tr.y_target.values, tr.weight.values,
+                       X_val, val.y_target.values, val.weight.values)
 
-    score_naive = weighted_rmse_score(val.y_target.values, model.predict(prepare_X(val)), val.weight.values)
+    score_naive = weighted_rmse_score(val.y_target.values, model.predict(X_val), val.weight.values)
     print(f"\n[Trial 013] Val score (naive): {score_naive:.6f}")
 
     print("\nRecursive val prediction...")
@@ -113,13 +119,27 @@ def main():
     )
     print(f"[Trial 013] Val score (recursive): {score_rec:.6f}")
 
-    print("\nFull retrain...")
-    model_full = retrain_full(prepare_X(train_f), train_f.y_target.values,
-                              train_f.weight.values, model.best_iteration)
+    # Free val/tr before retrain
+    best_iter = model.best_iteration
+    del tr, val, X_tr, X_val, model, val_result, hist_val
+    gc.collect()
+
+    # Build test history before freeing train_f
+    print("\nBuilding test history...")
+    hist_test = build_history(train_f, KEY)
+
+    print("Full retrain...")
+    y_full = train_f.y_target.values
+    w_full = train_f.weight.values
+    X_full = prepare_X(train_f)
+    del train_f
+    gc.collect()
+    model_full = retrain_full(X_full, y_full, w_full, best_iter)
+    del X_full, y_full, w_full
+    gc.collect()
 
     print("Recursive test prediction...")
-    hist_test = build_history(train_f, KEY)
-    test_result = recursive_predict(model_full, test_f.copy(), hist_test, KEY)
+    test_result = recursive_predict(model_full, test_f, hist_test, KEY)
 
     print(f"Prediction NaN: {test_result['prediction'].isna().sum()}")
     print(test_result['prediction'].describe())
