@@ -1,0 +1,9 @@
+{
+  "id": "004",
+  "status": "done",
+  "val_score": 0.8913,
+  "best_iteration": 196,
+  "top_features": ["cross_h1_lag1", "cross_h3_lag1", "cross_h25_lag1", "lag_2", "cross_h10_lag1"],
+  "notes": "trial_007(0.8912)과 거의 동일. longer lags/ewm 추가가 실질적 기여 없음을 역으로 증명.",
+  "conclusion": "cross_horizon feature가 핵심. 나머지 feature는 노이즈."
+}

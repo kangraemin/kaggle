@@ -1,0 +1,10 @@
+{
+  "id": "008",
+  "name": "cross_h_lags",
+  "base_trial": "004",
+  "created_at": "2026-03-27",
+  "hypothesis": "cross_horizon lag_1이 핵심 신호였으므로, lag_2, lag_3도 horizon 간 상관관계를 포착할 것이다.",
+  "changes": ["cross_horizon lag_2, lag_3 추가"],
+  "rationale": "trial_004에서 cross_h*_lag1이 top importance 독점. lag_2/lag_3도 같은 구조로 유효할 가능성.",
+  "expected_impact": "medium"
+}

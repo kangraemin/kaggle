@@ -1,0 +1,10 @@
+{
+  "id": "011",
+  "name": "clean_cross_h",
+  "base_trial": "004",
+  "created_at": "2026-03-27",
+  "hypothesis": "noisy feature(ewm, longer lags, trend)를 제거하고 cross_horizon + 핵심 lags만 남기면 모델이 단순해져 일반화 성능이 오른다.",
+  "changes": ["ewm 제거", "lag 50/100 제거", "trend 제거", "rolling window 5/10만 유지", "lag 1~10만 유지"],
+  "rationale": "trial_004 vs trial_007이 거의 동일(0.8913 vs 0.8912) → 추가 feature가 기여 없음. 단순화가 오히려 유리할 수 있음.",
+  "expected_impact": "low-medium"
+}

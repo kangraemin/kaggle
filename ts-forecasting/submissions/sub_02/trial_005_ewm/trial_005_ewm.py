@@ -1,5 +1,5 @@
 """Trial 005: EWM (exponential weighted mean) focus"""
-import sys; sys.path.insert(0, str(__import__('pathlib').Path(__file__).parent.parent))
+import sys; sys.path.insert(0, str(__import__('pathlib').Path(__file__).parent.parent.parent.parent))
 import numpy as np
 from utils import *
 

@@ -1,18 +1,19 @@
-"""Trial 007: all features combined"""
-import sys; sys.path.insert(0, str(__import__('pathlib').Path(__file__).parent.parent.parent.parent))
-import numpy as np
+"""Trial 011: cross_horizon + clean features only (noisy features removed)"""
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 from utils import *
+
 
 def main():
     train, test = load_data()
     combined = combine_train_test(train, test)
 
     print("Engineering features...")
-    combined = add_base_lags(combined, lags=(1, 2, 3, 5, 10, 20, 50, 100))
-    combined = add_rolling(combined, windows=(5, 10, 20, 50))
-    combined = add_ewm(combined, spans=(3, 5, 10, 20, 50))
-    combined = add_trend(combined)
+    combined = add_base_lags(combined, lags=(1, 2, 3, 5, 10))
+    combined = add_rolling(combined, windows=(5, 10))
     combined = add_cross_horizon(combined)
+    # ewm, longer lags, trend 제거
 
     train_f = combined[combined['weight'].notna()].copy()
     test_f  = combined[combined['weight'].isna()].copy()
@@ -28,17 +29,12 @@ def main():
 
     val_pred = model.predict(X_val)
     score = weighted_rmse_score(val.y_target.values, val_pred, val.weight.values)
-    print(f"\n[Trial 007] Val score: {score:.6f}")
-
-    imp = __import__('pandas').Series(
-        model.feature_importance('gain'), index=X_tr.columns
-    ).sort_values(ascending=False)
-    print("\nTop 20 feature importance:")
-    print(imp.head(20))
+    print(f"\n[Trial 011] Val score: {score:.6f}")
 
     model_full = retrain_full(prepare_X(train_f), train_f.y_target.values,
                               train_f.weight.values, model.best_iteration)
-    save_submission(test_f, model_full.predict(X_te), 'trial_007_all_features')
+    save_submission(test_f, model_full.predict(X_te), 'trial_011_clean_cross_h',
+                    output_dir=Path(__file__).parent)
 
 if __name__ == '__main__':
     main()

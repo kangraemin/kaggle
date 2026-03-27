@@ -1,0 +1,9 @@
+{
+  "id": "006",
+  "status": "done",
+  "val_score": 0.8441,
+  "best_iteration": null,
+  "top_features": [],
+  "notes": "horizon별 점수: h1=0.022, h3=0.668, h10=0.856, h25=0.919. h1이 완전 망함. per-horizon 분리 시 cross_horizon signal 사용 불가.",
+  "conclusion": "per-horizon 분리는 역효과. cross_horizon signal을 잃기 때문."
+}

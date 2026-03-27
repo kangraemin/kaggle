@@ -1,0 +1,10 @@
+{
+  "id": "010",
+  "name": "target_enc",
+  "base_trial": "004",
+  "created_at": "2026-03-27",
+  "hypothesis": "시리즈별 y_target 통계(mean, std, median)를 feature로 추가하면 시리즈 고유 특성을 반영할 수 있다.",
+  "changes": ["(code, sub_code, sub_category, horizon) 그룹별 train y_target mean/std/median 추가"],
+  "rationale": "고가중 시리즈(83EG83KQ)는 y_target ≈ 0인 고유 특성이 있음. 시리즈 식별 정보를 명시적으로 줄 필요.",
+  "expected_impact": "medium"
+}

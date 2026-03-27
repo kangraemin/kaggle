@@ -79,7 +79,7 @@ def get_feature_cols(df):
     engineered = [c for c in df.columns if
                   c.startswith('lag_') or c.startswith('roll_') or
                   c.startswith('ewm_') or c.startswith('trend_') or
-                  c.startswith('cross_')]
+                  c.startswith('cross_') or c.startswith('series_')]
     return raw + engineered
 
 
@@ -139,7 +139,9 @@ def retrain_full(X_all, y_all, w_all, best_iter, params=None):
     return lgb.train(params, dall, num_boost_round=best_iter)
 
 
-def save_submission(test_df, preds, trial_name):
-    out = DATA_DIR / 'trials' / f'{trial_name}.csv'
+def save_submission(test_df, preds, trial_name, output_dir=None):
+    if output_dir is None:
+        output_dir = DATA_DIR
+    out = Path(output_dir) / f'{trial_name}.csv'
     pd.DataFrame({'id': test_df['id'], 'prediction': preds}).to_csv(out, index=False)
     print(f"Saved → {out}")

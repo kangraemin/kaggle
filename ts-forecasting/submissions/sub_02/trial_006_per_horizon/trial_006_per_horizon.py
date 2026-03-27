@@ -1,5 +1,7 @@
 """Trial 006: separate model per horizon"""
-import sys; sys.path.insert(0, str(__import__('pathlib').Path(__file__).parent.parent))
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 import numpy as np
 import pandas as pd
 from utils import *
@@ -56,7 +58,7 @@ def main():
     print(f"\n[Trial 006] Overall val score: {score_all:.6f}")
 
     submission = pd.concat(test_preds_all)
-    out = DATA_DIR / 'trials' / 'trial_006_per_horizon.csv'
+    out = Path(__file__).parent / 'trial_006_per_horizon.csv'
     submission.to_csv(out, index=False)
     print(f"Saved → {out}")
 
