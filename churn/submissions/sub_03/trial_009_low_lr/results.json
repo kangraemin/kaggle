@@ -1,0 +1,7 @@
+{
+  "id": "009",
+  "status": "done",
+  "val_score": 0.91647,
+  "notes": "lr=0.01, n_estimators=5000, early_stopping=100",
+  "conclusion": ""
+}

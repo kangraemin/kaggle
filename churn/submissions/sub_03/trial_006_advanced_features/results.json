@@ -1,0 +1,19 @@
+{
+  "id": "006",
+  "status": "done",
+  "val_score": 0.91636,
+  "top_features": {
+    "AvgMonthlyCharge": 3342.8,
+    "TotalCharges": 3304.2,
+    "ChargeGap": 3222.6,
+    "charge_per_service": 2852.2,
+    "MonthlyCharges": 2757.6,
+    "ChargeRatio": 2667.6,
+    "ChargePerTenure": 2130.6,
+    "tenure": 2008.2,
+    "te_PaymentMethod": 865.2,
+    "te_Contract": 453.0
+  },
+  "notes": "advanced features: num_services, tenure_bin, fiber_monthly, charge_per_service + target encoding",
+  "conclusion": ""
+}

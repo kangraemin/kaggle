@@ -1,0 +1,19 @@
+{
+  "id": "002",
+  "status": "done",
+  "val_score": 0.91621,
+  "top_features": {
+    "TotalCharges": 2634.2,
+    "MonthlyCharges": 2430.2,
+    "ChargeGap": 2264.4,
+    "AvgMonthlyCharge": 2159.6,
+    "ChargeRatio": 1892.0,
+    "tenure": 1721.0,
+    "te_PaymentMethod": 638.8,
+    "te_Contract": 477.0,
+    "te_PaperlessBilling": 298.4,
+    "te_MultipleLines": 296.4
+  },
+  "notes": "target encoding (CV-safe) + charge interaction features",
+  "conclusion": ""
+}

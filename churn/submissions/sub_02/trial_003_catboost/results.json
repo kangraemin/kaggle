@@ -1,0 +1,19 @@
+{
+  "id": "003",
+  "status": "done",
+  "val_score": 0.91624,
+  "top_features": {
+    "Contract": 21.4,
+    "MonthlyCharges": 16.5,
+    "tenure": 15.6,
+    "PaymentMethod": 8.2,
+    "ChargeRatio": 7.6,
+    "TotalCharges": 4.8,
+    "PaperlessBilling": 3.5,
+    "AvgMonthlyCharge": 3.4,
+    "OnlineSecurity": 3.3,
+    "InternetService": 3.0
+  },
+  "notes": "CatBoost native categorical + charge interaction features",
+  "conclusion": ""
+}

@@ -1,0 +1,6 @@
+{
+  "id": "016",
+  "status": "done",
+  "val_score": 0.91674,
+  "notes": "LR meta-learner on OOF (lgbm_adv + xgb + catboost + lgbm_10fold)"
+}

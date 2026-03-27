@@ -1,0 +1,27 @@
+{
+  "id": "004",
+  "status": "done",
+  "val_score": 0.91663,
+  "best_params": {
+    "num_leaves": 76,
+    "min_child_samples": 81,
+    "feature_fraction": 0.5169676768664621,
+    "bagging_fraction": 0.95132857435767,
+    "lambda_l1": 3.9724654868131353,
+    "lambda_l2": 3.4117445047173107
+  },
+  "top_features": {
+    "TotalCharges": 5912.2,
+    "AvgMonthlyCharge": 5294.8,
+    "MonthlyCharges": 5014.8,
+    "ChargeGap": 4645.8,
+    "ChargeRatio": 4417.2,
+    "tenure": 3959.2,
+    "te_PaymentMethod": 956.2,
+    "te_MultipleLines": 535.6,
+    "te_Contract": 427.2,
+    "te_Dependents": 402.2
+  },
+  "notes": "Optuna 50 trials + target encoding + charge features",
+  "conclusion": ""
+}

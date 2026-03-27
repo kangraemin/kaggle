@@ -1,0 +1,14 @@
+{
+  "id": "004",
+  "name": "lgbm_tuned",
+  "base_trial": "002",
+  "created_at": "2026-03-27",
+  "hypothesis": "Optuna로 LightGBM 하이퍼파라미터 튜닝 (50 trials)으로 val AUC 0.917+ 달성한다.",
+  "changes": [
+    "num_leaves, min_child_samples, feature_fraction, bagging_fraction, lambda_l1, lambda_l2 튜닝",
+    "Optuna 50 trials",
+    "trial_002 feature set 유지 (target encoding + charge features)"
+  ],
+  "rationale": "trial_002/003 모두 개선폭 미미. 하이퍼파라미터가 bottleneck일 가능성. Optuna로 체계적 탐색.",
+  "expected_impact": "medium"
+}

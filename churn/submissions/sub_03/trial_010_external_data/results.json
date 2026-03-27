@@ -1,0 +1,7 @@
+{
+  "id": "010",
+  "status": "done",
+  "val_score": 0.91628,
+  "notes": "원본 Telco 데이터(7043행) 추가 + No internet service → No 통합",
+  "conclusion": ""
+}

@@ -1,0 +1,14 @@
+{
+  "id": "003",
+  "name": "catboost",
+  "base_trial": "002",
+  "created_at": "2026-03-27",
+  "hypothesis": "CatBoost의 native categorical 처리 + charge interaction features로 val AUC 0.917+ 달성한다.",
+  "changes": [
+    "LightGBM → CatBoost",
+    "target encoding 제거, cat_features 직접 전달",
+    "AvgMonthlyCharge/ChargeGap/ChargeRatio feature 유지"
+  ],
+  "rationale": "trial_002 결과: target encoding 개선폭 미미. CatBoost는 ordered target encoding을 내부적으로 수행해 leakage 없이 범주형 처리. 다른 모델 계열로 비교.",
+  "expected_impact": "medium"
+}

@@ -1,0 +1,12 @@
+{
+  "id": "005",
+  "name": "ensemble",
+  "base_trial": "002,003",
+  "created_at": "2026-03-27",
+  "hypothesis": "trial_002(LGBM) + trial_003(CatBoost) 예측값 평균 앙상블로 단일 모델 대비 AUC 개선",
+  "changes": [
+    "trial_002 oof/test predictions + trial_003 oof/test predictions 단순 평균"
+  ],
+  "rationale": "두 모델이 다른 inductive bias를 가짐. LGBM은 target encoding 기반, CatBoost는 native categorical. 앙상블로 분산 감소 기대.",
+  "expected_impact": "low-medium"
+}

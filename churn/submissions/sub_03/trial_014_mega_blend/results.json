@@ -1,0 +1,13 @@
+{
+  "id": "014",
+  "status": "done",
+  "val_score": 0.91677,
+  "weights": {
+    "trial_006": 0.2,
+    "trial_007": 0.4,
+    "trial_011": 0.0,
+    "trial_012": 0.2,
+    "trial_013": 0.2
+  },
+  "notes": "5모델 OOF grid search weighted blend (006+007+011+012+013)"
+}
