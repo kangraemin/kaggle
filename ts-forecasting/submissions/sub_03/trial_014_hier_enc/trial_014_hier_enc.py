@@ -3,12 +3,23 @@
 - ts_index × horizon 상호작용 feature 추가
 - feature_w/x/y/z NaN은 LightGBM에 위임 (ts_index 4071~4360 구조적 결측)
 """
+import gc
 import sys
+import psutil
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 import numpy as np
 import pandas as pd
 from utils import *
+
+MEM_LIMIT_GB = 2.0
+
+def check_memory(label=''):
+    avail = psutil.virtual_memory().available / 1024**3
+    print(f"[MEM] {label}: {avail:.1f} GB free", flush=True)
+    if avail < MEM_LIMIT_GB:
+        print(f"[MEM] 위험 — 강제 종료", flush=True)
+        sys.exit(1)
 
 
 def add_hierarchical_target_encoding(combined):
@@ -78,6 +89,9 @@ def prepare_X_014(df):
 def main():
     train, test = load_data()
     combined = combine_train_test(train, test)
+    del train, test
+    gc.collect()
+    check_memory('after load')
 
     print("Engineering features...")
     combined = add_hierarchical_target_encoding(combined)
@@ -85,22 +99,23 @@ def main():
 
     train_f = combined[combined['weight'].notna()].copy()
     test_f  = combined[combined['weight'].isna()].copy()
+    del combined
+    gc.collect()
+    check_memory('after feature engineering')
+
+    # NaN check on test
+    X_te = prepare_X_014(test_f)
+    for col in X_te.columns:
+        nan_pct = X_te[col].isna().mean()
+        if nan_pct > 0.05:
+            print(f"WARNING: {col} NaN {nan_pct*100:.1f}%")
 
     tr  = train_f[train_f.ts_index <= CUTOFF]
     val = train_f[train_f.ts_index >  CUTOFF]
     print(f"Train: {len(tr)}, Val: {len(val)}")
 
-    # NaN check on test
-    X_te_check = prepare_X_014(test_f)
-    for col in X_te_check.columns:
-        nan_pct = X_te_check[col].isna().mean()
-        if nan_pct > 0.05:
-            print(f"WARNING: {col} NaN {nan_pct*100:.1f}%")
-
     X_tr  = prepare_X_014(tr)
     X_val = prepare_X_014(val)
-    X_te  = prepare_X_014(test_f)
-
     model = train_lgbm(X_tr, tr.y_target.values, tr.weight.values,
                        X_val, val.y_target.values, val.weight.values)
 
@@ -112,8 +127,21 @@ def main():
     print("\nTop 15 feature importance:")
     print(imp.head(15))
 
-    model_full = retrain_full(prepare_X_014(train_f), train_f.y_target.values,
-                              train_f.weight.values, model.best_iteration)
+    best_iter = model.best_iteration
+    del tr, val, X_tr, X_val, model
+    gc.collect()
+    check_memory('after val, before retrain')
+
+    y_full = train_f.y_target.values
+    w_full = train_f.weight.values
+    X_full = prepare_X_014(train_f)
+    del train_f
+    gc.collect()
+    model_full = retrain_full(X_full, y_full, w_full, best_iter)
+    del X_full, y_full, w_full
+    gc.collect()
+    check_memory('after retrain')
+
     save_submission(test_f, model_full.predict(X_te), 'trial_014_hier_enc',
                     output_dir=Path(__file__).parent)
 

@@ -3,9 +3,19 @@ Memory-optimized: train → train+free → test 순차 처리
 """
 import gc
 import sys
+import psutil
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 from utils import *
+
+MEM_LIMIT_GB = 2.0
+
+def check_memory(label=''):
+    avail = psutil.virtual_memory().available / 1024**3
+    print(f"[MEM] {label}: {avail:.1f} GB free", flush=True)
+    if avail < MEM_LIMIT_GB:
+        print(f"[MEM] 위험 — 강제 종료", flush=True)
+        sys.exit(1)
 
 
 def main():
@@ -40,6 +50,7 @@ def main():
     best_iter = model.best_iteration
     del tr, val, X_tr, X_val, model
     gc.collect()
+    check_memory('after val, before retrain')
 
     # 6) Retrain full
     y_full = train.y_target.values
@@ -50,7 +61,7 @@ def main():
     model_full = retrain_full(X_full, y_full, w_full, best_iter)
     del X_full, y_full, w_full
     gc.collect()
-    print(f"\nMemory freed. Loading test...")
+    check_memory('after retrain, before test')
 
     test = load_test()
     test = test.merge(stats, on=KEY, how='left')
