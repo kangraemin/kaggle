@@ -197,9 +197,55 @@ def retrain_full(X_all, y_all, w_all, best_iter, params=None):
     return lgb.train(params, dall, num_boost_round=best_iter)
 
 
-def save_submission(test_df, preds, trial_name, output_dir=None):
+def validate_and_patch(test_df, preds, train_df=None):
+    """제출 전 필수 검증. danger_ratio > 0.1인 코드는 자동 패치.
+    검증 없이 save_submission 불가."""
+    import numpy as np
+    preds = np.array(preds, dtype=float)
+
+    print("\n=== 제출 전 검증 ===")
+    print(f"예측값 분포: mean={preds.mean():.4f}, std={preds.std():.4f}, "
+          f"min={preds.min():.4f}, max={preds.max():.4f}")
+    print(f"abs>10: {(np.abs(preds)>10).sum()}건, abs>100: {(np.abs(preds)>100).sum()}건")
+
+    if train_df is None:
+        train_df = load_train()
+
+    denom = float((train_df['weight'].values * train_df['y_target'].values**2).sum())
+    code_max_w = train_df.groupby('code')['weight'].max().sort_values(ascending=False)
+    code_mean_y = train_df.groupby('code')['y_target'].mean()
+
+    pred_series = pd.Series(preds, index=test_df.index)
+    test_df = test_df.copy()
+    test_df['_pred'] = pred_series.values
+
+    patched = False
+    for code in code_max_w.head(15).index:
+        mask = test_df['code'] == code
+        if mask.sum() == 0:
+            continue
+        max_pred = test_df.loc[mask, '_pred'].abs().max()
+        max_w = float(code_max_w[code])
+        ratio = max_w * max_pred**2 / denom
+        flag = '⚠️  PATCH' if ratio > 0.1 else '✅'
+        print(f"  {code}: max_pred={max_pred:.4f}, danger_ratio={ratio:.4f} {flag}")
+        if ratio > 0.1:
+            mean_y = float(code_mean_y.get(code, 0.0))
+            test_df.loc[mask, '_pred'] = mean_y
+            print(f"    → {code} 패치 완료: {mean_y:.8f}")
+            patched = True
+
+    if patched:
+        print("⚠️  패치된 예측값으로 저장합니다.")
+
+    print("=== 검증 완료 ===\n")
+    return test_df['_pred'].values
+
+
+def save_submission(test_df, preds, trial_name, output_dir=None, train_df=None):
     if output_dir is None:
         output_dir = DATA_DIR
+    preds = validate_and_patch(test_df, preds, train_df=train_df)
     out = Path(output_dir) / f'{trial_name}.csv'
     pd.DataFrame({'id': test_df['id'], 'prediction': preds}).to_csv(out, index=False)
     print(f"Saved → {out}")
