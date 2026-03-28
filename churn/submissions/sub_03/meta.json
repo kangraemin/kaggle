@@ -1,0 +1,11 @@
+{
+  "submission_id": "03",
+  "date": "2026-03-28",
+  "best_trial": "trial_014_mega_blend",
+  "val_score": 0.91677,
+  "public_score": 0.91404,
+  "gap": -0.00273,
+  "key_changes": "5모델 OOF grid search weighted blend (XGB×0.4 주도)",
+  "trials": ["006","007","008","009","010","011","012","013","014"],
+  "status": "submitted"
+}

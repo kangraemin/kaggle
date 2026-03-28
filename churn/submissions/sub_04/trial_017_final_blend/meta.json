@@ -1,0 +1,1 @@
+{"id":"017","name":"final_blend","base_trial":"006,007,012,013,015","created_at":"2026-03-28","hypothesis":"XGB_tuned 추가한 5모델 grid search blend","changes":["trial_015(xgb_tuned) OOF 추가","grid search 재탐색"],"rationale":"tuned XGB가 기존 XGB보다 나으므로 교체","expected_impact":"low"}

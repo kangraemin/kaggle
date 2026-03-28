@@ -1,0 +1,1 @@
+{"id":"011","name":"no_internet_fix","base_trial":"004","created_at":"2026-03-28","hypothesis":"No internet service→No 통합 + Contract 순서형으로 AUC 개선","changes":["No internet service→No 통합","Contract_ord 추가","contract_tenure interaction"],"rationale":"범주 단순화 + 자연스러운 순서 반영","expected_impact":"low-medium"}

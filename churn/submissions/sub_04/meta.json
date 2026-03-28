@@ -1,0 +1,11 @@
+{
+  "submission_id": "04",
+  "date": "2026-03-28",
+  "best_trial": "trial_017_final_blend",
+  "val_score": 0.91682,
+  "public_score": 0.91404,
+  "gap": -0.00278,
+  "key_changes": "XGB Optuna(trial_015) + 5모델 blend (xgb_opt×0.4 주도)",
+  "trials": ["015","016","017","018"],
+  "status": "submitted"
+}

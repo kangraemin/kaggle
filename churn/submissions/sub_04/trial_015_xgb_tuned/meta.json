@@ -1,0 +1,1 @@
+{"id":"015","name":"xgb_tuned","base_trial":"007","created_at":"2026-03-28","hypothesis":"XGBoost Optuna 30 trials로 파라미터 최적화","changes":["Optuna 30 trials","max_depth/min_child_weight/subsample/colsample 탐색"],"rationale":"LGBM만 튜닝했고 XGB는 기본 파라미터였음","expected_impact":"medium"}

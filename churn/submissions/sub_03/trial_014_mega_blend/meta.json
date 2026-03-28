@@ -1,0 +1,1 @@
+{"id":"014","name":"mega_blend","base_trial":"006,007,011,012,013","created_at":"2026-03-28","hypothesis":"5모델 OOF grid search weighted blend으로 최적 조합 탐색","changes":["5모델 OOF grid search (step 0.1)","XGB 0.4 주도"],"rationale":"다양한 모델 OOF blend로 분산 최소화","expected_impact":"medium"}

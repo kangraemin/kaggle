@@ -10,6 +10,16 @@
 | 006 | advanced_features | 0.91636 | - | num_services/tenure_bin/fiber_monthly + target encoding | ✅ done |
 | 007 | xgboost | 0.91659 | - | XGBoost + advanced features + target encoding | ✅ done |
 | 008 | stacking | 0.91668 | - | 006×0.35 + 007×0.65 weighted blend | ✅ done |
+| 009 | low_lr | 0.91647 | - | lr=0.01, 5000 iterations | ❌ worse |
+| 010 | external_data | 0.91628 | - | 원본 Telco 7천행 추가 | ❌ worse |
+| 011 | no_internet_fix | 0.91626 | - | No internet service→No 통합 + Contract_ord | ❌ worse |
+| 012 | catboost_oof | 0.91628 | - | CatBoost + No internet→No + OOF 저장 | ❌ worse |
+| 013 | 10fold | 0.91636 | - | 10-Fold + No internet→No + Contract_ord | ❌ worse |
+| 014 | mega_blend | 0.91677 | 0.91404 | 5모델 OOF grid search blend (XGB×0.4) | ✅ submitted |
+| 015 | xgb_tuned | 0.91669 | - | XGBoost Optuna 30 trials | ✅ done |
+| 016 | meta_stacking | 0.91674 | - | LR meta-learner on 4모델 OOF | ✅ done |
+| 017 | final_blend | 0.91682 | 0.91404 | 5모델 blend (xgb_opt×0.4 주도) | ✅ submitted |
+| 018 | groupby_features | 0.91621 | - | groupby 집계 83 피처 + tenure flags | ❌ worse |
 
 ## 메트릭
 - Task: classification

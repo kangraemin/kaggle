@@ -1,0 +1,1 @@
+{"id":"012","name":"catboost_oof","base_trial":"003","created_at":"2026-03-28","hypothesis":"CatBoost + 개선된 피처 + OOF 저장으로 스태킹 준비","changes":["No internet service→No 통합","Contract_ord","OOF/test preds 저장"],"rationale":"스태킹 앙상블용 CatBoost OOF 확보","expected_impact":"medium"}

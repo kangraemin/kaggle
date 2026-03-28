@@ -1,0 +1,1 @@
+{"id":"010","name":"external_data","base_trial":"004","created_at":"2026-03-28","hypothesis":"원본 Telco 7천행 추가로 실제 signal 보강","changes":["WA_Fn-UseC_-Telco-Customer-Churn.csv 추가","No internet service→No 통합"],"rationale":"Playground Series는 원본 데이터 기반 synthetic — 원본 추가 시 signal 강화","expected_impact":"medium"}

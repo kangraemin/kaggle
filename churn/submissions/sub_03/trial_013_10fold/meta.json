@@ -1,0 +1,1 @@
+{"id":"013","name":"10fold","base_trial":"004","created_at":"2026-03-28","hypothesis":"10-Fold로 분산 감소 및 더 안정적인 예측","changes":["5-Fold→10-Fold","No internet service→No 통합","Contract_ord"],"rationale":"Fold 수 증가 시 val 추정 분산 감소","expected_impact":"low-medium"}

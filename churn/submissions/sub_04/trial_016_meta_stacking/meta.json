@@ -1,0 +1,1 @@
+{"id":"016","name":"meta_stacking","base_trial":"006,007,012,013","created_at":"2026-03-28","hypothesis":"LR meta-learner로 4모델 OOF 스태킹","changes":["OOF를 피처로 Logistic Regression 학습","StandardScaler 적용"],"rationale":"단순 weighted blend 대신 meta-learner로 최적 조합 학습","expected_impact":"low-medium"}

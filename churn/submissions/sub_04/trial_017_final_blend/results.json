@@ -1,0 +1,13 @@
+{
+  "id": "017",
+  "status": "done",
+  "val_score": 0.91682,
+  "weights": {
+    "006_lgbm_adv": 0.1,
+    "007_xgb": 0.2,
+    "012_cb": 0.2,
+    "013_10fold": 0.1,
+    "015_xgb_opt": 0.4
+  },
+  "notes": "6\ubaa8\ub378 OOF grid search blend"
+}

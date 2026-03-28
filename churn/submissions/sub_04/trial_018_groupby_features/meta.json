@@ -1,0 +1,1 @@
+{"id":"018","name":"groupby_features","base_trial":"004","created_at":"2026-03-28","hypothesis":"groupby 집계 피처(83개) + tenure flags로 Chris Deotte 스타일 접근","changes":["Contract/InternetService 등 7가지 groupby","MonthlyCharges/TotalCharges/tenure mean/std/min/max","IsNewCustomer/IsLongTerm/tenure_bin"],"rationale":"상위권은 groupby 집계 피처 대량 사용","expected_impact":"medium"}
