@@ -1,0 +1,6 @@
+{
+  "id": "020",
+  "status": "done",
+  "val_score": 0.9103,
+  "notes": "Logistic Regression + target encoding + charge features"
+}

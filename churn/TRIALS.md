@@ -20,6 +20,12 @@
 | 016 | meta_stacking | 0.91674 | - | LR meta-learner on 4모델 OOF | ✅ done |
 | 017 | final_blend | 0.91682 | 0.91404 | 5모델 blend (xgb_opt×0.4 주도) | ✅ submitted |
 | 018 | groupby_features | 0.91621 | - | groupby 집계 83 피처 + tenure flags | ❌ worse |
+| 019 | orig_as_cols | 0.91633 | - | 원본 데이터 groupby mean → 컬럼 merge (Chris Deotte 방식) | ❌ worse |
+| 020 | logistic_regression | 0.91030 | - | Logistic Regression + target encoding | ❌ worse |
+| 021 | relative_features | 0.91608 | - | 그룹 내 상대적 위치 피처 + service_combo | ❌ worse |
+| 022 | multi_seed_lgbm | 0.91670 | - | LGBM 7seeds × 5fold = 35 models | ✅ done |
+| 023 | final_blend | 0.91686 | - | XGB_opt + XGB + CB + LGBM_multi blend | ✅ done |
+| 024 | xgb_multiseed | 0.91690 | 0.91395 | XGB 7seeds × 5fold = 35 models | ✅ submitted |
 
 ## 메트릭
 - Task: classification

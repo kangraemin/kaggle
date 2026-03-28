@@ -1,0 +1,15 @@
+{
+  "id": "021",
+  "name": "relative_features",
+  "base_trial": "004",
+  "created_at": "2026-03-28",
+  "hypothesis": "그룹 내 상대적 위치 피처 + 서비스 조합 hash로 val AUC 개선",
+  "changes": [
+    "MonthlyCharges - Contract별 평균 (contract 그룹 내 상대적 요금)",
+    "MonthlyCharges / Contract별 평균 (비율)",
+    "tenure × MonthlyCharges (총 예상 지불액)",
+    "서비스 조합 문자열 → target encoding"
+  ],
+  "rationale": "GBDT는 그룹 내 상대적 위치를 직접 포착 못함. 명시적 상대 피처로 signal 강화",
+  "expected_impact": "medium"
+}

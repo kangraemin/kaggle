@@ -1,0 +1,10 @@
+{
+  "id": "020",
+  "name": "logistic_regression",
+  "base_trial": "004",
+  "created_at": "2026-03-28",
+  "hypothesis": "피처 독립성(max_depth=1 최적) → Logistic Regression이 GBDT만큼 강할 수 있음. OOF 저장 후 앙상블 활용",
+  "changes": ["LightGBM → Logistic Regression", "동일 피처셋 (target encoding + charge features)", "OOF/test preds 저장"],
+  "rationale": "Chris Deotte: 이 데이터는 피처 독립성이 강해 LR이 강함. 모델 다양성 확보",
+  "expected_impact": "medium"
+}
