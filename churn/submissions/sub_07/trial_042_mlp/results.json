@@ -1,0 +1,6 @@
+{
+  "id": "042",
+  "status": "done",
+  "val_score": 0.91327,
+  "notes": "MLP 3-layer (256-128-64) + MPS + smoothed TE + 4seeds"
+}

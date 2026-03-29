@@ -1,0 +1,6 @@
+{
+  "id": "037",
+  "status": "done",
+  "val_score": 0.91681,
+  "notes": "LGBM lambda=5.0 + 7seeds \u00d7 5fold + smoothed TE"
+}

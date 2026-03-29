@@ -1,0 +1,16 @@
+{
+  "id": "036",
+  "status": "done",
+  "val_score": 0.91695,
+  "weights": {
+    "022_lgbm_multi": 0.0,
+    "024_xgb_multi": 0.4,
+    "025_cb_multi": 0.0,
+    "026_high_risk": 0.0,
+    "028_lgbm_reg": 0.0,
+    "029_smoothed": 0.0,
+    "031_xgb_smooth": 0.2,
+    "032_lgbm_rs": 0.30000000000000004,
+    "033_cb_opt": 0.1
+  }
+}

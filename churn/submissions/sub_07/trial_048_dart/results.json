@@ -1,0 +1,6 @@
+{
+  "id": "048",
+  "status": "done",
+  "val_score": 0.91482,
+  "notes": "LGBM DART + reg=2.0 + smoothed TE + 7seeds"
+}

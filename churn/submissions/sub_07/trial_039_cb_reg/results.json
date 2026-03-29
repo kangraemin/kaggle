@@ -1,0 +1,6 @@
+{
+  "id": "039",
+  "status": "done",
+  "val_score": 0.91609,
+  "notes": "CatBoost l2_leaf_reg=10.0 + depth=5 + min_data_in_leaf=50 + 7seeds"
+}

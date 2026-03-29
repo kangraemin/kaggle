@@ -1,0 +1,7 @@
+{
+  "id": "041",
+  "status": "done",
+  "val_score": 0.90341,
+  "best_alpha": 0.1,
+  "notes": "RidgeClassifier + smoothed TE + high-risk + 7seeds"
+}

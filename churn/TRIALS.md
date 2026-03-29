@@ -26,6 +26,29 @@
 | 022 | multi_seed_lgbm | 0.91670 | - | LGBM 7seeds × 5fold = 35 models | ✅ done |
 | 023 | final_blend | 0.91686 | - | XGB_opt + XGB + CB + LGBM_multi blend | ✅ done |
 | 024 | xgb_multiseed | 0.91690 | 0.91395 | XGB 7seeds × 5fold = 35 models | ✅ submitted |
+| 025 | cb_multiseed | 0.91642 | - | CatBoost 7seeds × 5fold | ✅ done |
+| 026 | high_risk_features | 0.91654 | - | EDA 기반 고위험 조합 + 정규화 강화 | ✅ done |
+| 028 | lgbm_reg_multiseed | 0.91683 | 0.91400 | lambda=2.0 + 7seeds | ✅ submitted |
+| 029 | smoothed_te | 0.91630 | - | Bayesian smoothed TE | ❌ worse |
+| 031 | xgb_smooth_multi | 0.91690 | - | XGB + smoothed TE + high risk + 7seeds | ✅ done |
+| 032 | lgbm_reg_smooth | 0.91683 | - | LGBM reg + smoothed TE + 7seeds | ✅ done |
+| 033 | catboost_optuna | 0.91632 | - | CatBoost Optuna 20 trials | ✅ done |
+| 034 | pseudo_label | 0.91634 | - | Pseudo-labeling (48% test samples) | ❌ worse |
+| 035 | extratrees | 0.91258 | - | ExtraTrees | ❌ worse |
+| 036 | ultimate_blend | 0.91695 | - | 9모델 grid search blend | ✅ done |
+| 037 | lgbm_reg5 | 0.91681 | - | lambda=5.0 + 7seeds | ✅ done |
+| 038 | xgb_reg5 | 0.91673 | - | XGB reg=5.0 + 7seeds | ✅ done |
+| 039 | cb_reg | 0.91609 | - | CatBoost l2=10 + 7seeds | ❌ worse |
+| 040 | lgbm_reg10 | 0.91681 | - | lambda=10.0 + 7seeds | ✅ done |
+| 041 | ridge | 0.90341 | - | RidgeClassifier | ❌ worse |
+| 042 | mlp | 0.91327 | - | PyTorch MLP 3-layer MPS | ❌ worse |
+| 044 | histgbm | 0.91606 | - | HistGradientBoosting + 7seeds | ❌ worse |
+| 045 | feat_select | 0.91515 | - | top 15 features only | ❌ worse |
+| 047 | realmlp | 0.91247 | - | RealMLP (PyTabKit) | ❌ worse |
+| 048 | dart | 0.91482 | - | LGBM DART + 7seeds | ❌ worse |
+| 049 | lr_onehot | 0.91078 | - | LR + one-hot encoding | ❌ worse |
+| 051 | xgb_wide_optuna | 0.91693 | - | XGB Optuna 100 trials 넓은 범위 | ✅ done |
+| 052 | all_rank_blend | 0.91694 | - | 9모델 rank averaging blend | ✅ done |
 
 ## 메트릭
 - Task: classification

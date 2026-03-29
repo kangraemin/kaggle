@@ -1,0 +1,15 @@
+{
+  "id": "042",
+  "name": "mlp",
+  "base_trial": "004",
+  "created_at": "2026-03-29",
+  "hypothesis": "MLP (PyTorch MPS) — GBDT와 다른 inductive bias로 앙상블 다양성 확보",
+  "changes": [
+    "PyTorch MLP 3-layer (256-128-64)",
+    "MPS(M1 GPU) 가속",
+    "smoothed TE + 고위험 조합 피처",
+    "RAM 85% 초과 시 자동 종료"
+  ],
+  "rationale": "GBDT 계열 한계 도달. NN은 완전히 다른 inductive bias — 앙상블 효과 기대",
+  "expected_impact": "medium-high"
+}

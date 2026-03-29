@@ -1,0 +1,6 @@
+{
+  "id": "044",
+  "status": "done",
+  "val_score": 0.91606,
+  "notes": "HistGradientBoosting l2=5.0 + smoothed TE + 7seeds"
+}

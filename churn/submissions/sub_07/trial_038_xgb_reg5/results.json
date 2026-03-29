@@ -1,0 +1,6 @@
+{
+  "id": "038",
+  "status": "done",
+  "val_score": 0.91673,
+  "notes": "XGB reg_alpha=5.0 + reg_lambda=5.0 + max_depth=4 + 7seeds"
+}

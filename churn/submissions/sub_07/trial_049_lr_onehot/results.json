@@ -1,0 +1,7 @@
+{
+  "id": "049",
+  "status": "done",
+  "val_score": 0.91078,
+  "best_C": 10.0,
+  "notes": "LR + one-hot encoding + StandardScaler + 7seeds"
+}

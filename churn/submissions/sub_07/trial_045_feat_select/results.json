@@ -1,0 +1,23 @@
+{
+  "id": "045",
+  "status": "done",
+  "val_score": 0.91515,
+  "top_features": [
+    "TotalCharges",
+    "MonthlyCharges",
+    "ChargeGap",
+    "AvgMonthlyCharge",
+    "tenure",
+    "ChargeRatio",
+    "te_PaymentMethod",
+    "is_electronic",
+    "te_gender",
+    "te_PaperlessBilling",
+    "te_Dependents",
+    "te_Contract",
+    "SeniorCitizen",
+    "te_MultipleLines",
+    "is_monthly"
+  ],
+  "notes": "top 15 features only + strong reg + 7seeds"
+}

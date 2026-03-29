@@ -1,0 +1,14 @@
+{
+  "id": "041",
+  "name": "ridge",
+  "base_trial": "020",
+  "created_at": "2026-03-29",
+  "hypothesis": "Ridge Classifier multi-seed — 1등 Discussion에서 Ridge Ensemble 17개로 CV 0.91959 달성 언급. 피처 독립성 강한 데이터에서 선형 모델이 강할 수 있음",
+  "changes": [
+    "Ridge (alpha 탐색: 0.001~10.0)",
+    "7 seeds × 5-Fold",
+    "smoothed TE + 고위험 조합 피처"
+  ],
+  "rationale": "LR(0.91030) 실패했지만 Ridge는 L2 정규화 내장, 다름. 1등이 Ridge Ensemble로 높은 점수 달성",
+  "expected_impact": "medium"
+}

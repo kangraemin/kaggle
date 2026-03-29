@@ -1,0 +1,11 @@
+{
+  "submission_id": "07",
+  "date": "2026-03-30",
+  "best_trial": "trial_036_ultimate_blend",
+  "val_score": 0.91695,
+  "public_score": null,
+  "gap": null,
+  "key_changes": "정규화 강화 (lambda 2→5→10), MLP, RealMLP, DART, Ridge, HistGBM, LR one-hot, rank blend, XGB 100 trials",
+  "trials": ["036","037","038","039","040","041","042","043","044","045","046","047","048","049","050","051","052"],
+  "status": "not submitted — val 기준 기존 best 못 넘음"
+}
