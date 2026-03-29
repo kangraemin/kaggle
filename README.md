@@ -3,60 +3,64 @@
 | 폴더 | 대회 | Best Public |
 |------|------|-------------|
 | `ts-forecasting/` | Hedge fund - Time series forecasting | 0.1499 |
-| `churn/` | Playground S6E3 - Churn Classification | 0.91404 |
+| `churn/` | Playground S6E3 - Bank Churn Classification | 0.91404 |
 
 ---
 
 ## ts-forecasting
 
-**대회**: 금융 시계열 예측. KEY=(code,sub_code,sub_category,horizon). test 89%가 신규 시리즈.
+**한 줄 요약**: 금융 시계열 예측 대회. 모델이 과거 패턴을 보고 미래값을 맞추는 문제.
+**핵심 난관**: 시험 데이터의 89%가 훈련 때 한 번도 본 적 없는 새로운 시리즈.
+
+### 실험 흐름
 
 | Trial | 왜 시도했나 | 결과 | 다음엔 |
 |-------|------------|------|--------|
-| 001 lgbm_baseline | 아무것도 모르니 raw feature + LightGBM부터 | public 0.1499. 생각보다 잘 됨 | lag feature 추가해보자 (AR(1) 발견) |
-| 002~010 lag/rolling/cross | AR(1)=0.86 발견 → lag가 핵심일 것 | val 0.89까지 올랐지만 **public 0.0000** | test에서 lag=NaN임을 몰랐다. val이 test 상황 반영 못 함 |
-| 012~014 no-lag | lag 빼고 raw+target encoding만 | val 0.30. test 89% 신규라 series_mean도 NaN | val split 자체를 test처럼 바꿔야 함 |
-| 015~021 cold-start val | 시리즈 holdout으로 "처음 보는 시리즈" 상황 재현 | cold-start val 0.64. 제출 → **또 0점** | 83EG83KQ(weight=13조, y≈0)에 6.37 예측 → 분자 폭발 |
-| 031~032 danger 패치 | 고가중치 시리즈 예측 폭발이 0점 원인 → 자동 패치 추가 | save_submission에 danger_ratio 자동 검사 | known series에 last_y feature 넣어보자 |
-| 033 last_y | test known series(10.9%)에 마지막 training y값 추가 | val 0.1145 → **0.2054** (+0.085 점프) | lag 2,3 + rolling stats도 추가 |
-| 034~042 rolling+mixed val | lag 1~20, rolling stats + val에 cold-start 15% 혼합 | val 0.36 → 0.49. cold-start 15%가 최적 | weight가 너무 극단적이어서 학습이 편중될 것 같음 |
-| 054~058 weight 변환 | weight 최대 13조 → 모델이 극소수 시리즈에 과적합 → sqrt/^0.25/^0.1/^0.05 시도 | **weight^0.05 = val 0.5912** (sweet spot) | cold-start 비율 재조정, 앙상블 |
+| 001 기본 모델 | 아무것도 모르니 주어진 feature 그대로 LightGBM 돌려보기 | public 0.1499. 생각보다 괜찮음 | "직전값이 다음값을 강하게 예측한다(상관관계 0.86)"는 걸 발견 → 직전값 feature 추가 |
+| 002~010 직전값 feature | 직전값이 강한 신호니까 추가하면 점수 오를 것 | val 0.89로 폭등. 그런데 **제출하니 0.0000** | 시험 데이터엔 직전값이 없었다. val에서는 정답지 보며 채점한 꼴. val이 틀린 방법이었음 |
+| 012~014 직전값 제거 | val 방식을 바꾸기 전에 일단 직전값 없이 재시도 | val 0.30. 새 시리즈의 평균값도 시험에서 89% NaN | val 자체를 시험 상황처럼 바꿔야 함 |
+| 015~021 새 평가 방식 | 훈련 시리즈 일부를 숨기고 "처음 보는 시리즈" 상황 재현 | val 0.64. 그런데 **제출하니 또 0.0000** | 특정 시리즈(83EG83KQ)가 중요도(weight) 13조짜리인데 예측값을 크게 틀림 → 점수 공식 분자가 천문학적으로 커져서 0점 |
+| 031~032 자동 안전장치 | 중요도 높은 시리즈 예측이 크게 벗어나면 자동으로 안전값으로 교체 | 이후 제출에서 0점 재발 없음 | 학습 데이터의 마지막 관측값을 feature로 활용해보기 |
+| 033 마지막 관측값 | 알고 있는 시리즈(10.9%)에 한해 "훈련 마지막에 이 값이었다"는 정보 추가 | val 0.20 (+0.085 점프). 이 feature가 압도적 1위 | rolling mean, 표준편차 등 통계값도 추가 |
+| 034~042 통계 feature + 혼합 평가 | 더 많은 과거 패턴(lag 1~20, rolling) + val에 새 시리즈 15% 섞기 | val 0.49. cold-start 15%가 최적 | 학습 weight가 최대 13조라 소수 시리즈에 과적합 의심 |
+| 054~058 weight 압축 | weight를 그냥 쓰면 13조짜리 시리즈 하나가 학습을 지배함 → 0.05제곱으로 압축 | **val 0.5912** (weight^0.05가 sweet spot) | cold-start 비율 재조정, 앙상블 |
 
-**제출 현황**
+### 제출 기록
 
-| sub | trial | public | 교훈 |
-|-----|-------|--------|------|
-| 01 | 001 | 0.1499 | raw feature도 괜찮음 |
-| 02 | 010 | 0.0000 | val이 높아도 test 상황 재현 안 하면 의미 없음 |
-| 03 | 021 | 0.0000 | cold-start val 높아도 고가중치 시리즈 예측 폭발하면 0점 |
-| 04 | 058 | **TBD** | weight^0.05 + danger 자동 패치 (미제출) |
+| sub | trial | public | 왜 이 결과가 나왔나 |
+|-----|-------|--------|---------------------|
+| 01 | 001 기본 모델 | 0.1499 | raw feature만으로도 어느 정도 일반화됨 |
+| 02 | 010 직전값 | 0.0000 | 직전값이 시험 데이터에 없어서 모든 예측이 0에 수렴 |
+| 03 | 021 새 평가 방식 | 0.0000 | 중요도 13조 시리즈 하나를 크게 틀려서 점수 공식 붕괴 |
+| 04 | 058 weight 압축 | **TBD** | - |
 
 ---
 
-## churn (Playground S6E3)
+## churn
 
-**대회**: 은행 고객 이탈 예측. AUC-ROC. 0.914 근방에서 치열.
+**한 줄 요약**: 은행 고객이 이탈할지 예측. AUC-ROC 지표.
+**핵심 난관**: 0.914 근방에서 모든 팀이 몰려있어 0.001 개선도 어려움.
+
+### 실험 흐름
 
 | Trial | 왜 시도했나 | 결과 | 다음엔 |
 |-------|------------|------|--------|
-| 001 lgbm_baseline | LightGBM + LabelEncoding + 5-Fold baseline | val 0.91613, public 0.91377 | LabelEncoding이 범주형 관계 못 반영 → target encoding으로 교체 |
-| 002 feature_eng | tenure 대비 실제 납부액(AvgMonthlyCharge), 요금 이탈(ChargeGap) 신호 확인 | val 0.91621 | Optuna로 하이퍼파라미터 탐색 |
-| 004 lgbm_tuned | Optuna 50 trials + target encoding 조합 | val 0.91663 → **제출 → public 0.91393** | 단일 모델 한계. 앙상블 시도 |
-| 005~008 앙상블 | LGBM + XGBoost + CatBoost OOF blend | val 0.91668~0.91677 | OOF grid search로 최적 비율 찾기 |
-| 014 mega_blend | 5모델 OOF grid search blend | val 0.91677 → **public 0.91404** | 이게 ceiling인지 확인 |
-| 017 final_blend | XGBoost 비중 높인 5모델 blend | val 0.91682 → public 0.91404 | 동일. 피처 더 필요 |
-| 018~021 추가 피처들 | groupby 집계, 원본 데이터 추가, 상대적 위치 피처 | 전부 하락 | 노이즈가 많음. multi-seed 앙상블 시도 |
-| 024 xgb_multiseed | XGB 7seeds×5fold = 35 models → variance 감소 | val 0.91690 (최고) → **public 0.91395 (하락)** | val 최고 ≠ public 최고. 0.914 벽이 있음 |
+| 001 기본 모델 | LightGBM baseline부터 | val 0.916, public 0.914 | 범주형 변수를 숫자로 단순 변환(LabelEncoding)하면 순서 관계를 잘못 학습 → 이탈률 기반으로 변환(target encoding) |
+| 002~003 feature 설계 | "가입 초반보다 요금이 올랐으면 이탈 가능성 높다"는 가설 검증 (ChargeGap) | val 0.916 → 소폭 개선 | Optuna로 하이퍼파라미터 탐색 |
+| 004 하이퍼파라미터 | 탐색 50회로 최적 파라미터 찾기 | val 0.9166 → **public 0.9139** | 단일 모델 한계. 여러 모델 조합 |
+| 005~013 앙상블 탐색 | LightGBM, XGBoost, CatBoost 섞으면 각 모델의 약점을 서로 보완 | val 0.9167 → **public 0.9140** | grid search로 최적 비율 찾기 |
+| 014~017 최적 blend | OOF 예측으로 수학적으로 최적 비율 계산 | val 0.9168 → public 0.9140 (동일) | 여기가 천장인 것 같음 |
+| 018~024 추가 시도 | groupby 집계, 외부 데이터, multi-seed 앙상블 등 총동원 | val은 0.917까지 올랐는데 **public 0.9140 미돌파** | val 높다고 public 높은 게 아님. 0.914 벽 존재 |
 
-**제출 현황**
+### 제출 기록
 
-| sub | trial | public | 교훈 |
-|-----|-------|--------|------|
-| 01 | 001 | 0.91377 | baseline도 나쁘지 않음 |
-| 02 | 004 | 0.91393 | 피처+튜닝으로 +0.002 |
-| 03 | 014 | 0.91404 | 앙상블이 효과 있음 |
-| 04 | 017 | 0.91404 | 동일. 이미 ceiling |
-| 05 | 024 | 0.91395 | val 높다고 public 높은 거 아님 |
+| sub | trial | public | 왜 이 결과가 나왔나 |
+|-----|-------|--------|---------------------|
+| 01 | 001 기본 모델 | 0.9138 | baseline도 나쁘지 않음 |
+| 02 | 004 하이퍼파라미터 | 0.9139 | 튜닝으로 소폭 개선 |
+| 03 | 014 앙상블 | 0.9140 | 모델 다양성으로 +0.001 |
+| 04 | 017 blend | 0.9140 | 동일. 이미 ceiling |
+| 05 | 024 multi-seed | 0.9140 | val 최고였는데 public 동일. 과적합 신호 |
 
 ---
 
