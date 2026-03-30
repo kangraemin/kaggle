@@ -31,7 +31,8 @@ PARAMS = {
     'feature_fraction': 0.8,
     'bagging_fraction': 0.8,
     'bagging_freq': 5,
-    'min_child_samples': 20,
+    'min_child_samples': 50,
+    'min_sum_hessian_in_leaf': 1e-3,
     'verbose': -1,
     'n_jobs': -1,
 }
@@ -87,7 +88,14 @@ def get_feature_cols(df):
     raw = [c for c in df.columns if c.startswith('feature_') and c not in EXCLUDE_FEATURES]
     enc = [c for c in ['subcat_mean', 'subcat_std', 'horizon_mean', 'horizon_std'] if c in df.columns]
     expanded = [c for c in df.columns if c.endswith('_grp_mean') or c.endswith('_dev')]
-    return raw + enc + expanded
+    # 중복 제거
+    seen = set()
+    result = []
+    for c in raw + enc + expanded:
+        if c not in seen:
+            seen.add(c)
+            result.append(c)
+    return result
 
 
 def prepare_X(df):
@@ -117,11 +125,10 @@ def main():
     print(f"Train: {len(tr):,}, Val: {len(val):,}")
     check_memory('after split')
 
-    # tr: 전체 평균 (훈련 방식)
-    # val: expanding mean (테스트 시뮬레이션)
+    # tr/val 둘 다 expanding mean → train/test 일관성
     print("Adding expanding features...")
     s2, s3 = compute_group_stats(tr)
-    tr  = apply_group_stats(add_grp_mean(tr),       s2, s3)
+    tr  = apply_group_stats(add_expanding_mean(tr),  s2, s3)
     val = apply_group_stats(add_expanding_mean(val), s2, s3)
     check_memory('after feature engineering')
 
@@ -151,10 +158,10 @@ def main():
     gc.collect()
     check_memory('after val, before retrain')
 
-    # full retrain: 전체 train은 grp_mean
+    # full retrain: expanding mean으로 일관성 유지
     train_full = load_train()
     s2_f, s3_f = compute_group_stats(train_full)
-    train_full = apply_group_stats(add_grp_mean(train_full), s2_f, s3_f)
+    train_full = apply_group_stats(add_expanding_mean(train_full), s2_f, s3_f)
     y_full = train_full.y_target.values
     w_full = train_full.weight.values
     X_full = prepare_X(train_full)

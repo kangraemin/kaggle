@@ -1,0 +1,6 @@
+{
+  "id": "029",
+  "status": "done",
+  "val_score": 0.9163,
+  "notes": "Bayesian smoothed TE (alpha=10) + high-risk features"
+}

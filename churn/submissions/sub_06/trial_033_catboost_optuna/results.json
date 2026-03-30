@@ -1,0 +1,12 @@
+{
+  "id": "033",
+  "status": "done",
+  "val_score": 0.91632,
+  "best_params": {
+    "learning_rate": 0.0999274092656732,
+    "depth": 7,
+    "l2_leaf_reg": 3.7051552012139397,
+    "bagging_temperature": 0.27229860701460085,
+    "random_strength": 0.7214840424215831
+  }
+}

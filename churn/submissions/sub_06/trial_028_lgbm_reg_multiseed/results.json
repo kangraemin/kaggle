@@ -1,0 +1,15 @@
+{
+  "id": "028",
+  "status": "done",
+  "val_score": 0.91683,
+  "seeds": [
+    42,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "notes": "\uac15\ud55c \uc815\uaddc\ud654(lambda=2.0) + 7seeds \u00d7 5fold"
+}

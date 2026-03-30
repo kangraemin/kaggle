@@ -1,0 +1,13 @@
+{
+  "id": "ramkang/churn-realmlp-gpu",
+  "title": "Churn RealMLP GPU",
+  "code_file": "script.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "competition_sources": ["competitions/playground-series-s6e3"],
+  "dataset_sources": [],
+  "kernel_sources": []
+}

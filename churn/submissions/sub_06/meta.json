@@ -1,0 +1,11 @@
+{
+  "submission_id": "06",
+  "date": "2026-03-29",
+  "best_trial": "trial_028_lgbm_reg_multiseed",
+  "val_score": 0.91683,
+  "public_score": 0.91400,
+  "gap": -0.00283,
+  "key_changes": "강한 정규화 (lambda=2.0, num_leaves=31) + 7seeds × 5fold + 고위험 조합 피처",
+  "trials": ["025","026","027","028","029","030","031","032","033","034","035"],
+  "status": "submitted"
+}

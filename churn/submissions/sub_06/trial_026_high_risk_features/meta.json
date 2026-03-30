@@ -1,0 +1,15 @@
+{
+  "id": "026",
+  "name": "high_risk_features",
+  "base_trial": "004",
+  "created_at": "2026-03-29",
+  "hypothesis": "EDA 기반 고위험 조합 피처 + 강한 정규화로 val-public gap 감소",
+  "changes": [
+    "is_senior_electronic: SeniorCitizen=1 & PaymentMethod=Electronic check",
+    "is_highest_risk: Month-to-month & Fiber optic & Electronic check",
+    "is_fiber_monthly: Fiber optic & Month-to-month",
+    "lambda_l1/l2 강화 (0.5→2.0), num_leaves 축소 (64→31)"
+  ],
+  "rationale": "EDA: Electronic check 49% churn, SeniorCitizen 50% churn. Adversarial AUC=0.51로 분포 차이 없음 → gap 원인은 과적합. 정규화 강화로 gap 줄이기",
+  "expected_impact": "medium"
+}

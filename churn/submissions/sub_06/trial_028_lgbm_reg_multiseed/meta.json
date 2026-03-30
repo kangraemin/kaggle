@@ -1,0 +1,13 @@
+{
+  "id": "028",
+  "name": "lgbm_reg_multiseed",
+  "base_trial": "022",
+  "created_at": "2026-03-29",
+  "hypothesis": "강한 정규화 + 7시드 multi-seed — val-public gap 줄이면서 분산도 감소",
+  "changes": [
+    "lambda_l1/l2: 0.5→2.0, num_leaves: 64→31, min_child_samples: 20→50",
+    "7 seeds × 5-Fold = 35 models"
+  ],
+  "rationale": "trial_026 정규화 강화로 val은 낮았으나 public gap 개선 가능성. multi-seed로 분산 추가 감소",
+  "expected_impact": "medium"
+}

@@ -1,0 +1,6 @@
+{
+  "id": "054",
+  "status": "done",
+  "val_score": 0.91188,
+  "notes": "LGBM stacking: original features + OOF predictions as features"
+}
