@@ -49,6 +49,13 @@
 | 049 | lr_onehot | 0.91078 | - | LR + one-hot encoding | ❌ worse |
 | 051 | xgb_wide_optuna | 0.91693 | - | XGB Optuna 100 trials 넓은 범위 | ✅ done |
 | 052 | all_rank_blend | 0.91694 | - | 9모델 rank averaging blend | ✅ done |
+| 055 | woe | 0.91685 | - | WoE encoding + LGBM multi-seed | ✅ done |
+| 056 | repeated_kfold | 0.91682 | - | RepeatedStratifiedKFold 3×5=15 folds | ✅ done |
+| 057 | calibrated | 0.91693 | - | Platt scaling on best blend | ✅ done |
+| 058 | xgb_depth1 | 0.91375 | - | XGB max_depth=1 + 7seeds | ❌ worse |
+| 059 | lgbm_depth1 | 0.91373 | - | LGBM num_leaves=2 + 7seeds | ❌ worse |
+| 060 | realmlp_kaggle | 0.91938 | 0.91683 | RealMLP 20-fold (Kaggle CPU fork) | ✅ submitted |
+| 061 | realmlp_xgb_blend | 0.91945 | 0.91686 | RealMLP×0.85 + XGB×0.15 | ✅ submitted |
 
 ## 메트릭
 - Task: classification
