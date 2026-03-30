@@ -2,9 +2,53 @@
 
 | 폴더 | 대회 | Best Public | 상태 |
 |------|------|-------------|------|
+| `birdclef/` | BirdCLEF+ 2026 - 새소리 종 분류 | TBD | v12 제출 대기 중 (v1~v11 삽질 끝) |
 | `ts-forecasting/` | Hedge fund - Time series forecasting | 0.1499 | 4번 제출, 3번 0점 |
 | `churn/` | Playground S6E3 - Churn Classification | 0.91404 | 0.914 벽에 도달 |
 | `march-mania/` | March Machine Learning Mania 2026 | 미제출 | 제출 마감 지남 (3/19) |
+
+---
+
+## birdclef (BirdCLEF+ 2026)
+
+**한 줄 요약**: 5초 오디오 클립에서 234종의 새소리를 분류하는 multi-label 분류 문제. macro-averaged ROC-AUC (높을수록 좋음).
+**핵심 난관**: Code Competition (Kaggle 노트북으로만 제출 가능) + 노트북 환경 삽질이 모델보다 더 큰 장벽.
+
+### 실험 흐름
+
+| Trial | 왜 시도했나 | 결과 | 다음엔 |
+|-------|------------|------|--------|
+| 001 Perch+LightGBM | Google Perch v2 (새소리 전문 딥러닝)가 1536차원 임베딩을 뽑아주니까, 그걸 LightGBM에 넣으면 빠르게 baseline 세울 수 있을 것 | OOF AUC **0.8375**. 사전학습된 임베딩의 힘으로 첫 시도에 꽤 좋은 점수 | soundscape (야외 녹음) 데이터 1,478개를 추가하면 다양한 환경음 학습 가능 |
+| 002 +soundscape | 야외 녹음 데이터를 추가하면 실제 시험 환경(야외)과 비슷해질 것 | OOF AUC **0.8731**. +0.036 개선. 야외 녹음이 도메인 갭을 줄여줌 | LightGBM vs XGBoost 비교 |
+| 003 XGBoost | XGBoost가 임베딩 데이터에 더 잘 맞을 수 있음 (깊은 트리 + 정규화) | XGBoost AUC **0.9709** >> LightGBM 0.8731. 압도적 차이 | XGBoost로 제출. PCA로 차원 축소(1536→512)하면 속도 3배 빨라짐 |
+
+### Kaggle 노트북 제출 삽질 (v1 → v12)
+
+Code Competition이라 로컬에서 아무리 잘 돌아도 **Kaggle 노트북 환경**에서 돌아야 함. 여기서 12번 삽질.
+
+| 버전 | 뭘 바꿨나 | 결과 | 원인 |
+|------|----------|------|------|
+| v1~v3 | Perch 모델 로드 방식 (`hub.load(URL)`) | ERROR | 인터넷 차단 환경이라 URL 로드 불가. 로컬 경로(`/kaggle/input/models/...`)로 바꿔야 함 |
+| v4 | 대회 데이터 경로 수정 | ERROR | `/kaggle/input/birdclef-2026`이 아니라 `/kaggle/input/competitions/birdclef-2026`. 경로 규칙이 다름 |
+| v5~v6 | 변수명 정리 | ERROR | 리팩토링하면서 `X_train`을 `X_audio`로 바꿨는데 한 곳을 빠뜨림. `NameError` |
+| v7 | try-except로 감싸기 | ERROR | 임베딩 추출이 (0,) 리턴. try-except가 에러를 삼켜서 빈 배열이 조용히 넘어감 |
+| v8 | 사전 추출 임베딩 사용 | TIMEOUT | train 임베딩 추출을 스킵해서 빨라졌는데, CPU XGBoost 학습이 너무 느림 (50종/86분, 234종 = 400분 예상 vs 90분 제한) |
+| v9 | GPU 모드 (`gpu_hist`) | ERROR | XGBoost 최신 버전에서 `gpu_hist` 폐지됨. `XGBoostError: Invalid Input` |
+| v10 | GPU 수정 (`device='cuda'`) | ERROR | 학습 성공(230모델/459초)! 근데 test 파일이 0개 → 빈 DataFrame에 `row_id` 컬럼 없음 → `KeyError` |
+| v11 | 빈 test 처리 추가 | COMPLETE | Kaggle Code Competition은 commit 단계에서 test 파일이 비어있고, 실제 채점 때만 넣어줌. 빈 경우 sample_submission으로 fallback |
+| v12 | GPU → CPU 변경 | RUNNING | 대회가 **GPU 제출을 허용 안 함** (GPU max = 0분). CPU로 변경 |
+
+**교훈**: Kaggle 노트북 제출은 로컬과 완전히 다른 세계.
+- 인터넷 차단 → URL 로드 불가, 모델은 `/kaggle/input/models/`에 마운트
+- 경로 규칙 → 대회 데이터는 `/kaggle/input/competitions/<slug>` (일반 데이터셋과 다름)
+- Code Competition → commit 시 test 파일이 비어있음. 채점 때만 실제 test 주입
+- GPU 허용 여부 → 대회마다 다름. 제출 화면에서 "GPU max of 0 minutes" 나오면 CPU 전용
+
+### 제출 기록
+
+| sub | trial | public | 왜 이 결과가 나왔나 |
+|-----|-------|--------|---------------------|
+| 01 | 003 XGBoost (v12) | TBD | Perch 임베딩 + PCA 512 + XGBoost CPU. 첫 제출 대기 중 |
 
 ---
 
@@ -107,6 +151,8 @@
 3. **대회 마감일 먼저 확인** — "X days to go"가 제출 마감이 아닐 수 있음
 4. **y_target 기반 통계를 새 시리즈에 쓰면 위험** — raw feature만 안전
 5. **단순한 모델이 더 안정적** — sub_01 (raw feature만)이 유일하게 0점 아닌 제출
+6. **Kaggle 노트북 제출은 로컬과 다른 세계** — 인터넷 차단, 경로 규칙, GPU 허용 여부, test 파일 유무 전부 다름. 한 번에 성공할 생각 버리고 v1부터 하나씩 디버깅
+7. **Code Competition은 commit ≠ 제출** — commit은 test 없이 돌고, 채점 때만 실제 test 주입. 빈 test 처리 필수
 
 ---
 
