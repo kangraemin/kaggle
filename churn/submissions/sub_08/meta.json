@@ -1,0 +1,11 @@
+{
+  "submission_id": "08",
+  "date": "2026-03-31",
+  "best_trial": "trial_061_realmlp_xgb_blend",
+  "val_score": 0.91945,
+  "public_score": 0.91686,
+  "gap": -0.00259,
+  "key_changes": "RealMLP Kaggle fork 20-Fold + XGB blend",
+  "trials": ["060", "061"],
+  "status": "submitted"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "060",
+  "name": "realmlp_kaggle",
+  "base_trial": "047",
+  "created_at": "2026-03-31",
+  "hypothesis": "RealMLP 20-Fold (Kaggle CPU fork of yekenot notebook) — 기본 epochs + 20-Fold로 0.919+ 기대",
+  "changes": ["Kaggle notebook fork", "20-Fold", "CPU mode"],
+  "rationale": "로컬 RealMLP 0.912→Kaggle fork로 제대로 돌리면 0.919 달성 가능",
+  "expected_impact": "high"
+}

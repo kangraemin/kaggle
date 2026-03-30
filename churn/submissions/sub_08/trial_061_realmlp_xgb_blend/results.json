@@ -1,0 +1,8 @@
+{
+  "id": "061",
+  "status": "done",
+  "val_score": 0.91945,
+  "public_score": 0.91686,
+  "weights": {"realmlp": 0.85, "xgb_multiseed": 0.15},
+  "notes": "RealMLP×0.85 + XGB×0.15 blend"
+}
