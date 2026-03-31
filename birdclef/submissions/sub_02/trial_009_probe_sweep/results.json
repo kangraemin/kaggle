@@ -1,0 +1,19 @@
+{
+  "trial": "009_probe_sweep",
+  "best": "LR_pca96_C0.1 (0.9766)",
+  "findings": [
+    "PCA dim 높을수록 좋음: 16(0.948) < 32(0.966) < 64(0.975) < 96(0.977)",
+    "C 낮을수록 좋음 (강한 정규화): C=0.1이 전구간 best",
+    "StandardScaler 적용 후 PCA가 미적용보다 나음",
+    "MLP(128)은 희귀종 early_stopping에서 에러 — min_pos 필터 필요"
+  ],
+  "results": {
+    "LR_pca96_C0.1": 0.976636,
+    "LR_pca96_C0.25": 0.976039,
+    "LR_pca64_C0.1": 0.974792,
+    "LR_pca64_C0.25": 0.974315,
+    "LR_pca32_C0.1": 0.966115,
+    "LR_pca16_C0.1": 0.948080
+  },
+  "note": "로컬 OOF (train_audio + soundscape 전체). Kaggle 실제 점수와 직접 비교 불가"
+}

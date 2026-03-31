@@ -9,7 +9,7 @@
 | 005 | pca_sweep | 0.9580 (best) | - | PCA 64~1536 비교. no PCA가 best지만 LR이 전부 이김 | ✅ |
 | 006 | xgb_tuned | 0.9559 (best) | - | XGB n_est/depth 튜닝. 미미한 개선 | ✅ |
 | 007 | perch_probe_bayesian | OOF 0.487 | 0.912 | 0.912 공개노트북 fork. Perch logits + Bayesian prior + LR probe | ✅ 첫 유효 제출 |
-| 008 | post_processing | OOF 미검증 | TBD | temperature scaling + file-level/rank-aware scaling + gaussian smoothing | ⏳ re-run 중 |
+| 008 | post_processing | OOF 미검증 | 0.910 | temperature scaling + file-level/rank-aware scaling + gaussian smoothing | ❌ 악화 (-0.002) |
 
 ## 메트릭
 - Task: multi-label classification (5초 오디오에서 새 종 존재 여부 예측)
