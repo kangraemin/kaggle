@@ -8,8 +8,8 @@
   "enable_gpu": false,
   "enable_internet": false,
   "competition": "birdclef-2026",
-  "dataset_sources": ["waterjoe/google-perch-embeddings"],
-  "kernel_sources": [],
+  "dataset_sources": ["waterjoe/google-perch-embeddings", "jaejohn/perch-meta"],
+  "kernel_sources": ["kdmitrie/bc26-tensorflow-2-20-0"],
   "competition_sources": ["birdclef-2026"],
-  "model_sources": ["google/bird-vocalization-classifier/tensorFlow2/bird-vocalization-classifier/8"]
+  "model_sources": ["google/bird-vocalization-classifier/tensorFlow2/perch_v2_cpu/1"]
 }
