@@ -3,7 +3,7 @@
 | 폴더 | 대회 | Best Public | 상태 |
 |------|------|-------------|------|
 | `birdclef/` | BirdCLEF+ 2026 — 새소리 종 분류 | 0.912 | 진행 중 (post-processing 실험) |
-| `churn/` | Playground S6E3 — 고객 이탈 예측 | 0.91686 | 70+ trial, RealMLP로 돌파 |
+| `churn/` | Playground S6E3 — 고객 이탈 예측 | 0.91707 (private 0.91815) | 84+ trial, 17 제출, 대회 종료 |
 | `ts-forecasting/` | Hedge Fund — 시계열 예측 | 0.1499 | 4번 제출, 3번 0점 |
 | `march-mania/` | March Mania 2026 — NCAA 농구 예측 | 미제출 | 마감 놓침 |
 
@@ -49,8 +49,9 @@
 
 ## churn (Playground S6E3)
 
-**한 줄 요약**: 은행 고객이 이탈할지 예측. AUC-ROC (높을수록 좋음, 최대 1.0).
+**한 줄 요약**: 통신사 고객이 이탈할지 예측. AUC-ROC (높을수록 좋음, 최대 1.0). 4,142팀 참가.
 **핵심 난관**: 상위권이 전부 0.914~0.917에 몰려있어서 0.001이 수십 등수 차이. 로컬 GBDT 한계를 Kaggle 노트북 fork(RealMLP)로 돌파.
+**최종 성적**: Best public **0.91707**, Best private **0.91815**. 17회 제출, 84+ trials.
 
 ### 실험 흐름
 
@@ -64,8 +65,10 @@
 | 018~024 총동원 | groupby 83변수, multi-seed(7시드×5폴드=35모델), 상대적 위치 피처 | val 0.9169(최고) → **public 0.9140 미돌파**. 과적합 확인 | GBDT 계열로는 한계. NN 필요 |
 | 025~059 대탐색 | MLP, RealMLP(로컬), Ridge, HistGBM, DART, pseudo-labeling, WoE, calibration, depth=1... **총 35개 trial** | **전부 돌파 실패**. 로컬 NN은 M1 Mac 한계 | Kaggle 노트북에서 NN 돌리기 |
 | 060 RealMLP fork | Kaggle 노트북에서 RealMLP 20-fold 실행 | val 0.9194 → **public 0.91683**. **+0.003 돌파!** | RealMLP + XGBoost blend |
-| 061 RealMLP+XGB | RealMLP×0.85 + XGBoost×0.15 | val 0.9195 → **public 0.91686**. best | distribution features로 추가 개선 시도 |
+| 061 RealMLP+XGB | RealMLP×0.85 + XGBoost×0.15 | val 0.9195 → **public 0.91686** | distribution features로 추가 개선 시도 |
 | 067 distribution | pctrank, zscore, 숫자 자릿수 피처 등 | val 0.9185 → **public 0.91571**. 과적합 | feature 과잉 → 정규화 필요 |
+| 074 TE std enriched | TE mean+std + 120 combo + digit features. distribution 없이 clean | val **0.91762** — 로컬 GBDT best | Ridge ensemble에 기여 |
+| 075~084 Ridge ensemble | 55개 OOF를 Ridge(alpha=100)로 앙상블. 약한 모델도 필터 없이 전부 투입 | val 0.9196 → **public 0.91707** → **private 0.91815** 🏆 | 대회 종료 |
 
 ### 제출 기록
 
@@ -76,8 +79,10 @@
 | 03 | 014 앙상블 | **0.91404** | 5모델 blend. GBDT 최고점 |
 | 04~06 | 017~028 | 0.91395~0.91404 | 여러 조합 시도했지만 0.914 벽 못 넘음 |
 | 07 | 060 RealMLP | **0.91683** | Kaggle 노트북 fork. NN이 GBDT 벽을 넘음 |
-| 08 | 061 blend | **0.91686** | RealMLP + XGBoost 최종 best |
+| 08 | 061 blend | **0.91686** | RealMLP + XGBoost blend |
 | 09 | 067 distribution | 0.91571 | 피처 과잉으로 과적합 |
+| 10 | Ridge 55 OOFs | **0.91707** | 55개 OOF Ridge ensemble. **best public** |
+| 11~15 | 078~084 | 0.91689~0.91704 | Ridge 변형 + blend 조합. **private 0.91815 🏆** |
 
 ---
 
@@ -135,7 +140,8 @@
 
 1. **val score를 맹신하면 안 됨** — val이 시험 상황을 반영하는지 항상 확인 (ts-forecasting 3번 0점)
 2. **제출 전 예측값 분포 확인** — 점수 0이 나오는 건 예측값 폭발/편향이 원인
-3. **로컬 한계를 느끼면 Kaggle 노트북 fork** — churn에서 GBDT 벽을 RealMLP fork로 돌파, BirdCLEF에서도 공개 노트북 fork가 정답
+3. **로컬 한계를 느끼면 Kaggle 노트북 fork** — churn에서 GBDT 벽을 RealMLP fork로 돌파(+0.003), BirdCLEF에서도 공개 노트북 fork가 정답
+7. **약한 모델도 버리지 마라** — Ridge ensemble에 55개 OOF 전부 넣었더니 best. Chris Deotte도 "필터링하지 마라" 조언
 4. **Code Competition은 환경 삽질이 반** — 처음부터 만들지 말고 검증된 노트북에 얹어라
 5. **대회 마감일 먼저 확인** — "X days to go"가 제출 마감이 아닐 수 있음
 6. **OOF 검증 없이 제출하지 말 것** — post-processing도 반드시 로컬 val 먼저
