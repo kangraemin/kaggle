@@ -1,0 +1,20 @@
+# 데이터
+*.csv
+*.parquet
+*.feather
+*.zip
+
+# 모델
+*.pkl
+*.joblib
+*.h5
+*.pt
+*.pth
+
+# 로그
+*.log
+
+# 예외: 제출 파일이 아닌 스크립트는 추적
+!submissions/**/*.py
+!submissions/**/*.json
+!submissions/**/*.md

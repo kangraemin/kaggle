@@ -2,48 +2,11 @@
 
 | 폴더 | 대회 | Best Public | 상태 |
 |------|------|-------------|------|
+| `churn/` | Playground S6E3 — 고객 이탈 예측 | 0.91707 (private 0.91815) | 84+ trial, 15 제출, 대회 종료 |
+| `irrigation/` | Playground S6E4 — 관개 수준 분류 | 0.9609 | 2 trial, 2 제출, 진행 중 |
 | `birdclef/` | BirdCLEF+ 2026 — 새소리 종 분류 | 0.912 | 진행 중 (post-processing 실험) |
-| `churn/` | Playground S6E3 — 고객 이탈 예측 | 0.91707 (private 0.91815) | 84+ trial, 17 제출, 대회 종료 |
 | `ts-forecasting/` | Hedge Fund — 시계열 예측 | 0.1499 | 4번 제출, 3번 0점 |
 | `march-mania/` | March Mania 2026 — NCAA 농구 예측 | 미제출 | 마감 놓침 |
-
----
-
-## birdclef (BirdCLEF+ 2026)
-
-**한 줄 요약**: 60초 야외 녹음을 5초씩 잘라서 234종의 새/개구리/곤충을 맞추는 multi-label 분류. macro-averaged ROC-AUC.
-**핵심 난관**: Code Competition이라 Kaggle 노트북에서만 제출 가능. CPU 90분 제한. 자체 파이프라인이 전부 실패하고 공개노트북 fork로 첫 제출 성공.
-
-### 실험 흐름
-
-| Trial | 왜 시도했나 | 결과 | 다음엔 |
-|-------|------------|------|--------|
-| 001~003 자체 파이프라인 | Perch v2 임베딩(1536차원)을 뽑아서 LightGBM/XGBoost에 넣으면 될 것 | 로컬 val AUC 0.97까지 올랐지만 **Kaggle 제출 16번 연속 실패** (경로, GPU 제한, TF 버전, timeout 등) | 자체 파이프라인 포기. 검증된 공개 노트북 fork |
-| 004 LR+PCA64 | Discussion에서 LR이 XGBoost보다 좋다는 걸 발견 | val **0.9754** (XGBoost 0.9580보다 좋음). 41초 완료 | 공개 노트북도 LR 사용 확인 |
-| 005 PCA sweep | PCA 차원(64~1536)에 따른 XGBoost 성능 비교 | no PCA(0.9580)가 best이지만 LR+PCA64(0.9754)가 전부 이김 | XGBoost는 버리고 LR로 통일 |
-| 007 공개노트북 fork | 0.912 공개노트북(Perch logits 직접 매핑 + Bayesian prior + LR probe + Gaussian smoothing) fork | **Public 0.912** — 첫 유효 제출! | post-processing 추가로 0.916+ 노려볼 것 |
-| 008 post-processing | temperature scaling(새=1.10, 개구리/곤충=0.95) + file-level/rank-aware scaling 추가 | re-run 중 (TBD) | OOF 검증 없이 제출 — 반성 포인트 |
-
-### 16번의 노트북 삽질 (v1 → v16)
-
-| 문제 유형 | 버전 | 뭐가 터졌나 |
-|----------|------|-----------|
-| 경로 | v1~v4 | 인터넷 차단(URL 불가), 대회 데이터 경로(`/competitions/` 필요), 모델 마운트 경로 |
-| 코드 | v5~v7 | 변수명 불일치, try-except가 에러 삼킴 |
-| 성능 | v8~v9 | CPU XGBoost 230종 학습 timeout, `gpu_hist` 폐지 |
-| 환경 | v10~v12 | test 파일 0개(commit 단계), GPU 제출 불가(GPU max=0분) |
-| TF | v13~v14 | TFLite 변환 불안정, Perch v2_cpu가 TF 2.20 필요(기본 2.19) |
-| 의존성 | v15 | TF wheel이 dataset 아닌 kernel_sources로 마운트 |
-| **성공** | **v16** | **0.912 fork + TF 2.20 wheel + perch-meta 캐시 = 성공** |
-
-**교훈**: Code Competition에서 삽질하지 않으려면 **검증된 공개 노트북을 fork**하고, 거기에 개선점을 얹어라. 처음부터 만들면 환경 차이만으로 일주일 날린다.
-
-### 제출 기록
-
-| sub | trial | public | 왜 이 결과가 나왔나 |
-|-----|-------|--------|---------------------|
-| 01 | 007 fork | **0.912** | Perch logits(14,795종→234종 매핑) + site×hour Bayesian prior + LR probe. 공개 노트북과 동일 |
-| 02 | 008 post-processing | TBD | temperature/file-level/rank-aware scaling 추가. OOF 미검증 상태로 제출 |
 
 ---
 
@@ -51,7 +14,7 @@
 
 **한 줄 요약**: 통신사 고객이 이탈할지 예측. AUC-ROC (높을수록 좋음, 최대 1.0). 4,142팀 참가.
 **핵심 난관**: 상위권이 전부 0.914~0.917에 몰려있어서 0.001이 수십 등수 차이. 로컬 GBDT 한계를 Kaggle 노트북 fork(RealMLP)로 돌파.
-**최종 성적**: Best public **0.91707**, Best private **0.91815**. 17회 제출, 84+ trials.
+**최종 성적**: Best public **0.91707**, Best private **0.91815**. 15회 제출, 84+ trials.
 
 ### 실험 흐름
 
@@ -83,6 +46,65 @@
 | 09 | 067 distribution | 0.91571 | 피처 과잉으로 과적합 |
 | 10 | Ridge 55 OOFs | **0.91707** | 55개 OOF Ridge ensemble. **best public** |
 | 11~15 | 078~084 | 0.91689~0.91704 | Ridge 변형 + blend 조합. **private 0.91815 🏆** |
+
+---
+
+## irrigation (Playground S6E4)
+
+**한 줄 요약**: 토양/기상/작물 정보로 관개(물 공급) 수준을 3단계(Low/Medium/High)로 분류. accuracy (높을수록 좋음).
+**핵심 난관**: baseline이 이미 98.4%라 개선 여지가 매우 작음. Val-Public gap이 -0.025로 꽤 커서 일반화가 관건.
+
+### 실험 흐름
+
+| Trial | 왜 시도했나 | 결과 | 다음엔 |
+|-------|------------|------|--------|
+| 001 LightGBM baseline | 데이터 파악 겸 baseline. label encoding + 5-fold | val 0.9844, **public 0.9589**. fold std 0.0002로 안정적이지만 gap -0.025 큼 | domain FE로 일반화 개선 |
+| 002 FE + 앙상블 | "증발산(ET_proxy), 수분수지(water_balance) 등 도메인 피처를 넣으면 일반화될 것" | val 0.9853, **public 0.9609**. public 개선폭(+0.002)이 val(+0.0009)보다 큼 → FE가 일반화에 효과적 | CatBoost가 0.9824로 가장 약함 — 제외하거나 튜닝 필요 |
+
+### 제출 기록
+
+| sub | trial | public | 왜 이 결과가 나왔나 |
+|-----|-------|--------|---------------------|
+| 01 | 001 baseline | 0.9589 | raw features + LightGBM. gap -0.025로 train/test 분포 차이 시사 |
+| 02 | 002 FE+앙상블 | **0.9609** | ET_proxy, water_balance 등 11개 FE + LGBM(4)+XGB(5)+CAT(1) 앙상블. gap -0.024로 소폭 개선 |
+
+---
+
+## birdclef (BirdCLEF+ 2026)
+
+**한 줄 요약**: 60초 야외 녹음을 5초씩 잘라서 234종의 새/개구리/곤충을 맞추는 multi-label 분류. macro-averaged ROC-AUC.
+**핵심 난관**: Code Competition이라 Kaggle 노트북에서만 제출 가능. CPU 90분 제한. 자체 파이프라인이 전부 실패하고 공개노트북 fork로 첫 제출 성공.
+
+### 실험 흐름
+
+| Trial | 왜 시도했나 | 결과 | 다음엔 |
+|-------|------------|------|--------|
+| 001~003 자체 파이프라인 | Perch v2 임베딩(1536차원)을 뽑아서 LightGBM/XGBoost에 넣으면 될 것 | 로컬 val AUC 0.97까지 올랐지만 **Kaggle 제출 16번 연속 실패** (경로, GPU 제한, TF 버전, timeout 등) | 자체 파이프라인 포기. 검증된 공개 노트북 fork |
+| 004 LR+PCA64 | Discussion에서 LR이 XGBoost보다 좋다는 걸 발견 | val **0.9754** (XGBoost 0.9580보다 좋음). 41초 완료 | 공개 노트북도 LR 사용 확인 |
+| 005 PCA sweep | PCA 차원(64~1536)에 따른 XGBoost 성능 비교 | no PCA(0.9580)가 best이지만 LR+PCA64(0.9754)가 전부 이김 | XGBoost는 버리고 LR로 통일 |
+| 007 공개노트북 fork | 0.912 공개노트북(Perch logits 직접 매핑 + Bayesian prior + LR probe + Gaussian smoothing) fork | **Public 0.912** — 첫 유효 제출! | post-processing 추가로 0.916+ 노려볼 것 |
+| 008 post-processing | temperature scaling(새=1.10, 개구리/곤충=0.95) + file-level/rank-aware scaling 추가 | **Public 0.910** — 오히려 악화(-0.002) | OOF 검증 없이 제출한 실수. 원본으로 되돌리고 probe 튜닝만 시도 |
+
+### 16번의 노트북 삽질 (v1 → v16)
+
+| 문제 유형 | 버전 | 뭐가 터졌나 |
+|----------|------|-----------|
+| 경로 | v1~v4 | 인터넷 차단(URL 불가), 대회 데이터 경로(`/competitions/` 필요), 모델 마운트 경로 |
+| 코드 | v5~v7 | 변수명 불일치, try-except가 에러 삼킴 |
+| 성능 | v8~v9 | CPU XGBoost 230종 학습 timeout, `gpu_hist` 폐지 |
+| 환경 | v10~v12 | test 파일 0개(commit 단계), GPU 제출 불가(GPU max=0분) |
+| TF | v13~v14 | TFLite 변환 불안정, Perch v2_cpu가 TF 2.20 필요(기본 2.19) |
+| 의존성 | v15 | TF wheel이 dataset 아닌 kernel_sources로 마운트 |
+| **성공** | **v16** | **0.912 fork + TF 2.20 wheel + perch-meta 캐시 = 성공** |
+
+**교훈**: Code Competition에서 삽질하지 않으려면 **검증된 공개 노트북을 fork**하고, 거기에 개선점을 얹어라. 처음부터 만들면 환경 차이만으로 일주일 날린다.
+
+### 제출 기록
+
+| sub | trial | public | 왜 이 결과가 나왔나 |
+|-----|-------|--------|---------------------|
+| 01 | 007 fork | **0.912** | Perch logits(14,795종→234종 매핑) + site×hour Bayesian prior + LR probe. 공개 노트북과 동일 |
+| 02 | 008 post-processing | 0.910 | temperature/file-level/rank-aware scaling 추가. OOF 미검증 상태로 제출 → 악화 |
 
 ---
 
@@ -141,10 +163,11 @@
 1. **val score를 맹신하면 안 됨** — val이 시험 상황을 반영하는지 항상 확인 (ts-forecasting 3번 0점)
 2. **제출 전 예측값 분포 확인** — 점수 0이 나오는 건 예측값 폭발/편향이 원인
 3. **로컬 한계를 느끼면 Kaggle 노트북 fork** — churn에서 GBDT 벽을 RealMLP fork로 돌파(+0.003), BirdCLEF에서도 공개 노트북 fork가 정답
-7. **약한 모델도 버리지 마라** — Ridge ensemble에 55개 OOF 전부 넣었더니 best. Chris Deotte도 "필터링하지 마라" 조언
-4. **Code Competition은 환경 삽질이 반** — 처음부터 만들지 말고 검증된 노트북에 얹어라
-5. **대회 마감일 먼저 확인** — "X days to go"가 제출 마감이 아닐 수 있음
-6. **OOF 검증 없이 제출하지 말 것** — post-processing도 반드시 로컬 val 먼저
+4. **약한 모델도 버리지 마라** — Ridge ensemble에 55개 OOF 전부 넣었더니 best. Chris Deotte도 "필터링하지 마라" 조언
+5. **Code Competition은 환경 삽질이 반** — 처음부터 만들지 말고 검증된 노트북에 얹어라
+6. **대회 마감일 먼저 확인** — "X days to go"가 제출 마감이 아닐 수 있음
+7. **OOF 검증 없이 제출하지 말 것** — post-processing도 반드시 로컬 val 먼저
+8. **Val 올리는 방향이 맞다** — churn에서 Val-Public gap은 음수였지만 Private이 Public보다 높게 나옴. Val이 더 정확한 지표
 
 ---
 

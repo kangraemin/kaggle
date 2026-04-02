@@ -1,0 +1,12 @@
+{
+  "trial": "trial_002_fe_catboost",
+  "oof_accuracy_lgbm": 0.984806,
+  "oof_accuracy_xgb": 0.985073,
+  "oof_accuracy_cat": 0.982413,
+  "oof_accuracy_ensemble": 0.985273,
+  "ensemble_weights": [
+    4,
+    5,
+    1
+  ]
+}
