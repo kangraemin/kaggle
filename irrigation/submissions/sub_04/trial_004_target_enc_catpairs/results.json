@@ -1,0 +1,16 @@
+{
+  "trial": "trial_004_target_enc_catpairs",
+  "oof_accuracy_lgbm": 0.984711,
+  "oof_accuracy_xgb": 0.985016,
+  "oof_accuracy_cat": 0.982451,
+  "oof_accuracy_ensemble": 0.985206,
+  "ensemble_weights": [
+    5,
+    5,
+    1
+  ],
+  "n_features_lgbm_xgb": 168,
+  "n_features_catboost": 168,
+  "te_columns": 72,
+  "pair_columns": 28
+}

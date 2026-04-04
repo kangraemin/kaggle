@@ -1,0 +1,19 @@
+{
+  "trial": "trial_006_full_pairwise_ensemble",
+  "oof_balanced_accuracy": 0.969867,
+  "oof_accuracy": 0.98454,
+  "oof_accuracy_ensemble": 0.969867,
+  "ensemble_weights": [
+    0,
+    1,
+    0
+  ],
+  "individual_bal_acc": {
+    "lgbm": 0.962752,
+    "xgb": 0.969867,
+    "cat": 0.968593
+  },
+  "n_features_base": 243,
+  "n_pairwise": 171,
+  "n_te_cols": 24
+}

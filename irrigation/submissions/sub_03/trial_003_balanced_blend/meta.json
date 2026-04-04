@@ -1,0 +1,17 @@
+{
+  "id": "003",
+  "name": "balanced_blend",
+  "base_trial": "002",
+  "created_at": "2026-04-03",
+  "hypothesis": "메트릭을 balanced_accuracy로 수정하고, class_weight balanced 적용 + original data blending + pairwise interaction TE를 추가하면 0.97+ 달성 가능",
+  "changes": [
+    "메트릭 accuracy → balanced_accuracy_score 수정",
+    "class_weight='balanced' / sample_weight 적용",
+    "original data 10K행 blending",
+    "pairwise categorical interaction features + target encoding",
+    "domain FE 강화 (Total_Water_Input, Evaporative_Stress, Soil_Health 등)",
+    "threshold optimization (minority class 보정)"
+  ],
+  "rationale": "discussion 분석: 상위권 전부 balanced accuracy 최적화 + original data 사용 + class balancing. 현재 0.9609는 메트릭 자체가 틀려서 낮은 것으로 추정",
+  "expected_impact": "high"
+}

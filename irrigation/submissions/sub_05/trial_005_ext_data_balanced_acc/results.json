@@ -1,0 +1,15 @@
+{
+  "trial": "trial_005_ext_data_balanced_acc",
+  "oof_balanced_accuracy": 0.969177,
+  "oof_accuracy": 0.985698,
+  "oof_accuracy_ensemble": 0.969177,
+  "per_fold_balanced_acc": [
+    0.968069,
+    0.969802,
+    0.969945,
+    0.968918,
+    0.969149
+  ],
+  "n_features": 147,
+  "n_train_original": 10000
+}
