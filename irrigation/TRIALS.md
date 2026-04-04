@@ -8,7 +8,7 @@
 | 004 | target_enc_catpairs | 0.9852 (acc) | - | 28 pairwise cat combos + target encoding(72 TE cols) + freq encoding + LGBM+XGB+CAT(5:5:1). 잘못된 메트릭 | done |
 | 005 | ext_data_balanced_acc | 0.9692 (bal_acc) | - | XGB + original data TE + append(w=0.1) + Deotte formula features + balanced weights + pairwise TE | done |
 | 006 | full_pairwise_ensemble | 0.9699 (bal_acc) | 0.9668 | Full pairwise(171 NUMS_bin+CATS) + multiclass TE + XGB/LGBM/CAT ensemble(XGB only best) + orig TE + freq enc + Ektarr FE | done |
-| 007 | bias_tuned_stacking | - | - | orig append(w=0.35) + multiclass TE + stacking meta-learner(Ridge/LGB) | 진행 중 |
+| 007 | bias_tuned_stacking | 0.9707 (bal_acc) | - | Orig append(w=0.35) + Ridge meta-learner + bias tuning(log-prob) + XGB+CAT(0:2:7) + depth=8 | done |
 
 ## 메트릭
 - Task: classification (3-class: Low / Medium / High)

@@ -1,0 +1,31 @@
+{
+  "trial": "trial_007_bias_tuned_stacking",
+  "oof_balanced_accuracy": 0.970738,
+  "oof_accuracy": 0.980283,
+  "oof_accuracy_ensemble": 0.970738,
+  "method": "ridge_meta+bias",
+  "bias": [
+    -0.5,
+    -0.7999999999999999,
+    0.0
+  ],
+  "grid_weights": [
+    0,
+    2,
+    7
+  ],
+  "strategy_scores": {
+    "grid_blend": 0.967547,
+    "ridge_meta": 0.96995,
+    "lgb_meta": 0.964375,
+    "best_mix": 0.96995
+  },
+  "individual_bal_acc": {
+    "lgbm": 0.96234,
+    "xgb": 0.967434,
+    "cat": 0.967181
+  },
+  "n_features_base": 243,
+  "n_pairwise": 171,
+  "n_te_cols_per_fold": 24
+}
