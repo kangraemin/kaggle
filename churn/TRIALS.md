@@ -56,6 +56,24 @@
 | 059 | lgbm_depth1 | 0.91373 | - | LGBM num_leaves=2 + 7seeds | ❌ worse |
 | 060 | realmlp_kaggle | 0.91938 | 0.91683 | RealMLP 20-fold (Kaggle CPU fork) | ✅ submitted |
 | 061 | realmlp_xgb_blend | 0.91945 | 0.91686 | RealMLP×0.85 + XGB×0.15 | ✅ submitted |
+| 062 | interaction_te | 0.91692 | - | XGB + 12 interaction pair TE + 7seeds | ❌ worse |
+| 063 | freq_encoding | 0.91688 | - | XGB + frequency encoding + TE + 7seeds | ❌ worse |
+| 064 | adversarial_val | 0.91594 | - | Adversarial validation으로 top 4 피처 제거 + XGB 7seeds | ❌ worse |
+| 065 | ridge_xgb_ngram | 0.91658 | - | Ridge→XGB two-stage + N-gram TE + 7seeds | ❌ worse |
+| 066 | all_combos_pseudo | 0.91710 | - | All 2-way cat combos (120) + pseudo labels (0.999) + orig stats + freq enc + 7seeds XGB | ✅ done |
+| 067 | distribution_digit | 0.91850 | 0.91571 | Distribution features (pctrank/zscore vs churner) + quantile distance + digit features + ORIG stats + XGB 7seeds | ⚠️ overfit |
+| 068 | dist_combos_20fold | 0.91846 | - | Distribution + All 2-way combos (120) + pseudo labels + digit + ORIG stats + freq enc + 20-fold CV + XGB 7seeds | ❌ worse |
+| 069 | knn_stacking | 0.91840 | - | KNN prob (K=20,50,100,200 OOF) + distribution + digit + ORIG stats + XGB 7seeds | ❌ worse |
+| 070 | ngram_direct | 0.91843 | - | Bi-gram(15) + Tri-gram(20) TE + distribution + digit + ORIG stats + XGB 7seeds | ❌ worse |
+| 075 | hill_climbing | 0.91964 | - | 53모델 OOF Hill Climbing rank blend → RealMLP×0.67 + KNN×0.33 | ⚠️ KNN(069)이 distribution feature 사용 → overfit 위험, 미제출 |
+| 074 | te_std_enriched | 0.91762 | - | All 2-way combos (120) + TE mean/std + digit + ORIG stats + freq enc + 7seeds XGB (no dist) | ✅ done |
+| 078 | realmlp_te_std_blend | 0.91950 | 0.91690 | RealMLP(060)×0.80 + XGB_TE_std(074)×0.20 rank blend | ✅ submitted |
+| 079 | hill_climbing_v2 | 0.91958 | 0.91693 | 52모델 Hill Climbing (dist 제외) → RealMLP_blend×0.4 + RealMLP×0.4 + Optuna_clean×0.2 | ✅ submitted |
+| 080 | ridge_ensemble_v2 | 0.91961 | 0.91702 | 51 OOFs Ridge (alpha=100, dist 제외, +trial_074) | ✅ submitted |
+| 081 | te_std_optuna_params | 0.91771 | - | trial_074 features + Optuna params (lr=0.012, colsample=0.38, gamma=0.61) + 10k rounds + 7seeds | ✅ done |
+| 082 | realmlp_xgb081_blend | 0.91951 | 0.91689 | RealMLP(060)×0.79 + XGB081×0.21 rank blend | ✅ submitted |
+| 083 | ridge_ensemble_v3 | 0.91962 | 0.91701 | 53 OOFs Ridge (alpha=100, dist 제외, +trial_074/081) | ✅ submitted |
+| 084 | ridge_ensemble_v4 | 0.91964 | 0.91704 | 56 OOFs Ridge (alpha=50, ALL models incl dist, +trial_074/081) | ✅ submitted |
 
 ## 메트릭
 - Task: classification

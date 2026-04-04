@@ -288,8 +288,9 @@ lgbm_params = {
 xgb_params = {
     "objective": "multi:softprob",
     "num_class": 3,
+    "eval_metric": "mlogloss",
     "verbosity": 0,
-    "n_estimators": 8000,
+    "n_estimators": 5000,
     "learning_rate": 0.03,
     "max_depth": 6,
     "min_child_weight": 3,
@@ -300,6 +301,7 @@ xgb_params = {
     "random_state": 42,
     "tree_method": "hist",
     "max_bin": 1024,
+    "early_stopping_rounds": 300,
 }
 
 cat_params = {
@@ -354,8 +356,7 @@ for fold, (train_idx, val_idx) in enumerate(skf.split(X, y)):
     model_lgb.fit(
         X_tr[fold_features], y_tr_full,
         eval_set=[(X_val[fold_features], y_val)],
-        eval_metric=lgbm_balanced_accuracy,
-        callbacks=[lgb.early_stopping(200, first_metric_only=True), lgb.log_evaluation(500)],
+        callbacks=[lgb.early_stopping(200), lgb.log_evaluation(500)],
     )
     oof_lgbm[val_idx] = model_lgb.predict_proba(X_val[fold_features])
     test_lgbm += model_lgb.predict_proba(X_test_fold[fold_features]) / N_FOLDS
@@ -363,19 +364,12 @@ for fold, (train_idx, val_idx) in enumerate(skf.split(X, y)):
     print(f"  LGBM bal_acc: {lgb_bal:.6f}")
 
     # --- XGBoost ---
-    model_xgb = xgb.XGBClassifier(
-        **xgb_params,
-        eval_metric=xgb_balanced_accuracy,
-        callbacks=[
-            xgb.callback.EarlyStopping(rounds=500, maximize=True, data_name="validation_0"),
-            xgb.callback.EvaluationMonitor(period=2000),
-        ],
-    )
+    model_xgb = xgb.XGBClassifier(**xgb_params)
     model_xgb.fit(
         X_tr[fold_features], y_tr_full,
         eval_set=[(X_val[fold_features], y_val)],
         sample_weight=sample_w,
-        verbose=False,
+        verbose=500,
     )
     oof_xgb[val_idx] = model_xgb.predict_proba(X_val[fold_features])
     test_xgb += model_xgb.predict_proba(X_test_fold[fold_features]) / N_FOLDS
