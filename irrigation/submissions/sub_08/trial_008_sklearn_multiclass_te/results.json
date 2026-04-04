@@ -1,0 +1,16 @@
+{
+  "trial": "trial_008_sklearn_multiclass_te",
+  "oof_balanced_accuracy": 0.971155,
+  "oof_accuracy": 0.980505,
+  "oof_accuracy_ensemble": 0.971155,
+  "method": "xgb+bias",
+  "bias": [
+    -1.23,
+    -0.7779999999999999,
+    0.0
+  ],
+  "xgb_raw_bal_acc": 0.969013,
+  "n_features_base": 334,
+  "n_pairwise": 253,
+  "n_te_source_cols": 265
+}
