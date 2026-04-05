@@ -1,0 +1,21 @@
+{
+  "vote3": {
+    "subs": [
+      "008b",
+      "008",
+      "003"
+    ],
+    "agree_with_best": 0.996
+  },
+  "nina_abc": {
+    "changed": 1721,
+    "pct": 0.64
+  },
+  "vote_all": {
+    "n_subs": 5,
+    "agree_with_best": 0.9956
+  },
+  "weighted": {
+    "agree_with_best": 0.9956
+  }
+}

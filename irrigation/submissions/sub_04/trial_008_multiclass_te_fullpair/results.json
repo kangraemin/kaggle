@@ -1,0 +1,20 @@
+{
+  "trial": "trial_008_multiclass_te_fullpair",
+  "metric": "balanced_accuracy",
+  "oof_bal_acc_xgb": 0.968868,
+  "oof_bal_acc_lgbm": 0.966819,
+  "oof_bal_acc_ensemble": 0.968868,
+  "oof_bal_acc_threshold": 0.97381,
+  "ensemble_weights_xgb_lgbm": [
+    1,
+    0
+  ],
+  "threshold_class_weights": [
+    0.7,
+    0.55,
+    3.7
+  ],
+  "n_base_features": 213,
+  "n_te_per_fold": 24,
+  "n_total_features": 237
+}

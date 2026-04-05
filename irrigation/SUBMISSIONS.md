@@ -8,5 +8,6 @@
 | 03-nothresh | 2026-04-04 | trial_003 (no threshold) | 0.9678 (bal_acc) | 0.9652 | - | -0.0026 | threshold 비교용 |
 | 06 | 2026-04-04 | trial_006_full_pairwise_ensemble | 0.9699 (bal_acc) | 0.9668 | - | -0.0031 | - |
 | 04 | 2026-04-05 | trial_008b_multiclass_te_fullpair | 0.9738 (bal_acc) | 0.9721 | - | -0.0017 | ✅ best public |
+| 08 | 2026-04-04 | trial_008_sklearn_multiclass_te | 0.9712 (bal_acc) | 0.9692 | - | -0.0020 | - |
 
 **Gap** = Public - Val. 양수면 val이 보수적, 음수면 overfitting 의심.
