@@ -3,8 +3,8 @@
 | 폴더 | 대회 | Best Public | 상태 |
 |------|------|-------------|------|
 | `churn/` | Playground S6E3 — 고객 이탈 예측 | 0.91707 (private 0.91815) | 84+ trial, 15 제출, 대회 종료 |
-| `irrigation/` | Playground S6E4 — 관개 수준 분류 | 0.9609 | 2 trial, 2 제출, 진행 중 |
-| `birdclef/` | BirdCLEF+ 2026 — 새소리 종 분류 | 0.912 | 진행 중 (post-processing 실험) |
+| `irrigation/` | Playground S6E4 — 관개 수준 분류 | 0.9721 | 9 trial, 6 제출, 진행 중 |
+| `birdclef/` | BirdCLEF+ 2026 — 새소리 종 분류 | 0.928 | 17 trial, 6 제출, 진행 중 |
 | `ts-forecasting/` | Hedge Fund — 시계열 예측 | 0.1499 | 4번 제출, 3번 0점 |
 | `march-mania/` | March Mania 2026 — NCAA 농구 예측 | 미제출 | 마감 놓침 |
 
@@ -52,59 +52,60 @@
 ## irrigation (Playground S6E4)
 
 **한 줄 요약**: 토양/기상/작물 정보로 관개(물 공급) 수준을 3단계(Low/Medium/High)로 분류. accuracy (높을수록 좋음).
-**핵심 난관**: baseline이 이미 98.4%라 개선 여지가 매우 작음. Val-Public gap이 -0.025로 꽤 커서 일반화가 관건.
+**핵심 난관**: 메트릭이 accuracy가 아니라 balanced_accuracy. 3클래스(Low/Medium/High) 중 High가 minority. threshold 최적화와 pairwise feature engineering이 핵심.
 
 ### 실험 흐름
 
 | Trial | 왜 시도했나 | 결과 | 다음엔 |
 |-------|------------|------|--------|
-| 001 LightGBM baseline | 데이터 파악 겸 baseline. label encoding + 5-fold | val 0.9844, **public 0.9589**. fold std 0.0002로 안정적이지만 gap -0.025 큼 | domain FE로 일반화 개선 |
-| 002 FE + 앙상블 | "증발산(ET_proxy), 수분수지(water_balance) 등 도메인 피처를 넣으면 일반화될 것" | val 0.9853, **public 0.9609**. public 개선폭(+0.002)이 val(+0.0009)보다 큼 → FE가 일반화에 효과적 | CatBoost가 0.9824로 가장 약함 — 제외하거나 튜닝 필요 |
+| 001 LightGBM baseline | 데이터 파악 겸 baseline | val 0.9844(acc), **public 0.9589** | 메트릭을 bal_acc로 수정 |
+| 002 FE + 앙상블 | 도메인 피처(ET_proxy, water_balance) + 3모델 앙상블 | val 0.9853(acc), **public 0.9609** | bal_acc 기준 재평가 필요 |
+| 003 balanced blend | bal_acc 메트릭 수정 + class_weight + threshold opt(High×2.6) | val **0.9711**(bal_acc), **public 0.9691** | pairwise TE 확장 |
+| 004~006 TE 탐색 | target encoding 변형 (28 pair, ext data, full pairwise 171) | val 0.9692~0.9699 | pairwise는 factorize만, TE는 원본 cat에만 |
+| 007 stacking | Ridge meta-learner + bias tuning + CatBoost 주도 | val 0.9707 | sklearn TE로 전환 |
+| 008 sklearn TE | multiclass TE(cv=5) 265 cols + bias tuning | val 0.9712, **public 0.9692** | TE를 cat_cols에만 한정 |
+| 008b fullpair | 171 pairwise factorize + cat_cols TE(24) + threshold(High×3.7) | val **0.9738**, **public 0.9721** 🏆 | stat group features |
+| 009 stat group | 88 pairs × 4 stats = 352 cols + orig TE | val 0.9710 | 008b보다 낮음, 과적합 |
 
 ### 제출 기록
 
 | sub | trial | public | 왜 이 결과가 나왔나 |
 |-----|-------|--------|---------------------|
-| 01 | 001 baseline | 0.9589 | raw features + LightGBM. gap -0.025로 train/test 분포 차이 시사 |
-| 02 | 002 FE+앙상블 | **0.9609** | ET_proxy, water_balance 등 11개 FE + LGBM(4)+XGB(5)+CAT(1) 앙상블. gap -0.024로 소폭 개선 |
+| 01 | 001 baseline | 0.9589 | raw features + LightGBM. gap -0.025 |
+| 02 | 002 FE+앙상블 | 0.9609 | 도메인 FE + 3모델 앙상블 |
+| 03 | 003 balanced | 0.9691 | bal_acc 메트릭 수정 + threshold opt. **+0.008 점프** |
+| 04 | 008b fullpair | **0.9721** | 171 pairwise factorize + multiclass TE + threshold(High×3.7). **best** |
+| 06 | 006 pairwise | 0.9668 | full pairwise 171 + XGB only |
+| 08 | 008 sklearn TE | 0.9692 | 265 TE cols → 008b보다 noise 많아 낮음 |
 
 ---
 
 ## birdclef (BirdCLEF+ 2026)
 
 **한 줄 요약**: 60초 야외 녹음을 5초씩 잘라서 234종의 새/개구리/곤충을 맞추는 multi-label 분류. macro-averaged ROC-AUC.
-**핵심 난관**: Code Competition이라 Kaggle 노트북에서만 제출 가능. CPU 90분 제한. 자체 파이프라인이 전부 실패하고 공개노트북 fork로 첫 제출 성공.
+**핵심 난관**: Code Competition이라 Kaggle 노트북에서만 제출 가능. CPU 90분 제한. 자체 파이프라인 16번 연속 실패 후 공개노트북 fork로 전환.
 
 ### 실험 흐름
 
 | Trial | 왜 시도했나 | 결과 | 다음엔 |
 |-------|------------|------|--------|
-| 001~003 자체 파이프라인 | Perch v2 임베딩(1536차원)을 뽑아서 LightGBM/XGBoost에 넣으면 될 것 | 로컬 val AUC 0.97까지 올랐지만 **Kaggle 제출 16번 연속 실패** (경로, GPU 제한, TF 버전, timeout 등) | 자체 파이프라인 포기. 검증된 공개 노트북 fork |
-| 004 LR+PCA64 | Discussion에서 LR이 XGBoost보다 좋다는 걸 발견 | val **0.9754** (XGBoost 0.9580보다 좋음). 41초 완료 | 공개 노트북도 LR 사용 확인 |
-| 005 PCA sweep | PCA 차원(64~1536)에 따른 XGBoost 성능 비교 | no PCA(0.9580)가 best이지만 LR+PCA64(0.9754)가 전부 이김 | XGBoost는 버리고 LR로 통일 |
-| 007 공개노트북 fork | 0.912 공개노트북(Perch logits 직접 매핑 + Bayesian prior + LR probe + Gaussian smoothing) fork | **Public 0.912** — 첫 유효 제출! | post-processing 추가로 0.916+ 노려볼 것 |
-| 008 post-processing | temperature scaling(새=1.10, 개구리/곤충=0.95) + file-level/rank-aware scaling 추가 | **Public 0.910** — 오히려 악화(-0.002) | OOF 검증 없이 제출한 실수. 원본으로 되돌리고 probe 튜닝만 시도 |
-
-### 16번의 노트북 삽질 (v1 → v16)
-
-| 문제 유형 | 버전 | 뭐가 터졌나 |
-|----------|------|-----------|
-| 경로 | v1~v4 | 인터넷 차단(URL 불가), 대회 데이터 경로(`/competitions/` 필요), 모델 마운트 경로 |
-| 코드 | v5~v7 | 변수명 불일치, try-except가 에러 삼킴 |
-| 성능 | v8~v9 | CPU XGBoost 230종 학습 timeout, `gpu_hist` 폐지 |
-| 환경 | v10~v12 | test 파일 0개(commit 단계), GPU 제출 불가(GPU max=0분) |
-| TF | v13~v14 | TFLite 변환 불안정, Perch v2_cpu가 TF 2.20 필요(기본 2.19) |
-| 의존성 | v15 | TF wheel이 dataset 아닌 kernel_sources로 마운트 |
-| **성공** | **v16** | **0.912 fork + TF 2.20 wheel + perch-meta 캐시 = 성공** |
-
-**교훈**: Code Competition에서 삽질하지 않으려면 **검증된 공개 노트북을 fork**하고, 거기에 개선점을 얹어라. 처음부터 만들면 환경 차이만으로 일주일 날린다.
+| 001~006 자체 파이프라인 | Perch v2 임베딩 + LightGBM/XGBoost/LR | 로컬 val 0.97이지만 **Kaggle 16번 연속 실패** (경로/GPU/TF 버전/timeout) | 공개 노트북 fork |
+| 007 0.912 fork | Perch logits + Bayesian prior + LR probe | **Public 0.912** — 첫 유효 제출 | post-processing |
+| 008 post-processing | temperature + file-level + rank-aware scaling | **0.910** — 악화. OOF 미검증 실수 | fork 전략 변경 |
+| 009~014 개선 시도 | PCA sweep, pseudo-label, CNN, 파라미터 변경 | 013: 0.904 하락, 014: 타임아웃 | 더 높은 점수 fork |
+| 015 0.926 fork | yukiZ 0.926 노트북 fork. dataset 누락→재학습 | **Public 0.928** 🏆 (+0.002 보너스) | multi-seed 앙상블 |
+| 016~017 multi-seed | 5-seed ProtoSSM 앙상블 (API push / 웹 수정) | **둘 다 점수 없음** — submission 생성 실패 | 노트북 output 로그 확인 필요 |
 
 ### 제출 기록
 
 | sub | trial | public | 왜 이 결과가 나왔나 |
 |-----|-------|--------|---------------------|
-| 01 | 007 fork | **0.912** | Perch logits(14,795종→234종 매핑) + site×hour Bayesian prior + LR probe. 공개 노트북과 동일 |
-| 02 | 008 post-processing | 0.910 | temperature/file-level/rank-aware scaling 추가. OOF 미검증 상태로 제출 → 악화 |
+| 01 | 007 fork | 0.912 | 0.912 공개노트북 fork. 첫 유효 제출 |
+| 02 | 008 post-processing | 0.910 | OOF 미검증 상태로 후처리 추가 → 악화 |
+| 03 | 013 param change | 0.904 | PCA96+C0.1 → 하락 |
+| 04 | 015 fork_926 | **0.928** | yukiZ 0.926 fork. dataset 누락→재학습으로 +0.002. **best** |
+| 05 | 016 API push | - | 빈 모델 학습 실패 (ProtoSSM_PATH 문제) |
+| 06 | 017 5-seed | - | 웹 수정 multi-seed. submission 생성 실패 |
 
 ---
 
