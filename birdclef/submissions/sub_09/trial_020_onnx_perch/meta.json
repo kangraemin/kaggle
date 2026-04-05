@@ -1,0 +1,14 @@
+{
+  "id": "019b",
+  "name": "onnx_perch",
+  "base_trial": "015",
+  "created_at": "2026-04-06",
+  "hypothesis": "Perch ONNX Runtime 변환으로 추론 2x 가속 → 120분 제한 내 통과",
+  "changes": [
+    "Perch SavedModel → ONNX Runtime (HuggingFace justinchuby/Perch-onnx)",
+    "TF 2.20 설치 불필요 — onnxruntime만 사용",
+    "infer_fn → ort.InferenceSession으로 교체"
+  ],
+  "rationale": "TFLite INT8은 Kaggle에서 OOM. ONNX는 로컬 벤치마크 0.64s → 0.31s/window (2x). 메모리도 적게 씀.",
+  "expected_impact": "high"
+}

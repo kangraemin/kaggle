@@ -1,0 +1,12 @@
+{
+  "id": "019",
+  "name": "tflite_speedup",
+  "base_trial": "015",
+  "created_at": "2026-04-05",
+  "hypothesis": "Perch TFLite INT8 변환으로 추론 가속 → 120분 제한 내 통과",
+  "changes": ["Perch SavedModel → TFLite INT8 양자화 (390MB → 100MB)"],
+  "rationale": "로컬 벤치마크 0.64s → 0.35s/window (1.8x). 600파일 기준 77분 → 42분",
+  "expected_impact": "high",
+  "result": "OOM — TFLite SELECT_TF_OPS가 Kaggle 메모리 초과. ONNX로 전환.",
+  "status": "failed"
+}
