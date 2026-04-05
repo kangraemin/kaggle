@@ -1,0 +1,22 @@
+{
+  "trial": "trial_010_multiseed_cat",
+  "metric": "balanced_accuracy",
+  "seeds": [
+    42,
+    123,
+    456
+  ],
+  "oof_bal_acc_xgb_avg": 0.968826,
+  "oof_bal_acc_cat_avg": 0.970198,
+  "oof_bal_acc_ensemble": 0.970198,
+  "oof_bal_acc_threshold": 0.971344,
+  "ensemble_weights_xgb_cat": [
+    0,
+    1
+  ],
+  "threshold_class_weights": [
+    1.2,
+    1.15,
+    2.2
+  ]
+}

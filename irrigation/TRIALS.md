@@ -13,6 +13,7 @@
 | 008b | multiclass_te_fullpair | **0.9738 (bal_acc)** | **0.9721** | 171 pairwise factorize + cat_cols multiclass TE(24) + Deotte binary + orig TE only(no append) + XGB(1:0) + threshold(High×3.7) | ✅ best public |
 | 009 | stat_group_features | 0.9710 (bal_acc) | - | Stat group feat(352 cols, 88 pairs x 4 stats, alpha=10) + orig TE CATS+NUMS(57 cols) + XGB 15k/500 + bias tuning | done |
 | 010 | multiseed_xgb | **0.9741 (bal_acc)** | 0.9720 | Multi-seed XGB (5 seeds x 5 folds = 25 models) on trial_008b arch + threshold(High×4.6) | best val |
+| 010b | multiseed_cat | 0.9713 (bal_acc) | 0.9687 | 3-seed XGB+CAT, CAT only(0.9702) best, threshold(High×2.2) 약함 | done |
 
 ## 메트릭
 - Task: classification (3-class: Low / Medium / High)

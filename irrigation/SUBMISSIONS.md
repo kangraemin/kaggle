@@ -12,6 +12,7 @@
 | 09-vote | 2026-04-04 | vote3 (008b+008+003 majority) | - | 0.9712 | - | - | voting 실험 |
 | 09-nina | 2026-04-04 | nina blend | - | 0.9712 | - | - | blending 실험 |
 | 10 | 2026-04-05 | trial_010_multiseed_xgb | 0.9741 (bal_acc) | 0.9720 | - | -0.0021 | val best, public 미갱신 |
+| 10b | 2026-04-06 | trial_010_multiseed_cat | 0.9713 (bal_acc) | 0.9687 | - | -0.0026 | CAT only, threshold 약해서 하락 |
 
 **Gap** = Public - Val. 양수면 val이 보수적, 음수면 overfitting 의심.
 
