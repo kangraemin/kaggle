@@ -258,3 +258,34 @@ Current best public: 0.9609 (trial_002)
 ### EVALUATION
 - **NO IMPROVEMENT**: 0.9710 < 0.9712 (trial_008)
 - best: trial_008_sklearn_multiclass_te (bal_acc 0.9712) 유지
+
+
+## [2026-04-05] STRATEGY: trial_010_multiseed_xgb
+
+### 전략
+- trial_008b 아키텍처 기반 (171 pairwise factorize, 24 multiclass TE on cats, Deotte binary, orig TE)
+- 5 seeds x 5 folds = 25 total models (seeds: 42, 123, 456, 789, 2024)
+- OOF/Test: per-seed 평균 -> averaged OOF에 threshold 최적화
+- XGB: lr=0.1, early_stopping=50 (속도 최적화)
+
+
+## [2026-04-05] RESULT: trial_010_multiseed_xgb
+
+### 결과
+- OOF bal_acc (raw, multi-seed avg): **0.9682**
+- OOF bal_acc (after threshold): **0.9741**
+- Threshold weights: [0.7, 0.5, 4.6]
+- Per-seed OOF: 42=0.9681, 123=0.9683, 456=0.9681, 789=0.9681, 2024=0.9681
+- Total models: 25 (5 seeds x 5 folds)
+- Features: 213 base + 24 TE = 237
+
+### 분석
+- Multi-seed raw OOF 0.9682 vs trial_008b raw 0.9689 (lr=0.1 조기종료로 약간 낮음)
+- Threshold 후: 0.9741 vs trial_008b 0.9738 — 미세 개선 (+0.0003)
+- Multi-seed variance reduction 효과: 각 seed간 raw OOF 편차 매우 작음 (0.00022 std)
+- 기대 대비 낮음: 예상 0.974-0.977 vs 실제 0.9741
+
+### EVALUATION
+- **MARGINAL IMPROVEMENT**: 0.9741 > 0.9738 (trial_008b)
+- best: trial_010_multiseed_xgb (bal_acc 0.9741)
+- best-score.txt 갱신: 0.9741

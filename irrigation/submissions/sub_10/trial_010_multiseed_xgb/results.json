@@ -1,0 +1,31 @@
+{
+  "trial": "trial_010_multiseed_xgb",
+  "metric": "balanced_accuracy",
+  "seeds": [
+    42,
+    123,
+    456,
+    789,
+    2024
+  ],
+  "n_seeds": 5,
+  "n_folds": 5,
+  "n_total_models": 25,
+  "oof_accuracy": 0.968185,
+  "oof_accuracy_ensemble": 0.974066,
+  "threshold_class_weights": [
+    0.7,
+    0.5,
+    4.6
+  ],
+  "per_seed_bal_acc": {
+    "42": 0.968109,
+    "123": 0.968326,
+    "456": 0.968117,
+    "789": 0.968112,
+    "2024": 0.968127
+  },
+  "n_base_features": 213,
+  "n_te_per_fold": 24,
+  "n_total_features": 237
+}
