@@ -1,0 +1,18 @@
+{
+  "trial": "trial_009_stat_group_features",
+  "oof_balanced_accuracy": 0.97097,
+  "oof_accuracy": 0.979908,
+  "oof_accuracy_ensemble": 0.97097,
+  "method": "xgb+bias",
+  "bias": [
+    -1.3820000000000001,
+    -0.8,
+    0.002
+  ],
+  "xgb_raw_bal_acc": 0.9689,
+  "n_stat_group_features": 352,
+  "n_features_base": 367,
+  "n_pairwise": 253,
+  "n_te_source_cols": 265,
+  "n_orig_te_cols": 57
+}
