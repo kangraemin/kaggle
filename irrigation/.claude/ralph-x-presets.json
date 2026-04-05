@@ -1,0 +1,26 @@
+{
+  "kaggle-irrigation": {
+    "task_template": "irrigation Kaggle trial & 개선",
+    "stages": [
+      {
+        "name": "Discussion 크롤링 + 전략 수립",
+        "skill": "/browse"
+      },
+      {
+        "name": "전략 구현 + 테스트 + 실행",
+        "skill": null
+      },
+      {
+        "name": "Local best 대비 스코어 비교",
+        "skill": null
+      },
+      {
+        "name": "3회마다 local best 갱신 시 Kaggle 제출 + public 점수 확인",
+        "skill": null,
+        "every_n": 3
+      }
+    ],
+    "max_iterations": 15,
+    "checklist": []
+  }
+}
