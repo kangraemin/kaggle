@@ -289,3 +289,27 @@ Current best public: 0.9609 (trial_002)
 - **MARGINAL IMPROVEMENT**: 0.9741 > 0.9738 (trial_008b)
 - best: trial_010_multiseed_xgb (bal_acc 0.9741)
 - best-score.txt 갱신: 0.9741
+
+
+## [2026-04-05] STRATEGY: trial_011_slow_xgb_deeper_trees
+
+### 리서치 결과 (Discussion 크롤링)
+- Kaggle discussion 페이지 직접 크롤링 성공
+- Chris Deotte (LB 0.9808): lr=0.01, n_estimators=50000, early_stopping=500
+- Mahog (LB 0.9793): ALL pairwise TE (171 × sklearn multiclass) + orig 0.35 weight + slow XGB
+- Ali Afzal (LB 0.9778): sklearn TargetEncoder(multiclass, cv=5) on ALL 171 pairwise
+- AidenSong (LB 0.9780): bias tuning via coordinate descent in log-odds space
+- 핵심 공식: True signal = 4 binary thresholds + 2 categorical (6 features total)
+
+### Gap 분석 (trial_010 OOF 0.9741 vs LB top 0.9808)
+1. **XGB learning rate/iterations**: trial_010 lr=0.1 early_stop=50 → ~400 trees (underfit)
+   Top: lr=0.01, 50k rounds, early_stop=500 → 5000~20000 trees
+2. **Pairwise TE scope**: trial_010 = 8 cats × 3 classes = 24 TE
+   Top: ALL 171 pairwise × 3 classes = 513 TE (sklearn multiclass)
+3. **Bias tuning**: coordinate descent in log-odds space (step sizes: 1.0→0.002 decreasing)
+
+### 전략 결정: Slow XGB + sklearn ALL Pairwise TE
+- XGB: lr=0.01, n_estimators=15000, early_stopping=200
+- sklearn TargetEncoder(multiclass) on ALL 171 pairwise within-fold → 513 new features
+- 기존 24 cat TE 유지, single seed (시간 대비 결과 확인 목적)
+- Expected OOF raw: 0.972~0.976, after threshold: 0.975~0.979
