@@ -1,0 +1,29 @@
+{
+  "trial": "trial_012_extend_rounds",
+  "metric": "balanced_accuracy",
+  "seed": 42,
+  "n_folds": 5,
+  "n_total_models": 5,
+  "xgb_lr": 0.01,
+  "xgb_n_estimators_max": 15000,
+  "xgb_early_stopping": 200,
+  "best_rounds_per_fold": [
+    6397,
+    6381,
+    6291,
+    6907,
+    6055
+  ],
+  "best_rounds_avg": 6406.2,
+  "oof_accuracy": 0.97546,
+  "oof_accuracy_ensemble": 0.979274,
+  "threshold_class_weights": [
+    0.7,
+    0.5,
+    4.8
+  ],
+  "n_base_features": 213,
+  "n_manual_te": 24,
+  "n_sklearn_pairwise_te": 513,
+  "n_total_features": 750
+}
