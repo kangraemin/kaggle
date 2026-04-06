@@ -1,0 +1,15 @@
+{
+  "id": "023",
+  "name": "effnet_blend",
+  "base_trial": "020",
+  "created_at": "2026-04-07",
+  "hypothesis": "EfficientNetV2-B0 1-fold + ONNX Perch 블렌딩(92:8)으로 0.928 이상 달성",
+  "changes": [
+    "EfficientNetV2-B0 (로컬 학습 25MB) 추론 추가",
+    "mel-spectrogram 기반 CNN logits → Perch logits와 weighted average",
+    "BLEND_EFFNET = 0.08 (mlnjsh v75 참고)",
+    "timm tf_efficientnetv2_b0, in_chans=1"
+  ],
+  "rationale": "mlnjsh v75(0.93)가 Perch+EffNet 블렌딩으로 성공. 우리도 학습 완료된 모델 있음. 다른 feature space라 앙상블 다양성.",
+  "expected_impact": "medium"
+}

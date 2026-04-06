@@ -13,3 +13,4 @@
 | 09 | 2026-04-06 | trial_020 | ONNX Perch | **0.928** | ✅ **best**, 타임아웃 해결 |
 | 10 | 2026-04-06 | trial_021 | 0.93 fork + ONNX | 0.925 | ❌ best 대비 -0.003 |
 | 11 | 2026-04-06 | trial_022 | ONNX + V18 + audio FE | 0.928 | ➖ best 동일, 효과 없음 |
+| 12 | 2026-04-07 | trial_023 | Perch + EffNet blend | TBD | 🔄 제출중 |
