@@ -1,0 +1,14 @@
+{
+  "id": "022",
+  "name": "cnn_blend",
+  "base_trial": "020",
+  "created_at": "2026-04-06",
+  "hypothesis": "EfficientNetV2 SED + ONNX Perch 블렌딩으로 0.93+ 달성",
+  "changes": [
+    "로컬 학습 완료된 EfficientNetV2-B0 (25MB) 추론 추가",
+    "Perch 0.928 + CNN 예측 weighted average",
+    "SED: CE Loss + Sigmoid at infer (Salman 방식)"
+  ],
+  "rationale": "Perch(임베딩)와 CNN(mel-spectrogram)은 완전 다른 feature space. 앙상블 다양성 극대화. Salman이 SED 2개만으로 0.923, Boredom(7위)이 EfficientNet 단독 0.925+.",
+  "expected_impact": "high"
+}

@@ -25,6 +25,7 @@
 | 019 | tflite_speedup | - | - | - | TFLite INT8 Kaggle OOM. 제출 안 함 | ❌ OOM |
 | 020 | onnx_perch | **09** | - | **0.928** | Perch ONNX Runtime 변환. 추론 2x 가속. 타임아웃 해결 | ✅ best 유지 |
 | 021 | 093_onnx_fork | **10** | - | 0.925 | 0.93 노트북(a4dc68) fork + ONNX. best 대비 -0.003 | ❌ 하락 |
+| 022 | full_upgrade | **11** | - | 0.928 | V18 파라미터 + audio features. 효과 없음 (동일) | ➖ 변화없음 |
 
 ## 메트릭
 - Task: multi-label classification (5초 오디오에서 새 종 존재 여부 예측)

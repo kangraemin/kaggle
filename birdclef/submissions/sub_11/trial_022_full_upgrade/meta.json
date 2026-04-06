@@ -1,0 +1,15 @@
+{
+  "id": "022",
+  "name": "full_upgrade",
+  "base_trial": "020",
+  "created_at": "2026-04-06",
+  "hypothesis": "V18 파라미터 + audio feature engineering으로 0.928 이상 달성",
+  "changes": [
+    "V18 CFG: d_model 256→320, d_state 16→32, n_ssm_layers 3→4, n_epochs 60→80",
+    "MLP (128)→(256,128), PCA 64→128",
+    "Audio features: window energy, silence ratio, ZCR, spectral centroid",
+    "Energy-weighted scoring: 저에너지 윈도우 prediction 감소"
+  ],
+  "rationale": "0.93 노트북과 동일한 V18 파라미터 + EDA에서 발견한 audio feature 추가",
+  "expected_impact": "medium"
+}
