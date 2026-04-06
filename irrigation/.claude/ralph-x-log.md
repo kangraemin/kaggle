@@ -313,3 +313,40 @@ Current best public: 0.9609 (trial_002)
 - sklearn TargetEncoder(multiclass) on ALL 171 pairwise within-fold → 513 new features
 - 기존 24 cat TE 유지, single seed (시간 대비 결과 확인 목적)
 - Expected OOF raw: 0.972~0.976, after threshold: 0.975~0.979
+
+
+## [2026-04-07] RESULT: trial_011_slow_xgb_deeper_trees
+
+### 결과
+- OOF balanced_accuracy (after threshold): **0.979367**
+- OOF accuracy: 0.976026
+- Threshold weights: [0.8, 0.7, 4.6]
+- XGB: lr=0.01, n_estimators=4000 (hard cap, no early stop)
+- Features: 213 base + 24 manual TE + 513 sklearn pairwise TE = 750
+
+### EVALUATION
+- **IMPROVED**: 0.979367 > 0.9741 (trial_010)
+- **Current best: trial_011_slow_xgb_deeper_trees** (bal_acc 0.979367)
+- best-score.txt 갱신: 0.9741 → 0.979367
+
+
+## [2026-04-07] RESULT: trial_012_extend_rounds
+
+### 결과
+- OOF balanced_accuracy (after threshold): **0.979274**
+- OOF accuracy: 0.97546
+- Threshold weights: [0.7, 0.5, 4.8]
+- XGB: lr=0.01, n_estimators_max=15000, early_stopping=200 (mlogloss)
+- Best rounds per fold: avg 6406.2
+- Features: 213 base + 24 manual TE + 513 sklearn pairwise TE = 750
+
+### 분석
+- trial_011 (4000 hard cap, 0.979367) > trial_012 (15k + mlogloss early_stop, 0.979274)
+- mlogloss 기반 early stop이 balanced_accuracy 최적화에 역효과 확인
+- mlogloss 기준 최적 round != bal_acc 기준 최적 round
+
+### EVALUATION
+- **NO IMPROVEMENT vs trial_011**: 0.979274 < 0.979367
+- **IMPROVED vs previous best (trial_010)**: 0.979274 > 0.9741
+- Current best: **trial_011_slow_xgb_deeper_trees** (bal_acc 0.979367)
+- best-score.txt updated: 0.9741 → 0.979367 (trial_011 기준)
