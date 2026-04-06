@@ -350,3 +350,30 @@ Current best public: 0.9609 (trial_002)
 - **IMPROVED vs previous best (trial_010)**: 0.979274 > 0.9741
 - Current best: **trial_011_slow_xgb_deeper_trees** (bal_acc 0.979367)
 - best-score.txt updated: 0.9741 → 0.979367 (trial_011 기준)
+
+
+## [2026-04-07] STRATEGY: trial_013_multiseed_lgbm_orig_append
+
+### 리서치 결과 (Discussion 크롤링)
+- Chris Deotte (LB 0.98082): magic formula 6개 feature로 100% 정확도 역공학, logit anchor features
+- wguesdon (LB 0.9788): 14-model GBDT ensemble (5 XGB + 3 LGB + 6 CAT), hill climbing weights, DE threshold 최적화
+- BlamerX (CV 0.979): LGBM + orig append(w=0.35) + pseudolabeling (max_prob>=0.92)
+- UtaAzu (0.977): coordinate descent bias tuning in log-odds space, step=1.0->0.002
+- Mahog (LB 0.9793): ALL pairwise TE (171 x sklearn multiclass) + orig 0.35 weight + slow XGB
+- 핵심: Top 솔루션은 단일 모델이 아닌 멀티 모델 앙상블 + 멀티 시드 사용
+
+### Gap 분석 (trial_011 OOF 0.979367 vs LB top 0.9808)
+1. **Single seed**: trial_011은 seed=42만 사용. Top은 3-5 seeds 평균 (분산 감소)
+2. **Single model**: trial_011은 XGB만. Top은 XGB + LGBM + CAT 앙상블
+3. **Original data**: trial_011은 orig에서 TE만. Top은 orig rows APPEND (weight=0.35)
+4. **Bias tuning**: trial_011 threshold sweep vs top coordinate descent log-odds (더 정밀)
+5. **Pseudolabeling**: 한 번도 시도 안 함 (BlamerX 방식)
+
+### 전략 결정: Multi-seed XGB+LGBM + Original Append + Log-odds Bias Tuning
+- 3 seeds x 5 folds x 2 models (XGB + LGBM) = 30 total models
+- XGB: trial_011 동일 (lr=0.01, 4000 rounds hard cap)
+- LGBM: num_leaves=127, lr=0.03, n_estimators=3000, early_stopping=100
+- Original rows APPEND (w=0.35) to each training fold
+- Hill climbing blend alpha on XGB/LGBM OOF
+- Coordinate descent log-odds bias tuning (UtaAzu method)
+- Expected OOF: 0.980~0.981
