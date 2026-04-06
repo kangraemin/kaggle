@@ -1,0 +1,15 @@
+{
+  "id": "021",
+  "name": "093_onnx_fork",
+  "base_trial": "020",
+  "created_at": "2026-04-06",
+  "hypothesis": "0.93 공개노트북(a4dc68) + ONNX 변환으로 0.930 달성",
+  "changes": [
+    "pantanal-distill-improvement-a4dc68 (0.930) fork",
+    "Perch SavedModel → ONNX Runtime 변환",
+    "V18 CFG + hardcoded per-class thresholds 포함"
+  ],
+  "rationale": "0.93 노트북은 ProtoSSM 구조가 약간 다르고 per-class threshold가 하드코딩됨. ONNX 변환 적용해서 타임아웃 해결하면서 0.930 노릴 수 있음.",
+  "expected_impact": "high",
+  "result": "0.925 — 0.928 대비 -0.003. ONNX 변환 시 Perch 출력 미세 차이 추정."
+}

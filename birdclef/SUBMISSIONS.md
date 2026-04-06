@@ -10,4 +10,5 @@
 | 06 | 2026-04-05 | trial_017 | 0.926 fork | - | ❌ 점수 없음 (submission 생성 실패 추정) |
 | 07 | 2026-04-05 | trial_018 | 0.926 fork | - | ❌ Notebook Timeout (multi-seed 오염) |
 | 08 | 2026-04-05 | trial_018 clean + V1 재제출 | 0.926 fork | - | ❌ Notebook Timeout (hidden test 증가) |
-| 09 | 2026-04-06 | trial_020 | ONNX Perch | **0.928** | ✅ 타임아웃 해결, best 유지 |
+| 09 | 2026-04-06 | trial_020 | ONNX Perch | **0.928** | ✅ **best**, 타임아웃 해결 |
+| 10 | 2026-04-06 | trial_021 | 0.93 fork + ONNX | 0.925 | ❌ best 대비 -0.003 |
