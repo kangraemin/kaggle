@@ -1,0 +1,21 @@
+{
+  "trial": "trial_011_slow_xgb_deeper_trees",
+  "metric": "balanced_accuracy",
+  "seed": 42,
+  "n_folds": 5,
+  "n_total_models": 5,
+  "xgb_lr": 0.01,
+  "xgb_n_estimators": 4000,
+  "xgb_early_stopping": "none_hard_cap",
+  "oof_accuracy": 0.976026,
+  "oof_accuracy_ensemble": 0.979367,
+  "threshold_class_weights": [
+    0.8,
+    0.7,
+    4.6
+  ],
+  "n_base_features": 213,
+  "n_manual_te": 24,
+  "n_sklearn_pairwise_te": 513,
+  "n_total_features": 750
+}
