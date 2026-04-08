@@ -13,8 +13,8 @@
 | Folder | Competition | Best Public | Status |
 |--------|-------------|-------------|--------|
 | `churn/` | Playground S6E3 — Customer Churn | 0.91707 (private 0.91815) | 84+ trials, 15 subs, ended |
-| `irrigation/` | Playground S6E4 — Irrigation Need | 0.9721 | 9 trials, 6 subs, in progress |
-| `birdclef/` | BirdCLEF+ 2026 — Bird Species | 0.928 | 17 trials, 6 subs, in progress |
+| `irrigation/` | Playground S6E4 — Irrigation Need | 0.97833 | 14 trials, 13 subs, in progress |
+| `birdclef/` | BirdCLEF+ 2026 — Bird Species | 0.929 | 23 trials, 12 subs, in progress |
 | `ts-forecasting/` | Hedge Fund — Time Series | 0.1499 | 4 subs, 3 scored zero |
 | `march-mania/` | March Mania 2026 — NCAA Basketball | not submitted | missed deadline |
 
@@ -57,7 +57,7 @@
 ## irrigation (Playground S6E4)
 
 **TL;DR**: Classify irrigation need (Low/Medium/High) from soil/weather/crop data. Balanced accuracy metric.
-**Key challenge**: Metric was balanced_accuracy, not accuracy. High class is only 3.3%. Threshold optimization and 171 pairwise features were the key breakthroughs.
+**Key challenge**: Metric was balanced_accuracy, not accuracy. High class is only 3.3%. Slow learning rate (lr=0.01) + sklearn pairwise TE on 171 combinations were the key breakthroughs.
 
 ### Experiment flow
 
@@ -68,7 +68,9 @@
 | 003 balanced blend | Fixed metric + class_weight + threshold(High×2.6) | val **0.9711**(bal_acc), **public 0.9691** | Expand pairwise TE |
 | 004–006 TE exploration | Various target encoding approaches (28–171 pairs) | val 0.9692–0.9699 | Factorize pairs, TE on cats only |
 | 007 stacking | Ridge meta-learner + bias tuning | val 0.9707 | Switch to sklearn TE |
-| 008b fullpair | 171 pairwise factorize + cat TE(24) + threshold(High×3.7) | val **0.9738**, **public 0.9721** | Multi-seed + CatBoost |
+| 008b fullpair | 171 pairwise factorize + cat TE(24) + threshold(High×3.7) | val **0.9738**, **public 0.9721** | Slow LR + full pairwise TE |
+| 011 slow XGB | lr=0.01, 4000 rounds hard cap + sklearn TE on 171 pairwise (750 features) | val **0.9794**, **public 0.97799** | Multi-seed |
+| 013 multiseed | 3-seed XGB + orig append + coord descent bias tuning | val **0.9796**, **public 0.97833** | Pseudolabeling, 5-seed |
 
 ### Submissions
 
@@ -76,7 +78,9 @@
 |-----|-------|--------|---------------|
 | 01 | 001 baseline | 0.9589 | Raw features + LightGBM |
 | 03 | 003 balanced | 0.9691 | Metric fix + threshold. **+0.008 jump** |
-| 04 | 008b fullpair | **0.9721** | 171 pairwise + multiclass TE + threshold. **best** |
+| 08b | 008b fullpair | 0.9721 | 171 pairwise + multiclass TE + threshold |
+| 11 | 011 slow XGB | 0.97799 | lr=0.01 + sklearn TE 750 features. **+0.006 jump** |
+| 13 | 013 multiseed | **0.97833** | 3-seed + bias tuning. **best** |
 
 ---
 
@@ -85,15 +89,17 @@
 **TL;DR**: Classify 234 bird/frog/insect species from 60s field recordings (5s segments). Macro-averaged ROC-AUC.
 **Key challenge**: Code Competition — submissions only via Kaggle notebooks. CPU 90min limit. 16 consecutive notebook failures before switching to public notebook fork.
 
-### Experiment flow
+> Competition in progress — detailed trial info hidden until competition ends.
 
-| Trial | Why | Result | Next |
-|-------|-----|--------|------|
-| 001–006 custom pipeline | Perch v2 embeddings + LGBM/XGB/LR | Local val 0.97 but **16 consecutive Kaggle failures** | Fork public notebook |
-| 007 0.912 fork | Perch logits + Bayesian prior + LR probe | **Public 0.912** — first valid submission | Post-processing |
-| 008 post-processing | Temperature + file-level + rank-aware scaling | **0.910** — worse. Submitted without OOF validation | Revert |
-| 015 0.926 fork | yukiZ 0.926 notebook fork | **Public 0.928** — dataset missing → retrained for +0.002 bonus | Multi-seed |
-| 016–017 multi-seed | 5-seed ProtoSSM ensemble | **Both failed** — submission generation error | Debug notebook output |
+### Summary
+
+| Phase | Public | What |
+|-------|--------|------|
+| Custom pipeline (001–006) | 16 failures | Perch v2 + LGBM/XGB/LR. All Kaggle notebook failures |
+| 0.912 fork (007–008) | **0.912** | First valid submission. Post-processing hurt |
+| 0.926 fork (015–018) | **0.928** | yukiZ fork. Multi-seed attempts all timed out |
+| ONNX speedup (020–022) | 0.928 | Perch ONNX 2x faster. Timeout solved |
+| EfficientNet blend (023) | **0.929** | Perch + EffNet blend. **current best** |
 
 ### 16 notebook failures (v1 → v16)
 
@@ -145,6 +151,8 @@ Best local score: Men 0.161, Women 0.132 — would have been competitive.
 6. **Check the actual deadline first** — "X days to go" might not mean submission deadline
 7. **Never submit without OOF validation** — Even post-processing needs local val first
 8. **Improving val is the right direction** — In churn, val-public gap was negative but private beat public. Val is the more accurate indicator
+9. **Slow learning rate + hard cap > early stopping** — lr=0.01 with fixed 4000 rounds beat mlogloss-based early stopping for balanced_accuracy (irrigation trial_011 vs 012)
+10. **Multi-seed averaging helps public more than val** — Variance reduction shows on unseen data (irrigation trial_013: val +0.0002, public +0.0003)
 
 ---
 
