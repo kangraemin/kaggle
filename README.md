@@ -87,33 +87,23 @@
 ## birdclef (BirdCLEF+ 2026)
 
 **TL;DR**: Classify 234 bird/frog/insect species from 60s field recordings (5s segments). Macro-averaged ROC-AUC.
-**Key challenge**: Code Competition — submissions only via Kaggle notebooks. CPU 90min limit. 16 consecutive notebook failures before switching to public notebook fork.
+**Key challenge**: Code Competition — submissions only via Kaggle notebooks. CPU 90min limit.
 
-> Competition in progress — detailed trial info hidden until competition ends.
+> Competition in progress — approaches hidden until competition ends.
 
-### Summary
+### Submissions
 
-| Phase | Public | What |
-|-------|--------|------|
-| Custom pipeline (001–006) | 16 failures | Perch v2 + LGBM/XGB/LR. All Kaggle notebook failures |
-| 0.912 fork (007–008) | **0.912** | First valid submission. Post-processing hurt |
-| 0.926 fork (015–018) | **0.928** | yukiZ fork. Multi-seed attempts all timed out |
-| ONNX speedup (020–022) | 0.928 | Perch ONNX 2x faster. Timeout solved |
-| EfficientNet blend (023) | **0.929** | Perch + EffNet blend. **current best** |
-
-### 16 notebook failures (v1 → v16)
-
-| Issue | Versions | What broke |
-|-------|----------|-----------|
-| Paths | v1–v4 | No internet, wrong data paths, model mount paths |
-| Code | v5–v7 | Variable name mismatches, try-except swallowing errors |
-| Performance | v8–v9 | CPU XGBoost 230-species timeout, `gpu_hist` deprecated |
-| Environment | v10–v12 | 0 test files (commit stage), GPU submission disabled |
-| TensorFlow | v13–v14 | TFLite conversion unstable, Perch needs TF 2.20 (default 2.19) |
-| Dependencies | v15 | TF wheel mounted as kernel_sources, not dataset |
-| **Success** | **v16** | **0.912 fork + TF 2.20 wheel + perch-meta cache** |
-
-**Lesson**: In Code Competitions, **fork a proven public notebook** and add improvements on top. Building from scratch wastes a week on environment issues alone.
+| sub | public | status |
+|-----|--------|--------|
+| 01 | 0.912 | first valid |
+| 02 | 0.910 | - |
+| 03 | 0.904 | - |
+| 04 | **0.928** | - |
+| 05–08 | failed | notebook errors |
+| 09 | 0.928 | - |
+| 10 | 0.925 | - |
+| 11 | 0.928 | - |
+| 12 | **0.929** | **best** |
 
 ---
 
