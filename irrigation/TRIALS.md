@@ -16,6 +16,7 @@
 | 010b | multiseed_cat | 0.9713 (bal_acc) | 0.9687 | 3-seed XGB+CAT, CAT only(0.9702) best, threshold(High×2.2) 약함 | done |
 | 011 | slow_xgb_deeper_trees | **0.9794 (bal_acc)** | 0.97799 | lr=0.01, 4000 rounds (hard cap) + sklearn TE(multiclass) on 171 pairwise(513) + manual cat TE(24) = 750 features, threshold(Low×0.8,Med×0.7,High×4.6) | ✅ best val |
 | 012 | extend_rounds | 0.9793 (bal_acc) | - | trial_011 + n_estimators 4000→15000 + early_stopping=200 (avg 6406 rounds) — mlogloss early stop ≠ bal_acc optimal | done |
+| 013 | multiseed_lgbm_orig_append | **0.9796 (bal_acc)** | - | 3-seed x 5-fold x XGB+LGBM (30 models) + orig append(w=0.35) + coord descent bias tuning. Hill climb→XGB only(alpha=1.0), LGBM(0.9747) < XGB(0.9763) | ✅ best val |
 
 ## 메트릭
 - Task: classification (3-class: Low / Medium / High)

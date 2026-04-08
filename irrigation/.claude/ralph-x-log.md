@@ -377,3 +377,29 @@ Current best public: 0.9609 (trial_002)
 - Hill climbing blend alpha on XGB/LGBM OOF
 - Coordinate descent log-odds bias tuning (UtaAzu method)
 - Expected OOF: 0.980~0.981
+
+
+## [2026-04-09] RESULT: trial_013_multiseed_lgbm_orig_append
+
+### 결과
+- OOF balanced_accuracy (after bias tuning): **0.979573**
+- Seed-averaged OOF: XGB=0.976280, LGBM=0.974683
+- Hill climbing: alpha=1.00 (XGB only, LGBM didn't contribute)
+- Bias: [-0.939, -0.98, 1.0] -> 0.979573 (was 0.976280)
+- Per-seed XGB OOF: seed42=0.975982, seed123=0.975999, seed456=0.976077
+- Per-seed LGBM OOF: seed42=0.974679, seed123=0.974501, seed456=0.974303
+- Total models: 30 (3 seeds x 5 folds x 2 types)
+- Features: 750 (213 base + 24 manual TE + 513 sklearn pairwise TE)
+
+### 분석
+- Multi-seed XGB 평균 (0.97628) vs trial_011 단일 시드 (raw ~0.976) — 미세 개선
+- LGBM (num_leaves=127, lr=0.03, early_stop=100) < XGB 성능 → alpha=1.0 (XGB only)
+- Orig append (w=0.35) 효과: XGB raw 0.97628 vs trial_011 ~0.976 — 수치상 비슷
+- Bias tuning (coord descent): 0.97628 -> 0.979573 (+0.0033 lift)
+- trial_011 threshold: 0.979367, trial_013 bias tuning: 0.979573 — +0.000206 개선
+
+### EVALUATION
+- **IMPROVED**: 0.979573 > 0.979367 (trial_011) — 미세 개선 (+0.000206)
+- **Current best: trial_013_multiseed_lgbm_orig_append** (bal_acc 0.979573)
+- 핵심: LGBM이 XGB를 이기지 못함 (num_leaves=127 + early_stop=100이 너무 약함)
+- 다음 방향: LGBM 강화 (num_leaves=255, lr=0.01, 더 많은 rounds) 또는 다른 접근
