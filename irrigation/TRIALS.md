@@ -14,9 +14,10 @@
 | 009 | stat_group_features | 0.9710 (bal_acc) | - | Stat group feat(352 cols, 88 pairs x 4 stats, alpha=10) + orig TE CATS+NUMS(57 cols) + XGB 15k/500 + bias tuning | done |
 | 010 | multiseed_xgb | **0.9741 (bal_acc)** | 0.9720 | Multi-seed XGB (5 seeds x 5 folds = 25 models) on trial_008b arch + threshold(High×4.6) | best val |
 | 010b | multiseed_cat | 0.9713 (bal_acc) | 0.9687 | 3-seed XGB+CAT, CAT only(0.9702) best, threshold(High×2.2) 약함 | done |
-| 011 | slow_xgb_deeper_trees | **0.9794 (bal_acc)** | 0.97799 | lr=0.01, 4000 rounds (hard cap) + sklearn TE(multiclass) on 171 pairwise(513) + manual cat TE(24) = 750 features, threshold(Low×0.8,Med×0.7,High×4.6) | ✅ best val |
+| 011 | slow_xgb_deeper_trees | 0.9794 (bal_acc) | 0.97799 | lr=0.01, 4000 rounds (hard cap) + sklearn TE(multiclass) on 171 pairwise(513) + manual cat TE(24) = 750 features, threshold(Low×0.8,Med×0.7,High×4.6) | done |
 | 012 | extend_rounds | 0.9793 (bal_acc) | - | trial_011 + n_estimators 4000→15000 + early_stopping=200 (avg 6406 rounds) — mlogloss early stop ≠ bal_acc optimal | done |
-| 013 | multiseed_lgbm_orig_append | **0.9796 (bal_acc)** | - | 3-seed x 5-fold x XGB+LGBM (30 models) + orig append(w=0.35) + coord descent bias tuning. Hill climb→XGB only(alpha=1.0), LGBM(0.9747) < XGB(0.9763) | ✅ best val |
+| 013 | multiseed_lgbm_orig_append | **0.9796 (bal_acc)** | **0.97833** | 3-seed x 5-fold x XGB+LGBM (30 models) + orig append(w=0.35) + coord descent bias tuning. Hill climb→XGB only(alpha=1.0), LGBM(0.9747) < XGB(0.9763) | ✅ best public |
+| 014 | ridge_stacking | 0.9785 (bal_acc) | - | 9 trial OOF stacking (LR meta) + threshold(High×5.6). 단일 모델 대비 하락 | done |
 
 ## 메트릭
 - Task: classification (3-class: Low / Medium / High)
