@@ -1,0 +1,17 @@
+{
+  "id": "024",
+  "name": "effnet5fold_lse",
+  "base_trial": "023",
+  "created_at": "2026-04-10",
+  "hypothesis": "EffNet 5-fold (all folds trained) + LSE inference pooling으로 0.930+ 달성",
+  "changes": [
+    "EfficientNetV2-B0 5-fold 앙상블 (1-fold → 5-fold)",
+    "LSE inference pooling (forward_features → mean(freq) → head → LSE over time)",
+    "blend weight 0.08 → 0.10 (5-fold이 더 강해서 상향)",
+    "TTA (shifted chunks) + Gaussian temporal smoothing 유지",
+    "Global file context (80:20) 유지",
+    "모델 출처: ramkang/birdclef2026-effnet-5fold"
+  ],
+  "rationale": "1-fold+LSE없이도 +0.001 효과. 5-fold는 분산 감소로 더 강한 CNN. LSE는 temporal multi-instance learning으로 +0.028 효과 (BirdCLEF 2023). MPS에서 forward_features 학습은 느리므로 추론 시에만 LSE 적용.",
+  "expected_impact": "medium-high"
+}
