@@ -1,0 +1,15 @@
+{
+  "id": "025",
+  "name": "effnet5fold_global",
+  "base_trial": "023",
+  "created_at": "2026-04-11",
+  "hypothesis": "EffNet 5-fold global pool 추론 (LSE 제거) + blend 0.08로 5-fold 단독 효과 확인",
+  "changes": [
+    "LSE inference 완전 제거 (forward_features → LSE 방식 삭제)",
+    "Global pool 추론 복구 (backbone(x)로 1280-dim, head로 logits)",
+    "BLEND_EFFNET 0.10 → 0.08 복구",
+    "5-fold 모델 유지 (fold 0-4)"
+  ],
+  "rationale": "trial_024에서 LSE inference-only가 학습-추론 불일치로 -0.007 역효과. sub_12(0.929)의 1-fold global pool 구조를 5-fold로 확장. 5-fold 단독 효과가 있다면 0.929+ 가능.",
+  "expected_impact": "low-medium"
+}
