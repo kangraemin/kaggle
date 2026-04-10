@@ -15,6 +15,7 @@
 | 10b | 2026-04-06 | trial_010_multiseed_cat | 0.9713 (bal_acc) | 0.9687 | - | -0.0026 | - |
 | 11 | 2026-04-06 | trial_011_slow_xgb_deeper_trees | 0.9794 (bal_acc) | 0.97799 | - | -0.0014 | - |
 | 13 | 2026-04-09 | trial_013_multiseed_lgbm_orig_append | 0.9796 (bal_acc) | 0.97833 | - | -0.0013 | ✅ best public |
+| 14 | 2026-04-10 | trial_015_pseudo_label | 0.9796 (bal_acc) | 0.97771 | - | -0.0019 | ❌ regression |
 
 **Gap** = Public - Val. 양수면 val이 보수적, 음수면 overfitting 의심.
 

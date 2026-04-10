@@ -18,6 +18,7 @@
 | 012 | extend_rounds | 0.9793 (bal_acc) | - | trial_011 + n_estimators 4000→15000 + early_stopping=200 (avg 6406 rounds) — mlogloss early stop ≠ bal_acc optimal | done |
 | 013 | multiseed_lgbm_orig_append | **0.9796 (bal_acc)** | **0.97833** | 3-seed x 5-fold x XGB+LGBM (30 models) + orig append(w=0.35) + coord descent bias tuning. Hill climb→XGB only(alpha=1.0), LGBM(0.9747) < XGB(0.9763) | ✅ best public |
 | 014 | ridge_stacking | 0.9785 (bal_acc) | - | 9 trial OOF stacking (LR meta) + threshold(High×5.6). 단일 모델 대비 하락 | done |
+| 015 | pseudo_label | 0.9796 (bal_acc) | 0.97771 | pseudo-label(conf>0.95, 249K samples) + trial_011 arch + threshold(High×3.6). best 대비 하락 | ❌ regression |
 
 ## 메트릭
 - Task: classification (3-class: Low / Medium / High)

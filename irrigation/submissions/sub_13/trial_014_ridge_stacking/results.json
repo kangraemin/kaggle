@@ -1,0 +1,33 @@
+{
+  "trial": "trial_014_ridge_stacking",
+  "metric": "balanced_accuracy",
+  "trials_used": [
+    "006",
+    "007",
+    "008_sklearn",
+    "008b_lgbm",
+    "008b_xgb",
+    "010_cat",
+    "010_xgb",
+    "011",
+    "012"
+  ],
+  "n_stacking_features": 27,
+  "meta_results": {
+    "Ridge_1": 0.974156,
+    "Ridge_10": 0.974169,
+    "Ridge_100": 0.974203,
+    "LR_C1": 0.974252,
+    "LR_C10": 0.974216
+  },
+  "best_meta": "LR_C1",
+  "best_meta_bal_acc": 0.974252,
+  "simple_avg_bal_acc": 0.969674,
+  "threshold_bal_acc": 0.978547,
+  "threshold_source": "meta",
+  "threshold_class_weights": [
+    0.5,
+    0.3,
+    5.6
+  ]
+}

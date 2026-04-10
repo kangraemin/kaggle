@@ -1,0 +1,18 @@
+{
+  "trial": "trial_015_pseudo_label",
+  "metric": "balanced_accuracy",
+  "confidence_threshold": 0.95,
+  "n_pseudo_labels": 249172,
+  "pseudo_distribution": {
+    "Low": 144851,
+    "Medium": 95868,
+    "High": 8453
+  },
+  "oof_bal_acc_raw": 0.976652,
+  "oof_bal_acc_threshold": 0.979567,
+  "threshold_class_weights": [
+    0.75,
+    0.6,
+    3.6
+  ]
+}
