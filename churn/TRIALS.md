@@ -28,8 +28,10 @@
 | 024 | xgb_multiseed | 0.91690 | 0.91395 | XGB 7seeds × 5fold = 35 models | ✅ submitted |
 | 025 | cb_multiseed | 0.91642 | - | CatBoost 7seeds × 5fold | ✅ done |
 | 026 | high_risk_features | 0.91654 | - | EDA 기반 고위험 조합 + 정규화 강화 | ✅ done |
+| 027 | blend | 0.91692 | - | 4모델 blend (XGB_multi×0.7 주도) | ✅ done |
 | 028 | lgbm_reg_multiseed | 0.91683 | 0.91400 | lambda=2.0 + 7seeds | ✅ submitted |
 | 029 | smoothed_te | 0.91630 | - | Bayesian smoothed TE | ❌ worse |
+| 030 | mega_blend | 0.91694 | - | 6모델 blend (XGB_multi×0.6 + LGBM_reg×0.3) | ✅ done |
 | 031 | xgb_smooth_multi | 0.91690 | - | XGB + smoothed TE + high risk + 7seeds | ✅ done |
 | 032 | lgbm_reg_smooth | 0.91683 | - | LGBM reg + smoothed TE + 7seeds | ✅ done |
 | 033 | catboost_optuna | 0.91632 | - | CatBoost Optuna 20 trials | ✅ done |
@@ -42,13 +44,18 @@
 | 040 | lgbm_reg10 | 0.91681 | - | lambda=10.0 + 7seeds | ✅ done |
 | 041 | ridge | 0.90341 | - | RidgeClassifier | ❌ worse |
 | 042 | mlp | 0.91327 | - | PyTorch MLP 3-layer MPS | ❌ worse |
+| 043 | mlp_blend | 0.91695 | - | 8모델 scipy optimize blend (MLP 포함, 기여도 미미) | ✅ done |
 | 044 | histgbm | 0.91606 | - | HistGradientBoosting + 7seeds | ❌ worse |
 | 045 | feat_select | 0.91515 | - | top 15 features only | ❌ worse |
+| 046 | final_blend | 0.91694 | - | 5모델 scipy optimize blend (XGB×0.62 + LGBM5×0.35) | ✅ done |
 | 047 | realmlp | 0.91247 | - | RealMLP (PyTabKit) | ❌ worse |
 | 048 | dart | 0.91482 | - | LGBM DART + 7seeds | ❌ worse |
 | 049 | lr_onehot | 0.91078 | - | LR + one-hot encoding | ❌ worse |
+| 050 | rank_blend | 0.91694 | - | 5모델 rank averaging blend (XGB×0.6 + LGBM5×0.4) | ✅ done |
 | 051 | xgb_wide_optuna | 0.91693 | - | XGB Optuna 100 trials 넓은 범위 | ✅ done |
 | 052 | all_rank_blend | 0.91694 | - | 9모델 rank averaging blend | ✅ done |
+| 053 | geo_blend | 0.91694 | - | 4모델 geometric mean blend (XGB×0.6 + LGBM5×0.4) | ✅ done |
+| 054 | oof_stacking | 0.91188 | - | LGBM stacking: original features + OOF predictions | ❌ worse |
 | 055 | woe | 0.91685 | - | WoE encoding + LGBM multi-seed | ✅ done |
 | 056 | repeated_kfold | 0.91682 | - | RepeatedStratifiedKFold 3×5=15 folds | ✅ done |
 | 057 | calibrated | 0.91693 | - | Platt scaling on best blend | ✅ done |
@@ -65,8 +72,10 @@
 | 068 | dist_combos_20fold | 0.91846 | - | Distribution + All 2-way combos (120) + pseudo labels + digit + ORIG stats + freq enc + 20-fold CV + XGB 7seeds | ❌ worse |
 | 069 | knn_stacking | 0.91840 | - | KNN prob (K=20,50,100,200 OOF) + distribution + digit + ORIG stats + XGB 7seeds | ❌ worse |
 | 070 | ngram_direct | 0.91843 | - | Bi-gram(15) + Tri-gram(20) TE + distribution + digit + ORIG stats + XGB 7seeds | ❌ worse |
-| 075 | hill_climbing | 0.91964 | - | 53모델 OOF Hill Climbing rank blend → RealMLP×0.67 + KNN×0.33 | ⚠️ KNN(069)이 distribution feature 사용 → overfit 위험, 미제출 |
+| 071 | optuna_deep | 0.91855 | - | Optuna 200 trials XGB + distribution/digit/ORIG + 7seeds | ⚠️ distribution 포함 → overfit 위험 |
+| 073 | optuna_clean | 0.91844 | - | Optuna 30 trials XGB clean features (no distribution) + 7seeds | ✅ done |
 | 074 | te_std_enriched | 0.91762 | - | All 2-way combos (120) + TE mean/std + digit + ORIG stats + freq enc + 7seeds XGB (no dist) | ✅ done |
+| 075 | hill_climbing | 0.91964 | - | 53모델 OOF Hill Climbing rank blend → RealMLP×0.67 + KNN×0.33 | ⚠️ KNN(069)이 distribution feature 사용 → overfit 위험, 미제출 |
 | 078 | realmlp_te_std_blend | 0.91950 | 0.91690 | RealMLP(060)×0.80 + XGB_TE_std(074)×0.20 rank blend | ✅ submitted |
 | 079 | hill_climbing_v2 | 0.91958 | 0.91693 | 52모델 Hill Climbing (dist 제외) → RealMLP_blend×0.4 + RealMLP×0.4 + Optuna_clean×0.2 | ✅ submitted |
 | 080 | ridge_ensemble_v2 | 0.91961 | 0.91702 | 51 OOFs Ridge (alpha=100, dist 제외, +trial_074) | ✅ submitted |
