@@ -12,9 +12,9 @@
 
 | Folder | Competition | Best Public | Status |
 |--------|-------------|-------------|--------|
-| `churn/` | Playground S6E3 — Customer Churn | 0.91707 (private 0.91815) | 84+ trials, 15 subs, ended |
-| `irrigation/` | Playground S6E4 — Irrigation Need | 0.97833 | 14 trials, 13 subs, in progress |
-| `birdclef/` | BirdCLEF+ 2026 — Bird Species | 0.929 | 23 trials, 12 subs, in progress |
+| `churn/` | Playground S6E3 — Customer Churn | 0.91704 (private 0.91815) | 84 trials, 15 subs, ended |
+| `irrigation/` | Playground S6E4 — Irrigation Need | 0.97833 | 15 trials, 14 subs, in progress |
+| `birdclef/` | BirdCLEF+ 2026 — Bird Species | 0.929 | 25 trials, 14 subs, in progress |
 | `ts-forecasting/` | Hedge Fund — Time Series | 0.1499 | 4 subs, 3 scored zero |
 | `march-mania/` | March Mania 2026 — NCAA Basketball | not submitted | missed deadline |
 
@@ -24,7 +24,7 @@
 
 **TL;DR**: Predict telecom customer churn. AUC-ROC metric. 4,142 teams.
 **Key challenge**: Top scores packed in 0.914–0.917. Broke through the GBDT ceiling by forking a RealMLP notebook on Kaggle.
-**Final**: Best public **0.91707**, private **0.91815**. 15 submissions, 84+ trials.
+**Final**: Best public **0.91704**, private **0.91815**. 15 submissions, 84 trials.
 
 ### Experiment flow
 
@@ -49,8 +49,10 @@
 | 01 | 001 baseline | 0.91377 | Raw features only |
 | 03 | 014 ensemble | **0.91404** | 5-model blend. GBDT ceiling |
 | 07 | 060 RealMLP | **0.91683** | Kaggle notebook fork. NN broke GBDT wall |
-| 10 | Ridge 55 OOFs | **0.91707** | 55 OOF Ridge ensemble. **best public** |
-| 11–15 | 078–084 | 0.91689–0.91704 | Ridge variants. **private 0.91815** |
+| 10 | 078 RealMLP+TE blend | **0.91690** | RealMLP×0.80 + XGB_TE_std×0.20 rank blend |
+| 12 | 080 Ridge 51 OOFs | **0.91702** | Ridge(alpha=100) 51 OOFs |
+| 15 | 084 Ridge 56 OOFs | **0.91704** | Ridge(alpha=50) all 56 OOFs. **best public** |
+| 14 | 083 Ridge 53 OOFs | 0.91701 | **private 0.91815** |
 
 ---
 
@@ -71,6 +73,7 @@
 | 008b fullpair | 171 pairwise factorize + cat TE(24) + threshold(High×3.7) | val **0.9738**, **public 0.9721** | Slow LR + full pairwise TE |
 | 011 slow XGB | lr=0.01, 4000 rounds hard cap + sklearn TE on 171 pairwise (750 features) | val **0.9794**, **public 0.97799** | Multi-seed |
 | 013 multiseed | 3-seed XGB + orig append + coord descent bias tuning | val **0.9796**, **public 0.97833** | Pseudolabeling, 5-seed |
+| 015 pseudo-label | pseudo-label (conf>0.95, 249K samples) + trial_011 arch | val 0.9796, **public 0.97771** — regression | Pseudo-labeling ineffective |
 
 ### Submissions
 
@@ -81,6 +84,7 @@
 | 08b | 008b fullpair | 0.9721 | 171 pairwise + multiclass TE + threshold |
 | 11 | 011 slow XGB | 0.97799 | lr=0.01 + sklearn TE 750 features. **+0.006 jump** |
 | 13 | 013 multiseed | **0.97833** | 3-seed + bias tuning. **best** |
+| 14 | 015 pseudo-label | 0.97771 | Pseudo-labeling regression |
 
 ---
 
@@ -96,14 +100,16 @@
 | sub | public | status |
 |-----|--------|--------|
 | 01 | 0.912 | first valid |
-| 02 | 0.910 | - |
-| 03 | 0.904 | - |
-| 04 | **0.928** | - |
-| 05–08 | failed | notebook errors |
-| 09 | 0.928 | - |
-| 10 | 0.925 | - |
-| 11 | 0.928 | - |
-| 12 | **0.929** | **best** |
+| 02 | 0.910 | post-processing worsened |
+| 03 | 0.904 | param change worsened |
+| 04 | **0.928** | 0.926 fork + dataset retrain |
+| 05–08 | failed | notebook errors / timeouts |
+| 09 | 0.928 | ONNX Perch, timeout solved |
+| 10 | 0.925 | 0.93 fork, worsened |
+| 11 | 0.928 | audio FE, no effect |
+| 12 | **0.929** | Perch + EffNet blend. **best** |
+| 13 | 0.922 | LSE inference, worsened |
+| 14 | 0.929 | 5-fold global pool, same as best |
 
 ---
 
@@ -143,6 +149,7 @@ Best local score: Men 0.161, Women 0.132 — would have been competitive.
 8. **Improving val is the right direction** — In churn, val-public gap was negative but private beat public. Val is the more accurate indicator
 9. **Slow learning rate + hard cap > early stopping** — lr=0.01 with fixed 4000 rounds beat mlogloss-based early stopping for balanced_accuracy (irrigation trial_011 vs 012)
 10. **Multi-seed averaging helps public more than val** — Variance reduction shows on unseen data (irrigation trial_013: val +0.0002, public +0.0003)
+11. **Pseudo-labeling doesn't always help** — In irrigation, pseudo-labeling (conf>0.95) caused regression despite high confidence threshold
 
 ---
 

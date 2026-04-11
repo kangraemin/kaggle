@@ -2,9 +2,9 @@
 
 | 폴더 | 대회 | Best Public | 상태 |
 |------|------|-------------|------|
-| `churn/` | Playground S6E3 — 고객 이탈 예측 | 0.91707 (private 0.91815) | 84+ trial, 15 제출, 대회 종료 |
-| `irrigation/` | Playground S6E4 — 관개 수준 분류 | 0.9721 | 9 trial, 6 제출, 진행 중 |
-| `birdclef/` | BirdCLEF+ 2026 — 새소리 종 분류 | 0.928 | 17 trial, 6 제출, 진행 중 |
+| `churn/` | Playground S6E3 — 고객 이탈 예측 | 0.91704 (private 0.91815) | 84 trial, 15 제출, 대회 종료 |
+| `irrigation/` | Playground S6E4 — 관개 수준 분류 | 0.97833 | 15 trial, 14 제출, 진행 중 |
+| `birdclef/` | BirdCLEF+ 2026 — 새소리 종 분류 | 0.929 | 25 trial, 14 제출, 진행 중 |
 | `ts-forecasting/` | Hedge Fund — 시계열 예측 | 0.1499 | 4번 제출, 3번 0점 |
 | `march-mania/` | March Mania 2026 — NCAA 농구 예측 | 미제출 | 마감 놓침 |
 
@@ -14,7 +14,7 @@
 
 **한 줄 요약**: 통신사 고객이 이탈할지 예측. AUC-ROC (높을수록 좋음, 최대 1.0). 4,142팀 참가.
 **핵심 난관**: 상위권이 전부 0.914~0.917에 몰려있어서 0.001이 수십 등수 차이. 로컬 GBDT 한계를 Kaggle 노트북 fork(RealMLP)로 돌파.
-**최종 성적**: Best public **0.91707**, Best private **0.91815**. 15회 제출, 84+ trials.
+**최종 성적**: Best public **0.91704**, Best private **0.91815**. 15회 제출, 84 trials.
 
 ### 실험 흐름
 
@@ -64,8 +64,11 @@
 | 004~006 TE 탐색 | target encoding 변형 (28 pair, ext data, full pairwise 171) | val 0.9692~0.9699 | pairwise는 factorize만, TE는 원본 cat에만 |
 | 007 stacking | Ridge meta-learner + bias tuning + CatBoost 주도 | val 0.9707 | sklearn TE로 전환 |
 | 008 sklearn TE | multiclass TE(cv=5) 265 cols + bias tuning | val 0.9712, **public 0.9692** | TE를 cat_cols에만 한정 |
-| 008b fullpair | 171 pairwise factorize + cat_cols TE(24) + threshold(High×3.7) | val **0.9738**, **public 0.9721** 🏆 | stat group features |
+| 008b fullpair | 171 pairwise factorize + cat_cols TE(24) + threshold(High×3.7) | val **0.9738**, **public 0.9721** | stat group features |
 | 009 stat group | 88 pairs × 4 stats = 352 cols + orig TE | val 0.9710 | 008b보다 낮음, 과적합 |
+| 011 slow XGB | lr=0.01, 4000 rounds hard cap + sklearn TE 171 pairwise (750 features) | val **0.9794**, **public 0.97799** | multi-seed |
+| 013 multiseed | 3-seed XGB + orig append + coord descent bias tuning | val **0.9796**, **public 0.97833** 🏆 | pseudo-labeling |
+| 015 pseudo-label | pseudo-label(conf>0.95, 249K samples) + trial_011 arch | val 0.9796, **public 0.97771** | best 대비 하락 |
 
 ### 제출 기록
 
@@ -74,9 +77,10 @@
 | 01 | 001 baseline | 0.9589 | raw features + LightGBM. gap -0.025 |
 | 02 | 002 FE+앙상블 | 0.9609 | 도메인 FE + 3모델 앙상블 |
 | 03 | 003 balanced | 0.9691 | bal_acc 메트릭 수정 + threshold opt. **+0.008 점프** |
-| 04 | 008b fullpair | **0.9721** | 171 pairwise factorize + multiclass TE + threshold(High×3.7). **best** |
-| 06 | 006 pairwise | 0.9668 | full pairwise 171 + XGB only |
-| 08 | 008 sklearn TE | 0.9692 | 265 TE cols → 008b보다 noise 많아 낮음 |
+| 08b | 008b fullpair | 0.9721 | 171 pairwise factorize + multiclass TE + threshold(High×3.7) |
+| 11 | 011 slow XGB | 0.97799 | lr=0.01 + sklearn TE 750 features. **+0.006 점프** |
+| 13 | 013 multiseed | **0.97833** | 3-seed + bias tuning. **best** |
+| 14 | 015 pseudo-label | 0.97771 | pseudo-labeling regression |
 
 ---
 
@@ -85,27 +89,23 @@
 **한 줄 요약**: 60초 야외 녹음을 5초씩 잘라서 234종의 새/개구리/곤충을 맞추는 multi-label 분류. macro-averaged ROC-AUC.
 **핵심 난관**: Code Competition이라 Kaggle 노트북에서만 제출 가능. CPU 90분 제한. 자체 파이프라인 16번 연속 실패 후 공개노트북 fork로 전환.
 
-### 실험 흐름
-
-| Trial | 왜 시도했나 | 결과 | 다음엔 |
-|-------|------------|------|--------|
-| 001~006 자체 파이프라인 | Perch v2 임베딩 + LightGBM/XGBoost/LR | 로컬 val 0.97이지만 **Kaggle 16번 연속 실패** (경로/GPU/TF 버전/timeout) | 공개 노트북 fork |
-| 007 0.912 fork | Perch logits + Bayesian prior + LR probe | **Public 0.912** — 첫 유효 제출 | post-processing |
-| 008 post-processing | temperature + file-level + rank-aware scaling | **0.910** — 악화. OOF 미검증 실수 | fork 전략 변경 |
-| 009~014 개선 시도 | PCA sweep, pseudo-label, CNN, 파라미터 변경 | 013: 0.904 하락, 014: 타임아웃 | 더 높은 점수 fork |
-| 015 0.926 fork | yukiZ 0.926 노트북 fork. dataset 누락→재학습 | **Public 0.928** 🏆 (+0.002 보너스) | multi-seed 앙상블 |
-| 016~017 multi-seed | 5-seed ProtoSSM 앙상블 (API push / 웹 수정) | **둘 다 점수 없음** — submission 생성 실패 | 노트북 output 로그 확인 필요 |
+> 대회 진행 중 — 접근법 비공개
 
 ### 제출 기록
 
-| sub | trial | public | 왜 이 결과가 나왔나 |
-|-----|-------|--------|---------------------|
-| 01 | 007 fork | 0.912 | 0.912 공개노트북 fork. 첫 유효 제출 |
-| 02 | 008 post-processing | 0.910 | OOF 미검증 상태로 후처리 추가 → 악화 |
-| 03 | 013 param change | 0.904 | PCA96+C0.1 → 하락 |
-| 04 | 015 fork_926 | **0.928** | yukiZ 0.926 fork. dataset 누락→재학습으로 +0.002. **best** |
-| 05 | 016 API push | - | 빈 모델 학습 실패 (ProtoSSM_PATH 문제) |
-| 06 | 017 5-seed | - | 웹 수정 multi-seed. submission 생성 실패 |
+| sub | public | 상태 |
+|-----|--------|------|
+| 01 | 0.912 | 첫 유효 제출 |
+| 02 | 0.910 | 후처리 악화 |
+| 03 | 0.904 | 파라미터 변경 하락 |
+| 04 | **0.928** | 0.926 fork + dataset 재학습 |
+| 05~08 | 실패 | 노트북 에러/타임아웃 |
+| 09 | 0.928 | ONNX Perch, 타임아웃 해결 |
+| 10 | 0.925 | 0.93 fork, 하락 |
+| 11 | 0.928 | audio FE, 효과 없음 |
+| 12 | **0.929** | Perch + EffNet blend. **best** |
+| 13 | 0.922 | LSE inference, 역효과 |
+| 14 | 0.929 | 5-fold global pool, best 동일 |
 
 ---
 
@@ -169,6 +169,9 @@
 6. **대회 마감일 먼저 확인** — "X days to go"가 제출 마감이 아닐 수 있음
 7. **OOF 검증 없이 제출하지 말 것** — post-processing도 반드시 로컬 val 먼저
 8. **Val 올리는 방향이 맞다** — churn에서 Val-Public gap은 음수였지만 Private이 Public보다 높게 나옴. Val이 더 정확한 지표
+9. **Slow LR + hard cap이 early stopping보다 낫다** — lr=0.01 + 4000 rounds 고정이 mlogloss 기반 early stopping보다 bal_acc에서 우수 (irrigation trial_011 vs 012)
+10. **Multi-seed는 public에서 더 효과적** — 분산 감소는 unseen data에서 발현 (irrigation trial_013: val +0.0002, public +0.0003)
+11. **Pseudo-labeling이 항상 좋진 않다** — irrigation에서 conf>0.95로 pseudo-label 했는데 오히려 하락
 
 ---
 
