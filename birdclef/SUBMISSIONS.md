@@ -15,3 +15,4 @@
 | 11 | 2026-04-06 | trial_022 | ONNX + V18 + audio FE | 0.928 | ➖ best 동일, 효과 없음 |
 | 12 | 2026-04-07 | trial_023 | Perch + EffNet blend | **0.929** | ✅ **new best** |
 | 13 | 2026-04-10 | trial_024 | Perch + EffNet 5fold + LSE | 0.922 | ❌ LSE 역효과 (-0.007) |
+| 14 | 2026-04-11 | trial_025 | Perch + EffNet 5fold global pool | 0.929 | ➖ best 동일, 5-fold 효과 없음 |

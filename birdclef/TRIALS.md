@@ -28,6 +28,7 @@
 | 022 | full_upgrade | **11** | - | 0.928 | V18 파라미터 + audio features. 효과 없음 (동일) | ➖ 변화없음 |
 | 023 | effnet_blend | **12** | - | **0.929** | EfficientNetV2 1-fold + Perch 블렌딩(92:8) | ✅ **new best** |
 | 024 | effnet5fold_lse | **13** | - | 0.922 | EffNet 5-fold + LSE inference (forward_features→LSE pool) + Perch 블렌딩(90:10). LSE 역효과 | ❌ 하락 |
+| 025 | effnet5fold_global | **14** | - | 0.929 | LSE 제거, global pool 복구, BLEND 0.08, 5-fold | ➖ best 동일 |
 
 ## 메트릭
 - Task: multi-label classification (5초 오디오에서 새 종 존재 여부 예측)
