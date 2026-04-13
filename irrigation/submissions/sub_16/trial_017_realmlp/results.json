@@ -1,0 +1,27 @@
+{
+  "trial": "trial_017_realmlp",
+  "metric": "balanced_accuracy",
+  "seeds": [
+    42
+  ],
+  "n_folds": 5,
+  "n_total_models": 5,
+  "model": "RealMLP_TD_Classifier",
+  "hidden_sizes": [
+    512,
+    64,
+    128
+  ],
+  "n_epochs": 256,
+  "lr": 0.04,
+  "label_smoothing": 0.04,
+  "use_orig": true,
+  "oof_raw": 0.963685,
+  "bias": [
+    -1.24,
+    -1.21,
+    0.998
+  ],
+  "oof_with_bias": 0.970341,
+  "n_features": 104
+}

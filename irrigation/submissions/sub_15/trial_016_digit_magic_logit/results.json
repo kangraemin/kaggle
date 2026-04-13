@@ -1,0 +1,29 @@
+{
+  "trial": "trial_016_digit_magic_logit",
+  "metric": "balanced_accuracy",
+  "seeds": [
+    42,
+    123,
+    456,
+    789,
+    2024
+  ],
+  "n_folds": 5,
+  "n_total_models": 25,
+  "new_features": {
+    "digit_features": 55,
+    "magic_score": 4,
+    "logit_features": 3
+  },
+  "oof_raw": 0.976408,
+  "bias": [
+    -1.055,
+    -1.0,
+    1.0
+  ],
+  "oof_with_bias": 0.979593,
+  "n_base_features": 275,
+  "n_manual_te": 24,
+  "n_sklearn_pairwise_te": 513,
+  "n_total_features": 812
+}
