@@ -1,0 +1,10 @@
+{
+  "id": "029",
+  "name": "blend_sweep",
+  "base_trial": "trial_028_distill_5fold",
+  "created_at": "2026-04-15",
+  "hypothesis": "BLEND_EFFNET 0.08→0.10으로 높이면 distill CNN 기여도 증가 → 점수 향상",
+  "changes": ["BLEND_EFFNET 0.08 → 0.10"],
+  "rationale": "distillation으로 CNN 품질 올랐으니 비중 높여도 OK. 가장 빠른 실험.",
+  "expected_impact": "low"
+}
