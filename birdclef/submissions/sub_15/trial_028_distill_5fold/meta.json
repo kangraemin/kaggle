@@ -1,0 +1,16 @@
+{
+  "id": "028",
+  "name": "distill_5fold",
+  "base_trial": "trial_025_effnet5fold_global",
+  "created_at": "2026-04-14",
+  "hypothesis": "Knowledge distillation (EffNet proj head → Perch 임베딩 L2-MSE) 학습 후 5-fold 블렌딩으로 CNN 품질 향상 → public score 개선",
+  "changes": [
+    "EffNet 모델을 Perch 임베딩 매칭 knowledge distillation으로 학습 (ramkang/birdclef2026-effnet-5fold-distill)",
+    "BLEND_EFFNET = 0.08 유지 (Perch 92% + EffNet 8%)",
+    "5-fold global pool 추론 유지",
+    "ONNX 경로 fallback 추가 (/kaggle/input/datasets/ 및 /kaggle/input/ 양쪽 탐색)",
+    "competition data BASE 경로 fallback 추가"
+  ],
+  "rationale": "trial_025에서 5-fold 효과가 미미했던 이유가 모델 품질 한계일 수 있음. distillation으로 CNN 표현력 자체를 개선하면 블렌딩 기여도 상승 기대",
+  "expected_impact": "medium"
+}
