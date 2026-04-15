@@ -31,6 +31,7 @@
 | 025 | effnet5fold_global | **14** | - | 0.929 | LSE 제거, global pool 복구, BLEND 0.08, 5-fold | ➖ best 동일 |
 | 028 | distill_5fold | **15** | - | **0.930** | Knowledge distillation (EffNet→Perch L2-MSE) 5-fold, BLEND 0.08 | ✅ **new best** |
 | 029 | blend_sweep | **16** | - | 0.930 | BLEND_EFFNET 0.08→0.10 | ➖ best 동일 |
+| 030 | blend_sweep | **17** | - | 0.930 | BLEND_EFFNET 0.15 | ➖ best 동일 |
 
 ## 메트릭
 - Task: multi-label classification (5초 오디오에서 새 종 존재 여부 예측)

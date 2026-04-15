@@ -1,0 +1,10 @@
+{
+  "id": "030",
+  "name": "blend_sweep",
+  "base_trial": "trial_028_distill_5fold",
+  "created_at": "2026-04-15",
+  "hypothesis": "BLEND_EFFNET 0.15로 높이면 distill CNN 기여도 증가 → 점수 향상",
+  "changes": ["BLEND_EFFNET 0.08 → 0.15"],
+  "rationale": "0.10이 효과 없어서 더 큰 폭으로 탐색",
+  "expected_impact": "low"
+}

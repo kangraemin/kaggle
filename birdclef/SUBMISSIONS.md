@@ -18,3 +18,4 @@
 | 14 | 2026-04-11 | trial_025 | Perch + EffNet 5fold global pool | 0.929 | ➖ best 동일, 5-fold 효과 없음 |
 | 15 | 2026-04-14 | trial_028 | Perch + EffNet distill 5fold | **0.930** | ✅ **new best** (+0.001) |
 | 16 | 2026-04-15 | trial_029 | distill 5fold BLEND=0.10 | 0.930 | ➖ best 동일, BLEND 0.10=0.08 |
+| 17 | 2026-04-15 | trial_030 | distill 5fold BLEND=0.15 | 0.930 | ➖ best 동일, BLEND 0.15=0.08 |
