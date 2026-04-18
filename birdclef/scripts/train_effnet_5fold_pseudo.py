@@ -33,6 +33,7 @@ SS_DIR = DATA / 'train_soundscapes'
 SS_EMB_FILE = DATA / 'soundscape_extracted' / 'all_ss_embeddings.npy'
 SS_META_FILE = DATA / 'soundscape_extracted' / 'all_ss_meta.csv'
 PSEUDO_CONF_THR = 0.7
+PSEUDO_MAX_SAMPLES = 10000   # top-N by confidence; None = use all
 
 DEVICE = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
 print(f'Device: {DEVICE}')
@@ -243,8 +244,8 @@ def train_fold(fold, paths, labels, perch_embs, df, end_secs=None):
     )
 
     train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True,
-                               num_workers=0, pin_memory=False, drop_last=True)
-    val_loader = DataLoader(val_ds, batch_size=BATCH_SIZE, shuffle=False, num_workers=0)
+                               num_workers=4, pin_memory=False, drop_last=True)
+    val_loader = DataLoader(val_ds, batch_size=BATCH_SIZE, shuffle=False, num_workers=4)
 
     print(f'\n{"="*50}')
     print(f'Fold {fold+1}/{N_FOLDS}: Train={len(train_ds)} (orig={len(train_idx)}, pseudo={len(pseudo_paths)}), Val={len(val_ds)}')
@@ -361,6 +362,13 @@ def load_pseudo_data(n_classes):
 
     pseudo_meta_f = pseudo_meta[conf_mask].reset_index(drop=True)
     pseudo_labels_f = pseudo_labels_raw[conf_mask]
+
+    # subsample top-N by confidence
+    if PSEUDO_MAX_SAMPLES and len(pseudo_meta_f) > PSEUDO_MAX_SAMPLES:
+        top_idx = max_scores[conf_mask].argsort()[::-1][:PSEUDO_MAX_SAMPLES]
+        pseudo_meta_f = pseudo_meta_f.iloc[top_idx].reset_index(drop=True)
+        pseudo_labels_f = pseudo_labels_f[top_idx]
+        print(f"  Subsampled to top-{PSEUDO_MAX_SAMPLES} by confidence")
 
     # match Perch embeddings
     ss_meta = pd.read_csv(SS_META_FILE)
