@@ -32,7 +32,7 @@
 | 028 | distill_5fold | **15** | - | **0.930** | Knowledge distillation (EffNet→Perch L2-MSE) 5-fold, BLEND 0.08 | ✅ **new best** |
 | 029 | blend_sweep | **16** | - | 0.930 | BLEND_EFFNET 0.08→0.10 | ➖ best 동일 |
 | 030 | blend_sweep | **17** | - | 0.930 | BLEND_EFFNET 0.15 | ➖ best 동일 |
-| 031 | pseudo_5fold | **18** | CV AUC 0.9792 | PENDING | pseudo-label 학습(23.8h) EffNet 5-fold 교체, BLEND 0.15 유지 | ⏳ 제출 대기 |
+| 031 | pseudo_5fold | **18** | CV AUC 0.9792 | 0.927 | pseudo-label 학습(23.8h) EffNet 5-fold 교체, BLEND 0.15 유지 | ❌ 하락 (-0.003, CV-LB gap) |
 
 ## 메트릭
 - Task: multi-label classification (5초 오디오에서 새 종 존재 여부 예측)
