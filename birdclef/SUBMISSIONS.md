@@ -20,3 +20,4 @@
 | 16 | 2026-04-15 | trial_029 | distill 5fold BLEND=0.10 | 0.930 | ➖ best 동일, BLEND 0.10=0.08 |
 | 17 | 2026-04-15 | trial_030 | distill 5fold BLEND=0.15 | 0.930 | ➖ best 동일, BLEND 0.15=0.08 |
 | 18 | 2026-04-19 | trial_031 | pseudo 5fold (CV 0.9792) | 0.927 | ❌ -0.003 하락, CV-LB gap (CV 0.9792 → LB 0.927) |
+| 19 | 2026-04-19 | trial_032 | distill + proto_ssm attach | 0.929 | ❌ -0.001, proto_ssm(작년 학습) 일반화 실패 |

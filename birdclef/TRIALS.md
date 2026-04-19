@@ -33,6 +33,7 @@
 | 029 | blend_sweep | **16** | - | 0.930 | BLEND_EFFNET 0.08→0.10 | ➖ best 동일 |
 | 030 | blend_sweep | **17** | - | 0.930 | BLEND_EFFNET 0.15 | ➖ best 동일 |
 | 031 | pseudo_5fold | **18** | CV AUC 0.9792 | 0.927 | pseudo-label 학습(23.8h) EffNet 5-fold 교체, BLEND 0.15 유지 | ❌ 하락 (-0.003, CV-LB gap) |
+| 032 | protossm_attach | **19** | - | 0.929 | hideyukizushi sgkfk dataset 추가 → proto_ssm + residual_ssm 실제 로드 (residual mean_abs=0.4487) | ❌ 약간 하락 (-0.001, 작년 weight 일반화 실패) |
 
 ## 메트릭
 - Task: multi-label classification (5초 오디오에서 새 종 존재 여부 예측)
