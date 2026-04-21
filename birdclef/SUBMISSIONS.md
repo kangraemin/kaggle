@@ -22,3 +22,4 @@
 | 18 | 2026-04-19 | trial_031 | pseudo 5fold (CV 0.9792) | 0.927 | ❌ -0.003 하락, CV-LB gap (CV 0.9792 → LB 0.927) |
 | 19 | 2026-04-19 | trial_032 | distill + proto_ssm attach | 0.929 | ❌ -0.001, proto_ssm(작년 학습) 일반화 실패 |
 | 20 | 2026-04-19 | trial_033 | yusuf Improvement V18 baseline fork | (silent reject) | ❌ COMPLETE인데 publicScore 빈칸. 채점 컨테이너 재실행 실패로 추정 |
+| 21 | 2026-04-20 | trial_034 | distill 5fold + HGNetV2 4fold 10% blend | 0.927 | ❌ -0.003, HGNetV2 OOF 낮아 noise |

@@ -1,0 +1,15 @@
+{
+  "id": "034",
+  "name": "hgnet_blend",
+  "base_trial": "028",
+  "created_at": "2026-04-20",
+  "hypothesis": "HGNetV2-B0 4-fold를 EffNet blend에 추가하면 CNN 다양성으로 +0.001~0.005 기대",
+  "changes": [
+    "ttahara HGNetV2-B0 4-fold 학습 (T4 GPU, 20 epochs, OOF 0.9657)",
+    "학습된 weights → ramkang/birdclef2026-hgnetv2-b0-4fold 데이터셋 업로드",
+    "blend 노트북에 HGNetV2 10% 추가 (Perch+ProtoSSM 75% + EffNet 15% + HGNetV2 10%)",
+    "v1: cell 위치 오류(ERROR) → v2: raw logit scale 불일치(0.858) → v3: z-score 정규화(0.927)"
+  ],
+  "rationale": "EffNet(0.9792)과 다른 아키텍처 CNN으로 다양성 확보. ttahara baseline 130 votes로 커뮤니티 검증됨",
+  "expected_impact": "medium"
+}
