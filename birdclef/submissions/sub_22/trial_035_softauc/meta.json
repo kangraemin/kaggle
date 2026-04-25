@@ -1,0 +1,14 @@
+{
+  "id": "035",
+  "name": "softauc_loss",
+  "base_trial": "trial_028_distill_5fold",
+  "created_at": "2026-04-25",
+  "hypothesis": "BCE → 0.5*BCE + 0.5*SoftAUC hybrid loss. 메트릭(AUC)과 학습 목표 정렬로 OOF 개선 기대",
+  "changes": [
+    "SoftAUCLoss 추가 (pairwise ranking, gamma=1.0)",
+    "loss_cls = 0.5 * BCE + 0.5 * SoftAUC",
+    "Distillation loss 동일 유지 (DISTILL_ALPHA=0.3)"
+  ],
+  "rationale": "BirdCLEF 2025 1위 사용. BCE는 calibration 최적화, SoftAUC는 ranking 직접 최적화. hybrid로 안정성 확보",
+  "expected_impact": "medium"
+}
