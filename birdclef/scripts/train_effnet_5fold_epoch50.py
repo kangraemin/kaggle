@@ -148,11 +148,12 @@ class SpecAugment(nn.Module):
 
 
 class BirdDataset(Dataset):
-    def __init__(self, paths, labels, perch_embs, sr=32000, is_train=True, specs=None):
+    def __init__(self, paths, labels, perch_embs, sr=32000, is_train=True, specs=None, spec_indices=None):
         self.paths = paths
         self.labels = labels
         self.perch_embs = perch_embs
-        self.specs = specs  # (N, 1, 256, 256) float16 or None
+        self.specs = specs          # full mmap array (N_total, 1, 256, 256) float16
+        self.spec_indices = spec_indices  # int array mapping dataset idx → specs idx
         self.sr = sr
         self.dur = 5 * sr
         self.is_train = is_train
@@ -181,7 +182,8 @@ class BirdDataset(Dataset):
 
     def __getitem__(self, idx):
         if self.specs is not None:
-            x = torch.from_numpy(self.specs[idx].astype(np.float32))  # (1, 256, 256)
+            real_idx = int(self.spec_indices[idx]) if self.spec_indices is not None else idx
+            x = torch.from_numpy(np.array(self.specs[real_idx], dtype=np.float32))  # (1, 256, 256)
         else:
             x = self.load_sound(self.paths[idx])
         label = torch.tensor(self.labels[idx], dtype=torch.float32)
@@ -248,14 +250,16 @@ def train_fold(fold, paths, labels, perch_embs, df, all_specs=None):
         labels[train_idx],
         perch_embs[train_idx],
         is_train=True,
-        specs=all_specs[train_idx] if all_specs is not None else None,
+        specs=all_specs if all_specs is not None else None,
+        spec_indices=train_idx if all_specs is not None else None,
     )
     val_ds = BirdDataset(
         [paths[i] for i in val_idx],
         labels[val_idx],
         perch_embs[val_idx],
         is_train=False,
-        specs=all_specs[val_idx] if all_specs is not None else None,
+        specs=all_specs if all_specs is not None else None,
+        spec_indices=val_idx if all_specs is not None else None,
     )
 
     train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True,
