@@ -259,10 +259,8 @@ def train_fold(fold, paths, labels, perch_embs, df, all_specs=None):
     )
 
     train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True,
-                               num_workers=4, pin_memory=False, persistent_workers=True,
-                               drop_last=True)
-    val_loader = DataLoader(val_ds, batch_size=BATCH_SIZE, shuffle=False,
-                            num_workers=4, persistent_workers=True)
+                               num_workers=0, pin_memory=False, drop_last=True)
+    val_loader = DataLoader(val_ds, batch_size=BATCH_SIZE, shuffle=False, num_workers=0)
 
     print(f'\n{"="*50}')
     print(f'Fold {fold+1}/{N_FOLDS}: Train={len(train_ds)}, Val={len(val_ds)}')
