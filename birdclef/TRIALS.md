@@ -36,7 +36,7 @@
 | 032 | protossm_attach | **19** | - | 0.929 | hideyukizushi sgkfk dataset 추가 → proto_ssm + residual_ssm 실제 로드 (residual mean_abs=0.4487) | ❌ 약간 하락 (-0.001, 작년 weight 일반화 실패) |
 | 033 | yusuf_baseline | **20** | - | (silent reject) | yusuf "Improvement" V18 그대로 fork 진단 시도 | ❌ Kaggle 채점 publicScore 빈칸. 진단 실패 |
 | 034 | hgnet_blend | **21** | OOF 0.9657 | 0.927 | HGNetV2-B0 4-fold 학습 후 10% blend (z-score 정규화). raw logit scale 불일치 삽질(v2→0.858) 후 수정 | ❌ -0.003, OOF 낮아 noise 효과 |
-| 035 | softauc_loss | **22** | OOF 0.9815 | PENDING | SoftAUC hybrid loss (0.5*BCE+0.5*SoftAUC) + spec pre-compute (6.5x 속도향상). OOF +0.0023 vs baseline | 🔄 PENDING |
+| 035 | softauc_loss | **22** | OOF 0.9815 | 0.930 | SoftAUC hybrid loss (0.5*BCE+0.5*SoftAUC) + spec pre-compute (6.5x 속도향상). OOF +0.0023 vs baseline | ➖ best 동률 |
 
 ## 메트릭
 - Task: multi-label classification (5초 오디오에서 새 종 존재 여부 예측)

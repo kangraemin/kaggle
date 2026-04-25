@@ -23,4 +23,4 @@
 | 19 | 2026-04-19 | trial_032 | distill + proto_ssm attach | 0.929 | ❌ -0.001, proto_ssm(작년 학습) 일반화 실패 |
 | 20 | 2026-04-19 | trial_033 | yusuf Improvement V18 baseline fork | (silent reject) | ❌ COMPLETE인데 publicScore 빈칸. 채점 컨테이너 재실행 실패로 추정 |
 | 21 | 2026-04-20 | trial_034 | distill 5fold + HGNetV2 4fold 10% blend | 0.927 | ❌ -0.003, HGNetV2 OOF 낮아 noise |
-| 22 | 2026-04-25 | trial_035 | distill 5fold weights → SoftAUC 5fold weights (BLEND=0.15 유지) | PENDING | 🔄 PENDING |
+| 22 | 2026-04-25 | trial_035 | distill 5fold weights → SoftAUC 5fold weights (BLEND=0.15 유지) | 0.930 | ➖ best 동률, SoftAUC OOF +0.0023 but LB 미반영 |

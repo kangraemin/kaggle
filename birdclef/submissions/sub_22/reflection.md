@@ -1,7 +1,7 @@
 # Sub 22 Reflection — trial_035_softauc
 
 ## 결과
-- Public: **PENDING**
+- Public: **0.930** (best 동률)
 - OOF (5-fold mean): **0.9815** (vs trial_028 baseline 0.9792, +0.0023)
 
 ## 변경사항 (sub_21 대비)
@@ -22,7 +22,7 @@
 - 대회 메트릭(AUC)에 직접 정렬된 loss는 OOF 개선에 실질적으로 기여
 
 ## 버려야 할 것
-- (점수 확인 후 업데이트)
+- SoftAUC만으로 LB 돌파는 어려움 — OOF 개선이 LB에 직결되지 않음 확인
 
 ## 유지해야 할 것
 - SoftAUC hybrid loss (OOF +0.0023, LB 반영 여부 확인 필요)
