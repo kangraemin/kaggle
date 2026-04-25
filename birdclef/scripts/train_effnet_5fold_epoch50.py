@@ -51,7 +51,7 @@ def precompute_specs(paths):
     """한 번만 실행. 전체 오디오 → 스펙트로그램 → float16 npy 저장."""
     if SPEC_CACHE.exists():
         print(f'Spec cache found: {SPEC_CACHE}')
-        return np.load(SPEC_CACHE)
+        return np.load(SPEC_CACHE, mmap_mode='r')
     print(f'Pre-computing spectrograms for {len(paths)} files...')
     spec_fn = Spectrogram()
     dur = 5 * 32000
