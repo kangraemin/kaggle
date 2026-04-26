@@ -1,0 +1,16 @@
+{
+  "id": "036",
+  "name": "epoch50_blend25",
+  "base_trial": "trial_035_softauc",
+  "created_at": "2026-04-26",
+  "hypothesis": "EffNet 50 epoch 학습 + BLEND 0.15→0.25로 기여 비중 올리면 LB에 SoftAUC 개선이 반영된다",
+  "changes": [
+    "N_EPOCHS 30→50 (spec precompute로 ~170s/epoch, 총 ~2.4h 추가)",
+    "BLEND_EFFNET 0.15→0.25 (EffNet 기여 비중 증가)",
+    "DataLoader spec_indices mmap 패턴 도입 (fancy indexing copy 방지)"
+  ],
+  "rationale": "sub_22(0.930)에서 BLEND=15%가 너무 낮아 EffNet 개선이 LB에 미반영. BLEND를 올리면 개선된 SoftAUC 모델 효과가 직접 반영될 것",
+  "expected_impact": "medium",
+  "oof_score": 0.9823,
+  "public_score": 0.929
+}
