@@ -112,7 +112,7 @@ def precompute_convnext_specs(paths):
         else:
             wav = np.pad(wav, (0, dur - len(wav)))
         with torch.no_grad():
-            s = spec_fn(torch.from_numpy(wav)).squeeze(0).numpy()  # (1, 128, T)
+            s = spec_fn(torch.from_numpy(wav)).numpy()  # (1, 128, T)
         specs.append(s.astype(np.float16))
         if (i + 1) % 500 == 0:
             print(f'  {i+1}/{len(paths)}', flush=True)
