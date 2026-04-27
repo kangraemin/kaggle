@@ -7,7 +7,8 @@
       "mcp__claude-library__library_list",
       "mcp__kaggle__authorize",
       "mcp__kaggle__start_competition_submission_upload",
-      "Skill(update-config)"
+      "Skill(update-config)",
+      "mcp__kaggle__get_dataset_info"
     ]
   }
 }
