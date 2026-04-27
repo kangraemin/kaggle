@@ -1,0 +1,6 @@
+{
+  "id": "063",
+  "status": "done",
+  "val_score": 0.91688,
+  "strategy": "XGB + frequency encoding + target encoding + 7 seeds"
+}

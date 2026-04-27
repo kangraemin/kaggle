@@ -1,0 +1,7 @@
+{
+  "id": "081",
+  "name": "te_std_optuna_params",
+  "strategy": "trial_074 features + Optuna params (lr=0.012, colsample=0.38, gamma=0.61) + 10k rounds + 7-seed",
+  "val_score": 0.91771,
+  "status": "done"
+}

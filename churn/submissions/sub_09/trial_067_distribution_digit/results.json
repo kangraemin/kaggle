@@ -1,0 +1,7 @@
+{
+  "id": "067",
+  "name": "distribution_digit",
+  "strategy": "Distribution features (percentile rank, z-score vs churner/non-churner) + quantile distance + digit features + ORIG stats + XGB 7-seed",
+  "val_score": 0.9185,
+  "status": "done"
+}

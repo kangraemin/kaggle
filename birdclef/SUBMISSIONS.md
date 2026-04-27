@@ -25,3 +25,4 @@
 | 21 | 2026-04-20 | trial_034 | distill 5fold + HGNetV2 4fold 10% blend | 0.927 | ❌ -0.003, HGNetV2 OOF 낮아 noise |
 | 22 | 2026-04-25 | trial_035 | distill 5fold weights → SoftAUC 5fold weights (BLEND=0.15 유지) | 0.930 | ➖ best 동률, SoftAUC OOF +0.0023 but LB 미반영 |
 | 23 | 2026-04-26 | trial_036 | SoftAUC 5fold 50 epochs + BLEND=0.25 | 0.929 | ❌ -0.001, BLEND 올려 Perch 비중 감소 역효과 |
+| 24 | 2026-04-27 | trial_037 | ConvNeXt-Base XCL 3-way blend (Fold 1 only) | 0.930 | ➖ best 동률, 5-fold 완성 후 재제출 예정 |

@@ -1,0 +1,13 @@
+{
+  "best_params": {
+    "learning_rate": 0.0124018068702206,
+    "max_depth": 6,
+    "colsample_bytree": 0.3806706329147044,
+    "subsample": 0.9041567868023306,
+    "min_child_weight": 8,
+    "reg_alpha": 0.10386852544894747,
+    "reg_lambda": 0.06539256777213219,
+    "gamma": 0.6126514761044808
+  },
+  "best_score_3fold": 0.9178387892835946
+}

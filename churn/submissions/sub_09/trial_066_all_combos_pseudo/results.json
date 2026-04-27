@@ -1,0 +1,7 @@
+{
+  "id": "066",
+  "name": "all_combos_pseudo",
+  "strategy": "All 2-way categorical combos (120) + conservative pseudo labels (0.999) + 7-seed XGB",
+  "val_score": 0.9171,
+  "status": "done"
+}

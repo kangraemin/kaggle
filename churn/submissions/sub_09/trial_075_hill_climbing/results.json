@@ -1,0 +1,21 @@
+{
+  "id": "075",
+  "name": "hill_climbing",
+  "status": "done",
+  "val_score": 0.9196388376274377,
+  "n_models_total": 53,
+  "n_models_selected": 2,
+  "n_rounds": 3,
+  "weights": [
+    {
+      "name": "trial_060_realmlp_kaggle",
+      "weight": 0.6666666666666666,
+      "auc": 0.9193835924753948
+    },
+    {
+      "name": "trial_069_knn_stacking",
+      "weight": 0.3333333333333333,
+      "auc": 0.918400386496939
+    }
+  ]
+}

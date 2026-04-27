@@ -38,6 +38,7 @@
 | 034 | hgnet_blend | **21** | OOF 0.9657 | 0.927 | HGNetV2-B0 4-fold 학습 후 10% blend (z-score 정규화). raw logit scale 불일치 삽질(v2→0.858) 후 수정 | ❌ -0.003, OOF 낮아 noise 효과 |
 | 035 | softauc_loss | **22** | OOF 0.9815 | 0.930 | SoftAUC hybrid loss (0.5*BCE+0.5*SoftAUC) + spec pre-compute (6.5x 속도향상). OOF +0.0023 vs baseline | ➖ best 동률 |
 | 036 | epoch50_blend25 | **23** | OOF 0.9823 | 0.929 | N_EPOCHS 30→50 + BLEND 0.15→0.25. OOF +0.0008 but BLEND 올려 Perch 비중 감소 → LB 하락 | ❌ -0.001 |
+| 037 | convnext_xcl | **24** | Fold1 0.9895 | 0.930 | ConvNeXt-Base XCL 3-way blend (Perch 65%+EffNet 15%+ConvNeXt 20%). Fold 1 only 제출. 5-fold 진행 중 | ➖ best 동률 |
 
 ## 메트릭
 - Task: multi-label classification (5초 오디오에서 새 종 존재 여부 예측)

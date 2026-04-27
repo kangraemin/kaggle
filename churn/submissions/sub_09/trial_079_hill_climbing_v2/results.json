@@ -1,0 +1,26 @@
+{
+  "id": "079",
+  "name": "hill_climbing_v2",
+  "status": "done",
+  "val_score": 0.9195814381037062,
+  "n_models_total": 52,
+  "n_models_selected": 3,
+  "n_rounds": 5,
+  "weights": [
+    {
+      "name": "trial_078_realmlp_te_std_blend",
+      "weight": 0.4,
+      "auc": 0.9194964307321473
+    },
+    {
+      "name": "trial_060_realmlp_kaggle",
+      "weight": 0.4,
+      "auc": 0.9193835924753948
+    },
+    {
+      "name": "trial_073_optuna_clean",
+      "weight": 0.2,
+      "auc": 0.9184398423678934
+    }
+  ]
+}

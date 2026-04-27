@@ -1,0 +1,7 @@
+{
+  "id": "074",
+  "name": "te_std_enriched",
+  "strategy": "All 2-way combos (120) + TE mean/std + digit features + ORIG stats(mean+std) + freq enc + 7-seed XGB (no dist, no pseudo)",
+  "val_score": 0.91762,
+  "status": "done"
+}

@@ -1,0 +1,7 @@
+{
+  "id": "070",
+  "name": "ngram_direct",
+  "strategy": "N-gram (bi+tri-gram) categorical TE + distribution + digit + ORIG stats + XGB 7-seed",
+  "val_score": 0.91843,
+  "status": "done"
+}

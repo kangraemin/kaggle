@@ -1,0 +1,11 @@
+{
+  "id": "082",
+  "name": "realmlp_xgb081_blend",
+  "val_score": 0.91951,
+  "weights": {
+    "realmlp": 0.79,
+    "xgb081": 0.21
+  },
+  "blend_type": "rank",
+  "status": "done"
+}

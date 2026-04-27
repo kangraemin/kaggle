@@ -1,0 +1,8 @@
+{
+  "id": "084",
+  "name": "ridge_ensemble_v4",
+  "val_score": 0.91964,
+  "best_alpha": 50,
+  "n_models": 56,
+  "status": "done"
+}

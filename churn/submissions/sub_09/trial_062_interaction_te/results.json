@@ -1,0 +1,20 @@
+{
+  "id": "062",
+  "status": "done",
+  "val_score": 0.91692,
+  "strategy": "XGB + interaction feature TE + 7 seeds",
+  "interaction_pairs": [
+    "Contract\u00d7InternetService",
+    "Contract\u00d7PaymentMethod",
+    "Contract\u00d7tenure",
+    "InternetService\u00d7OnlineSecurity",
+    "InternetService\u00d7TechSupport",
+    "InternetService\u00d7MonthlyCharges",
+    "Contract\u00d7PaperlessBilling",
+    "Partner\u00d7Dependents",
+    "InternetService\u00d7StreamingTV",
+    "InternetService\u00d7StreamingMovies",
+    "Contract\u00d7OnlineSecurity",
+    "PaymentMethod\u00d7PaperlessBilling"
+  ]
+}

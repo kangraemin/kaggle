@@ -1,0 +1,12 @@
+{
+  "id": "078",
+  "name": "realmlp_te_std_blend",
+  "strategy": "RealMLP(060) \u00d7 0.80 + XGB_TE_std(074) \u00d7 0.20 (rank_blend)",
+  "val_score": 0.9195,
+  "weights": {
+    "realmlp": 0.8,
+    "xgb074": 0.2
+  },
+  "blend_type": "rank_blend",
+  "status": "done"
+}

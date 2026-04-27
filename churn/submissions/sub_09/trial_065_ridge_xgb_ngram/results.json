@@ -1,0 +1,7 @@
+{
+  "id": "065",
+  "name": "ridge_xgb_ngram",
+  "strategy": "Two-stage Ridge\u2192XGB + N-gram features",
+  "val_score": 0.91658,
+  "status": "done"
+}

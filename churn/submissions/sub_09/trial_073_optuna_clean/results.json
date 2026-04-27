@@ -1,0 +1,18 @@
+{
+  "id": "073",
+  "name": "optuna_clean",
+  "strategy": "Optuna 30 trials XGB on clean feature set (charge+digit+ORIG+TE, no distribution) + 7-seed 5-fold",
+  "val_score": 0.91844,
+  "optuna_best_score_3fold": 0.91784,
+  "best_params": {
+    "learning_rate": 0.0124018068702206,
+    "max_depth": 6,
+    "colsample_bytree": 0.3806706329147044,
+    "subsample": 0.9041567868023306,
+    "min_child_weight": 8,
+    "reg_alpha": 0.10386852544894747,
+    "reg_lambda": 0.06539256777213219,
+    "gamma": 0.6126514761044808
+  },
+  "status": "done"
+}

@@ -1,0 +1,32 @@
+{
+  "trial": "trial_019_top_params",
+  "metric": "balanced_accuracy",
+  "seeds": [
+    42,
+    123,
+    456,
+    789,
+    2024
+  ],
+  "n_folds": 5,
+  "n_total_models": 25,
+  "xgb_params": {
+    "lr": 0.1,
+    "max_depth": 4,
+    "max_leaves": 30,
+    "min_child_weight": 2,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "reg_alpha": 5.0,
+    "reg_lambda": 5.0,
+    "max_bin": 10000,
+    "early_stopping": 200
+  },
+  "oof_raw": 0.976062,
+  "bias": [
+    -1.37,
+    -1.05,
+    1.0
+  ],
+  "oof_with_bias": 0.97955
+}

@@ -1,0 +1,25 @@
+{
+  "trial": "trial_020_ordered_te",
+  "metric": "balanced_accuracy",
+  "seeds": [
+    42,
+    123,
+    456,
+    789,
+    2024
+  ],
+  "n_folds": 5,
+  "n_total_models": 25,
+  "features": {
+    "base": 303,
+    "ordered_te_sources": 127,
+    "ordered_te_cols": 381
+  },
+  "oof_raw": 0.970455,
+  "bias": [
+    -2.027,
+    -1.442,
+    1.0
+  ],
+  "oof_with_bias": 0.976034
+}
