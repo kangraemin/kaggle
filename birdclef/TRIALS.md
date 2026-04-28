@@ -39,6 +39,7 @@
 | 035 | softauc_loss | **22** | OOF 0.9815 | 0.930 | SoftAUC hybrid loss (0.5*BCE+0.5*SoftAUC) + spec pre-compute (6.5x 속도향상). OOF +0.0023 vs baseline | ➖ best 동률 |
 | 036 | epoch50_blend25 | **23** | OOF 0.9823 | 0.929 | N_EPOCHS 30→50 + BLEND 0.15→0.25. OOF +0.0008 but BLEND 올려 Perch 비중 감소 → LB 하락 | ❌ -0.001 |
 | 037 | convnext_xcl | **24** | Fold1 0.9895 | 0.930 | ConvNeXt-Base XCL 3-way blend (Perch 65%+EffNet 15%+ConvNeXt 20%). Fold 1 only 제출. 5-fold 진행 중 | ➖ best 동률 |
+| 038 | prior_mask | **25** | (post-hoc) | PENDING | 도메인 prior mask 후처리 한 줄 (Tier C 67종 ×0.3). 학습/모델 변경 0. EDA 발견 통합 첫 라운드 (sub_25 v1) | 🕐 v22 채점 대기 |
 
 ## 메트릭
 - Task: multi-label classification (5초 오디오에서 새 종 존재 여부 예측)

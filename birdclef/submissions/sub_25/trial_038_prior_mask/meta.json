@@ -1,0 +1,19 @@
+{
+  "id": "038",
+  "name": "prior_mask",
+  "base_trial": "037 (ConvNeXt 3-way blend, 0.930)",
+  "created_at": "2026-04-29",
+  "hypothesis": "Pantanal/labeled soundscape에 등장 안 하는 67종 (C tier)에 prior 0.3 곱하면 false positive 감소로 LB 미세 ↑ — 단, macro AUC + skip-empty species metric 특성상 효과 제한적 예상",
+  "changes": [
+    "노트북 cell 17에 _compute_class_prior_mask 함수 추가 (in-notebook 계산, 외부 dataset 불필요)",
+    "노트북 cell 64 (submission build)에 probs *= CLASS_PRIOR_MASK[None,:] 한 줄 추가",
+    "Tier A (labeled soundscape 75종) + B (Pantanal 박스 train 92종) → 1.0 / Tier C (다른 67종) → 0.3",
+    "ConvNeXt fold2 single (best_fold2.pth, AUC 0.9908) 기반 — 5-fold 학습 진행 중",
+    "EffNet 5fold + Perch ONNX + ConvNeXt fold2 + prior mask"
+  ],
+  "rationale": "이전 24개 submission이 도메인 prior를 활용하지 않음. test=Pantanal Brazil single-site S05인데 학습 클래스 234 중 67개는 그 도메인에 등장 가능성 매우 낮음. 후처리 한 줄로 free 측정.",
+  "expected_impact": "low",
+  "kaggle_kernel_version": 22,
+  "submission_time_utc": "2026-04-28 16:08:12",
+  "public_score": "PENDING"
+}

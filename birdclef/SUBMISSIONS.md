@@ -26,3 +26,4 @@
 | 22 | 2026-04-25 | trial_035 | distill 5fold weights → SoftAUC 5fold weights (BLEND=0.15 유지) | 0.930 | ➖ best 동률, SoftAUC OOF +0.0023 but LB 미반영 |
 | 23 | 2026-04-26 | trial_036 | SoftAUC 5fold 50 epochs + BLEND=0.25 | 0.929 | ❌ -0.001, BLEND 올려 Perch 비중 감소 역효과 |
 | 24 | 2026-04-27 | trial_037 | ConvNeXt-Base XCL 3-way blend (Fold 1 only) | 0.930 | ➖ best 동률, 5-fold 완성 후 재제출 예정 |
+| 25 | 2026-04-28 | trial_038 | ConvNeXt fold2 + 도메인 prior mask 후처리 | PENDING | 🕐 v22 채점 대기 중. 모델/학습 변경 0, 후처리 1줄 추가 (Pantanal/soundscape 미등장 67종 ×0.3) |
