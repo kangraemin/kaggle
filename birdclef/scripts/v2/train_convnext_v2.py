@@ -2,13 +2,17 @@
 
 기존 train_convnext_5fold.py 대비 변경:
 
-1. **라벨 = data/v2/labels_v2.npz** (focal 35549 primary + 0.3 secondary, soundscape 1478 segments multi-hot)
-2. **캐시 = data/v2/cache_v2.npy** (multi-window per sample, RMS top-K)
-3. **Dataset.__getitem__**: 샘플의 윈도우 풀에서 매 epoch 랜덤 1개 추출 → 시간축 다양성 확보
-4. **출력 = models/convnext_5fold_v2/** (v1과 분리)
-5. **Mixup은 자동으로 focal ↔ soundscape 섞음** (배치 안에서 랜덤 페어링 → 도메인 mix augmentation 효과)
+1. **라벨 = data/v2/labels_v3.npz** (focal 35549 + soundscape 1478 + ss10k pseudo 30000 = 67027)
+   - focal: primary 1.0 + secondary 0.3
+   - soundscape: multi-hot 1.0 (segment 단위)
+   - pseudo (Perch ss10k confident): soft 0.85 (cross-model, 25 sonotype 제외)
+2. **두 캐시**: data/v2/cache_v2.npy (focal+ss multi-window) + cache_ss10k.npy (pseudo single window)
+3. **Dataset.__getitem__**: 샘플의 윈도우 풀에서 매 epoch 랜덤 1개 → 시간축 다양성
+4. **Synthetic soundscape mixing**: focal 학습 시 RMS 낮은 ss/pseudo background spec과 합성 (도메인 갭 직접 해결)
+5. **출력 = models/convnext_5fold_v2/** (v1과 분리)
+6. **Mixup은 자동으로 focal ↔ soundscape ↔ pseudo 섞음** (배치 내 랜덤 페어링 보너스)
 
-전제: build_labels_v2.py + build_multi_window_cache.py 선행 실행.
+전제: build_labels_v2 + build_multi_window_cache + extract_ss10k_pseudo + build_ss10k_cache + combine_labels_v3 선행.
 """
 from __future__ import annotations
 
@@ -118,39 +122,79 @@ class BirdConvNeXt(nn.Module):
         return out.logits, target
 
 
-class MultiWindowDataset(Dataset):
-    """샘플마다 윈도우 풀(focal=K개, soundscape=1개) 중 랜덤 1개 추출."""
+class MultiCacheDataset(Dataset):
+    """labels_v3.npz 기반 — focal+ss(multi-window) + ss10k(single window) 통합.
+
+    cache_offset == "main" → cache_v2.npy 사용 (multi-window pool)
+    cache_offset == "ss10k" → cache_ss10k.npy 사용 (single window)
+
+    Synthetic soundscape mixing (옵션):
+      focal 샘플은 일정 확률로 random ss/pseudo background spec과 mixup → 도메인 갭 줄임.
+    """
 
     def __init__(self, sample_idx_keep: np.ndarray, labels: np.ndarray,
-                 cache: np.ndarray, meta_sample_idx: np.ndarray, is_train: bool):
+                 source: np.ndarray, cache_offset: np.ndarray,
+                 cache_main, meta_main_sample_idx: np.ndarray,
+                 cache_ss10k, n_main_samples: int, is_train: bool,
+                 soundscape_mix_prob: float = 0.4, soundscape_mix_lam: float = 0.5):
         self.sample_idx_keep = sample_idx_keep
         self.labels = labels
-        self.cache = cache
-        self.meta_sample_idx = meta_sample_idx
+        self.source = source
+        self.cache_offset = cache_offset
+        self.cache_main = cache_main
+        self.cache_ss10k = cache_ss10k
+        self.n_main_samples = n_main_samples
         self.is_train = is_train
+        self.soundscape_mix_prob = soundscape_mix_prob
+        self.soundscape_mix_lam = soundscape_mix_lam
 
-        # sample_idx → 그 샘플의 windows (cache 인덱스 list)
-        self.windows_per_sample: dict[int, list[int]] = {}
-        for w_idx, s_idx in enumerate(meta_sample_idx):
-            self.windows_per_sample.setdefault(int(s_idx), []).append(w_idx)
+        # main cache: sample_idx (0~n_main_samples-1) → window 인덱스 풀
+        self.main_windows_per_sample: dict[int, list[int]] = {}
+        for w_idx, s_idx in enumerate(meta_main_sample_idx):
+            self.main_windows_per_sample.setdefault(int(s_idx), []).append(w_idx)
+
+        # background pool: ss + ss10k 샘플 (focal 아닌 것)
+        self.bg_pool: list[int] = []
+        for i in range(len(labels)):
+            src = str(source[i])
+            if src in ("soundscape", "pseudo_ss10k"):
+                self.bg_pool.append(i)
+
+    def _fetch_spec(self, sample_idx: int) -> np.ndarray:
+        co = str(self.cache_offset[sample_idx])
+        if co == "main":
+            wins = self.main_windows_per_sample.get(sample_idx, [])
+            if not wins:
+                return np.zeros_like(self.cache_main[0])  # 캐시 누락 안전장치
+            w = random.choice(wins) if (self.is_train and len(wins) > 1) else wins[0]
+            return np.array(self.cache_main[w], dtype=np.float32)
+        ss10k_idx = sample_idx - self.n_main_samples
+        return np.array(self.cache_ss10k[ss10k_idx], dtype=np.float32)
 
     def __len__(self):
         return len(self.sample_idx_keep)
 
     def __getitem__(self, idx):
         s_idx = int(self.sample_idx_keep[idx])
-        win_pool = self.windows_per_sample[s_idx]
-        if self.is_train and len(win_pool) > 1:
-            w = random.choice(win_pool)
-        else:
-            w = win_pool[0]  # val: 가장 강한(첫 번째) 윈도우 고정
-        spec = torch.from_numpy(np.array(self.cache[w], dtype=np.float32))
-        label = torch.tensor(self.labels[s_idx], dtype=torch.float32)
-        return spec, label
+        spec = self._fetch_spec(s_idx)
+        label = self.labels[s_idx].copy()
+
+        if self.is_train and str(self.source[s_idx]) == "focal" and self.bg_pool:
+            if random.random() < self.soundscape_mix_prob:
+                bg_idx = random.choice(self.bg_pool)
+                bg_spec = self._fetch_spec(bg_idx)
+                lam = self.soundscape_mix_lam
+                spec = lam * spec + (1 - lam) * bg_spec
+                bg_label = self.labels[bg_idx]
+                label = np.maximum(label, bg_label * 0.5)  # focal label 우선, bg는 약하게 흡수
+
+        return torch.from_numpy(spec), torch.tensor(label, dtype=torch.float32)
 
 
 def train_fold(fold: int, sample_indices: np.ndarray, labels: np.ndarray,
-               strat: np.ndarray, cache, meta_sample_idx):
+               strat: np.ndarray, source: np.ndarray, cache_offset: np.ndarray,
+               cache_main, meta_main_sample_idx: np.ndarray,
+               cache_ss10k, n_main_samples: int):
     set_seed(42 + fold)
 
     skf = StratifiedKFold(n_splits=N_FOLDS, shuffle=True, random_state=42)
@@ -158,8 +202,16 @@ def train_fold(fold: int, sample_indices: np.ndarray, labels: np.ndarray,
     train_idx = sample_indices[train_pos]
     val_idx = sample_indices[val_pos]
 
-    train_ds = MultiWindowDataset(train_idx, labels, cache, meta_sample_idx, is_train=True)
-    val_ds = MultiWindowDataset(val_idx, labels, cache, meta_sample_idx, is_train=False)
+    train_ds = MultiCacheDataset(
+        train_idx, labels, source, cache_offset,
+        cache_main, meta_main_sample_idx, cache_ss10k, n_main_samples,
+        is_train=True, soundscape_mix_prob=0.4, soundscape_mix_lam=0.5,
+    )
+    val_ds = MultiCacheDataset(
+        val_idx, labels, source, cache_offset,
+        cache_main, meta_main_sample_idx, cache_ss10k, n_main_samples,
+        is_train=False, soundscape_mix_prob=0.0,
+    )
 
     train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True,
                               num_workers=0, pin_memory=False, drop_last=True)
@@ -255,29 +307,46 @@ def train_fold(fold: int, sample_indices: np.ndarray, labels: np.ndarray,
 
 
 def main():
-    print("Loading v2 labels + cache...")
-    npz = np.load(DATA_V2 / "labels_v2.npz", allow_pickle=True)
+    print("Loading v3 labels + caches (main + ss10k)...")
+    npz = np.load(DATA_V2 / "labels_v3.npz", allow_pickle=True)
     labels = npz["labels"]
+    source = npz["source"]
+    cache_offset = npz["cache_offset"]
     strat_full = npz["primary_strat"]
-    sample_indices = np.arange(len(labels))
 
-    cache = np.load(DATA_V2 / "cache_v2.npy", mmap_mode="r")
-    meta = np.load(DATA_V2 / "cache_v2_meta.npz", allow_pickle=True)
-    meta_sample_idx = meta["sample_idx"]
+    cache_main = np.load(DATA_V2 / "cache_v2.npy", mmap_mode="r")
+    meta_main = np.load(DATA_V2 / "cache_v2_meta.npz", allow_pickle=True)
+    meta_main_sample_idx = meta_main["sample_idx"]
 
-    print(f"samples = {len(labels)} (focal+soundscape), cache windows = {len(meta_sample_idx)}")
-    print(f"label C = {labels.shape[1]}")
+    cache_ss10k = np.load(DATA_V2 / "cache_ss10k.npy", mmap_mode="r")
 
-    # 캐시에 등장하는 샘플만 학습 (실패 케이스 제외)
-    valid_samples = np.array(sorted({int(x) for x in meta_sample_idx}))
-    print(f"valid samples (in cache): {len(valid_samples)}/{len(labels)}")
+    n_main_samples = int((cache_offset == "main").sum())
+    print(f"samples = {len(labels)} (main {n_main_samples} + ss10k {len(labels)-n_main_samples})")
+    print(f"  source dist: focal={int((source=='focal').sum())}, ss={int((source=='soundscape').sum())}, pseudo={int((source=='pseudo_ss10k').sum())}")
+    print(f"  cache_main windows = {len(meta_main_sample_idx)}, cache_ss10k samples = {len(cache_ss10k)}")
+    print(f"  label C = {labels.shape[1]}")
+
+    # main cache에 windows 있는 sample만 + ss10k 전부 학습 가능
+    main_valid = {int(x) for x in meta_main_sample_idx}
+    valid_samples_list = []
+    for i in range(len(labels)):
+        co = str(cache_offset[i])
+        if co == "main" and i in main_valid:
+            valid_samples_list.append(i)
+        elif co == "ss10k":
+            valid_samples_list.append(i)
+    valid_samples = np.array(valid_samples_list)
+    print(f"valid samples (in caches): {len(valid_samples)}/{len(labels)}")
 
     valid_strat = np.array([str(strat_full[i]) for i in valid_samples])
 
     t_start = time.time()
     fold_aucs = []
     for fold in range(N_FOLDS):
-        auc = train_fold(fold, valid_samples, labels, valid_strat, cache, meta_sample_idx)
+        auc = train_fold(
+            fold, valid_samples, labels, valid_strat, source, cache_offset,
+            cache_main, meta_main_sample_idx, cache_ss10k, n_main_samples,
+        )
         fold_aucs.append(auc)
         print(f"  → fold {fold+1} best AUC: {auc:.4f}")
 
