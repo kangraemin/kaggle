@@ -5,8 +5,8 @@
 **Hypothesis**: Pantanal/labeled soundscape에 등장 안 하는 67종(C tier)에 prior 0.3 곱하면 false positive 감소로 LB 미세 ↑. 단 macro AUC + skip-empty species metric 특성상 효과 제한적 예상.
 
 ## 결과
-- Public: **PENDING** (2026-04-28 16:08 제출, 채점 큐 대기 또는 진행 중)
-  - 채점 완료 시 본 reflection 업데이트 예정
+- Public: **0.930** (2026-04-28 16:08 제출, 채점 완료)
+  - best 동률. prior mask 효과 없음 (macro AUC + skip-empty 특성상 예상된 결과)
 - 노트북 v22 출력 검증 OK:
   - `[sub_25 v1] prior mask: A+B=167 C=67 mean=0.800` (cell 17)
   - `[sub_25 v1] applying prior mask...` (cell 64, threshold sharpening 직후)

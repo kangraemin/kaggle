@@ -1,0 +1,15 @@
+{
+  "id": "039",
+  "name": "convnext_5fold",
+  "base_trial": "037",
+  "created_at": "2026-04-30",
+  "hypothesis": "ConvNeXt-Base XCL 5-fold 전체 앙상블로 교체 (sub_24는 fold1 single). 모델 분산 감소 → 0.930 돌파 기대",
+  "changes": [
+    "ConvNeXt fold1 → fold0~fold4 전체 5-fold 평균",
+    "Kaggle 데이터셋 birdclef2026-convnext-5fold 업데이트 (fold0,1,2,3,4 전부 업로드)",
+    "노트북 v23 push (glob으로 모든 fold 자동 로드, 코드 변경 없음)",
+    "Blend 비율 유지: Perch 65% + EffNet 15% + ConvNeXt 20%"
+  ],
+  "rationale": "sub_24 trial_037에서 fold1 single로 0.930 동률. 5-fold mean으로 variance 감소 → 동등 이상 예상. convnext_5fold Mean AUC 0.9905 (fold1~5: 0.9895/0.9891/0.9920/0.9908/0.9913)",
+  "expected_impact": "medium"
+}
