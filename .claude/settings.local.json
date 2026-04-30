@@ -11,7 +11,8 @@
       "mcp__kaggle__get_dataset_info",
       "mcp__kaggle__search_competition_submissions",
       "mcp__kaggle__get_competition",
-      "mcp__kaggle__list_competition_pages"
+      "mcp__kaggle__list_competition_pages",
+      "mcp__kaggle__create_code_competition_submission"
     ]
   }
 }
