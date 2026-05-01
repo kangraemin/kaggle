@@ -14,7 +14,8 @@
       "mcp__kaggle__list_competition_pages",
       "mcp__kaggle__create_code_competition_submission",
       "Skill(learn)",
-      "mcp__kaggle__get_notebook_session_status"
+      "mcp__kaggle__get_notebook_session_status",
+      "mcp__kaggle__get_notebook_info"
     ]
   }
 }
