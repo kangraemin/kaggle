@@ -17,7 +17,8 @@
       "mcp__kaggle__get_notebook_session_status",
       "mcp__kaggle__get_notebook_info",
       "mcp__kaggle__get_competition_data_files_summary",
-      "mcp__kaggle__list_competition_data_files"
+      "mcp__kaggle__list_competition_data_files",
+      "mcp__kaggle__save_notebook"
     ]
   }
 }
