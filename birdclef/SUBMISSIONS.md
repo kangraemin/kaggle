@@ -27,4 +27,11 @@
 | 23 | 2026-04-26 | trial_036 | SoftAUC 5fold 50 epochs + BLEND=0.25 | 0.929 | ❌ -0.001, BLEND 올려 Perch 비중 감소 역효과 |
 | 24 | 2026-04-27 | trial_037 | ConvNeXt-Base XCL 3-way blend (Fold 1 only) | 0.930 | ➖ best 동률, 5-fold 완성 후 재제출 예정 |
 | 25 | 2026-04-28 | trial_038 | ConvNeXt fold2 + 도메인 prior mask 후처리 | 0.930 | ➖ best 동률. prior mask 효과 미미 (macro AUC skip-empty 특성) |
-| 26 | 2026-04-30 | trial_039 | ConvNeXt 5fold 전체 앙상블 (fold0~4) | PENDING | 🕐 노트북 v23 실행 중. fold1 single → 5-fold mean으로 variance 감소 |
+| 26 | 2026-04-30 | trial_039 | ConvNeXt 5fold 전체 앙상블 (fold0~4) | ❌ silent | ❌ COMPLETE, publicScore 없음. 4월 30일부터 채점 시스템 이상 시작 |
+| 27 | 2026-04-30 | trial_039 v24 | ConvNeXt 5fold batch opt | ❌ silent | ❌ COMPLETE, publicScore 없음. batch_size 최적화 시도 |
+| 28 | 2026-05-01 | trial_039 v25 | ConvNeXt ONNX 5fold INT8 | ❌ silent | ❌ COMPLETE, publicScore 없음. ONNX INT8 변환 시도 |
+| 29 | 2026-05-01 | trial_039 v26 | ConvNeXt ONNX 3fold INT8 + timeguard | ❌ silent | ❌ COMPLETE, publicScore 없음. 3fold 축소 + 7.5h timeguard |
+| 30 | 2026-05-01 | trial_039 v27 | ConvNeXt 1-fold fold2 + timeguard | ❌ silent | ❌ COMPLETE, publicScore 없음. timeguard 기준점 버그 수정 후에도 silent |
+| 31 | 2026-05-03 | trial_040 v1 | EffNet multiwindow dry-run (24행 CSV) | ❌ format | ❌ COMPLETE, publicScore 없음. dry-run fallback으로 24행 CSV 제출 |
+| 32 | 2026-05-03 | blend v28 diagnostic | 알려진 0.930 blend 재제출 | PENDING | 🔍 채점 시스템 진단용. v25~31 모두 silent이므로 플랫폼 이상 확인 중 |
+| 33 | 2026-05-03 | trial_040 v8 | EffNet multiwindow dry-run fix | ❌ silent | ❌ COMPLETE, publicScore 없음. dry-run 수정 후에도 채점 안 됨 → 플랫폼 이상 |

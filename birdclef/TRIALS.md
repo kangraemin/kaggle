@@ -40,7 +40,8 @@
 | 036 | epoch50_blend25 | **23** | OOF 0.9823 | 0.929 | N_EPOCHS 30→50 + BLEND 0.15→0.25. OOF +0.0008 but BLEND 올려 Perch 비중 감소 → LB 하락 | ❌ -0.001 |
 | 037 | convnext_xcl | **24** | Fold1 0.9895 | 0.930 | ConvNeXt-Base XCL 3-way blend (Perch 65%+EffNet 15%+ConvNeXt 20%). Fold 1 only 제출. 5-fold 진행 중 | ➖ best 동률 |
 | 038 | prior_mask | **25** | (post-hoc) | 0.930 | 도메인 prior mask 후처리 한 줄 (Tier C 67종 ×0.3). 학습/모델 변경 0. EDA 발견 통합 첫 라운드 (sub_25 v1) | ➖ best 동률 |
-| 039 | convnext_5fold | **26** | CV 0.9905 | PENDING | ConvNeXt-Base XCL fold1 single → fold0~4 전체 5-fold. Blend 유지 (Perch 65%+EffNet 15%+ConvNeXt 20%). 노트북 v23 | 🕐 채점 대기 |
+| 039 | convnext_5fold | **26~30** | CV 0.9905 | ❌ silent | ConvNeXt-Base XCL fold0~4 5-fold. 4/30~5/1 총 5회 제출 변형(v24 batch, v25 ONNX INT8, v26 3fold, v27 1-fold). 전부 silent reject | ❌ 플랫폼 이상으로 채점 불가 |
+| 040 | effnet_multiwindow | **31,33** | Val AUC 0.9794 | ❌ silent | EfficientNetV2-B0 fold0 ep16. 5초 multiwindow 12개. 31: dry-run 24행 버그, 33: 수정 후 재제출. 둘 다 silent reject | ❌ 플랫폼 이상 |
 
 ## 메트릭
 - Task: multi-label classification (5초 오디오에서 새 종 존재 여부 예측)
