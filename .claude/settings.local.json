@@ -23,7 +23,8 @@
       "mcp__kaggle__search_notebooks",
       "mcp__kaggle__download_notebook_output",
       "mcp__kaggle__list_forum_topics",
-      "mcp__kaggle__get_forum_topic"
+      "mcp__kaggle__get_forum_topic",
+      "mcp__kaggle__list_notebook_session_output"
     ]
   }
 }
