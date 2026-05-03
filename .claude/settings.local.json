@@ -19,7 +19,8 @@
       "mcp__kaggle__get_competition_data_files_summary",
       "mcp__kaggle__list_competition_data_files",
       "mcp__kaggle__save_notebook",
-      "mcp__kaggle__get_dataset_status"
+      "mcp__kaggle__get_dataset_status",
+      "mcp__kaggle__search_notebooks"
     ]
   }
 }
