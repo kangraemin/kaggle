@@ -1,0 +1,14 @@
+{
+  "id": "042",
+  "name": "gaussian_smoothing",
+  "base_trial": "trial_038 (Perch+EffNet+prior_mask blend)",
+  "created_at": "2026-05-04",
+  "hypothesis": "같은 soundscape 내 연속된 window 예측에 Gaussian smoothing(σ=1.0)을 적용하면 temporal consistency가 향상되어 AUC +0.005 기대",
+  "changes": [
+    "prior mask 후, submission pd.DataFrame 생성 전에 gaussian_filter1d 삽입",
+    "sigma=1.0, axis=0(time axis), per-soundscape 그룹핑",
+    "blend notebook v31 push"
+  ],
+  "rationale": "Tucker Arrants(rank 462) 포럼 포스트: 5-tap Gaussian smoothing으로 +0.005~0.010 LB 향상 확인",
+  "expected_impact": "medium"
+}

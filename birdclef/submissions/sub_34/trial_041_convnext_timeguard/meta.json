@@ -1,0 +1,10 @@
+{
+  "id": "041",
+  "name": "convnext_timeguard",
+  "base_trial": "trial_037/038 (ConvNeXt 3-way blend v28)",
+  "created_at": "2026-05-03",
+  "hypothesis": "ConvNeXt deadline을 114분으로 제한하면 타임아웃 없이 3-way blend 완주 가능",
+  "changes": ["_CONVNEXT_DEADLINE = _WALL_START + 114 * 60 (기존 8 * 3600)", "blend notebook v30 push"],
+  "rationale": "kernel log 분석: ConvNeXt 추론이 v28에서 약 95분 소요, 경쟁 eval 환경은 더 느려서 114분 hard deadline 설정",
+  "expected_impact": "medium"
+}
