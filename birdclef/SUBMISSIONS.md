@@ -39,3 +39,4 @@
 | 35 | 2026-05-04 | trial_042 | Gaussian smoothing σ=1.0 (v31) | ❌ silent | ❌ COMPLETE, publicScore 없음. 플랫폼 채점 이상 지속 |
 | 36 | 2026-05-04 | trial_043 | ConvNeXt 제거 2-way blend (v32) | 0.928 | ❌ -0.002. 채점 정상화 확인. Gaussian smoothing 효과 미미 (0.930→0.928) |
 | 37 | 2026-05-04 | trial_044 | Gaussian smoothing 제거 (v33) | **0.930** | ➖ best 동률. Gaussian smoothing 역효과 확인, 기준선 복귀 |
+| 38 | 2026-05-04 | trial_045 | EffNet multiwindow standalone retry (kernel v9) | PENDING | 🔍 확인 중 |

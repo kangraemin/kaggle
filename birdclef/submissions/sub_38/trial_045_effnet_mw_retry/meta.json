@@ -1,0 +1,14 @@
+{
+  "id": "045",
+  "name": "effnet_mw_retry",
+  "base_trial": "040",
+  "created_at": "2026-05-04",
+  "hypothesis": "trial_040 enable_gpu=true 버그 수정(false로 변경) + IS_DRY_RUN v8 확인 후 standalone EffNet multiwindow 재제출",
+  "changes": [
+    "kernel-metadata.json enable_gpu: true → false (BirdCLEF 2026 GPU max=0)",
+    "push 전용 디렉토리 birdclef/notebooks/effnet-multiwindow-infer/ 생성",
+    "kernel v9 push, ref 52313149"
+  ],
+  "rationale": "sub_31/33이 플랫폼 이상으로 채점 불가였으므로 플랫폼 정상화된 지금 재시도하여 standalone EffNet multiwindow 실제 LB 성능 측정",
+  "expected_impact": "low"
+}
