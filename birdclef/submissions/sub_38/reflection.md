@@ -4,7 +4,7 @@
 **Trial**: trial_045 kernel v9
 
 ## 결과
-- Public: **PENDING** (채점 중)
+- Public: **0.836** ❌ (best 0.930 대비 -0.094)
 - ref: 52313149, 2026-05-04 제출
 
 ## 변경사항 (sub_33 대비)
@@ -13,10 +13,12 @@
 - push 전용 디렉토리 신규 생성
 
 ## 교훈
-- (결과 확인 후 작성)
+- Standalone EffNet (Val AUC 0.9794)이 LB에서 0.836 — Perch 없이는 크게 하락
+- Perch가 제공하는 사전학습 임베딩이 BirdCLEF에서 핵심적 역할을 함
+- EffNet은 Perch 블렌드의 보조 역할로만 유효 (trial_023부터 확인된 사실 재확인)
 
 ## 버려야 할 것
-- (결과 확인 후 작성)
+- Standalone EffNet 단독 제출 — Perch 없이 경쟁력 없음 (0.836)
 
 ## 유지해야 할 것
 - IS_DRY_RUN 자동 감지 패턴 — 코드 컴피티션 노트북 표준

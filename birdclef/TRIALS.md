@@ -46,7 +46,7 @@
 | 042 | gaussian_smoothing | **35** | - | ❌ silent | scipy gaussian_filter1d sigma=1.0 per soundscape, prior mask 후 적용. v31 push. 플랫폼 채점 이상으로 결과 미확인 | ❌ 플랫폼 이상 |
 | 043 | convnext_remove | **36** | - | 0.928 | ConvNeXt 완전 제거. Perch 85%+EffNet 15% 2-way blend. Gaussian smoothing 유지. v32 push. 채점 정상화 확인 | ❌ -0.002 (best 0.930 대비) |
 | 044 | gaussian_remove | **37** | - | **0.930** | Gaussian smoothing(σ=1.0) 제거. Perch 85%+EffNet 15%+prior_mask. v33 push | ➖ best 동률 |
-| 045 | effnet_mw_retry | **38** | Val AUC 0.9794 | PENDING | EffNet multiwindow standalone 재시도. enable_gpu=false 수정 + IS_DRY_RUN v8. kernel v9 push | 🔍 확인 중 |
+| 045 | effnet_mw_retry | **38** | Val AUC 0.9794 | 0.836 | EffNet multiwindow standalone 재시도. enable_gpu=false 수정 + IS_DRY_RUN v8. kernel v9 push | ❌ -0.094 (Perch 없이 standalone EffNet 한계) |
 
 ## 메트릭
 - Task: multi-label classification (5초 오디오에서 새 종 존재 여부 예측)
