@@ -1,0 +1,14 @@
+{
+  "id": "044",
+  "name": "gaussian_remove",
+  "base_trial": "trial_043 (Perch+EffNet+prior_mask+gaussian_smoothing)",
+  "created_at": "2026-05-04",
+  "hypothesis": "Gaussian smoothing(σ=1.0) 제거 시 sub_25(0.930) 기준선 복귀 가능",
+  "changes": [
+    "Cell 64: gaussian_filter1d 블록 14줄 삭제 (from scipy.ndimage import gaussian_filter1d ~ print 포함)",
+    "prior_mask, BLEND_EFFNET, temperature scaling 유지",
+    "v33 push + competition submit (ref 52306531)"
+  ],
+  "rationale": "sub_36(0.928) = sub_25(0.930) - Gaussian smoothing 역효과(-0.002). 제거 시 0.930 복귀 예상.",
+  "expected_impact": "medium"
+}
