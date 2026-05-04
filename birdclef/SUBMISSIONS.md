@@ -36,4 +36,4 @@
 | 32 | 2026-05-03 | blend v28 diagnostic | 알려진 0.930 blend 재제출 | PENDING | 🔍 채점 시스템 진단용. v25~31 모두 silent이므로 플랫폼 이상 확인 중 |
 | 33 | 2026-05-03 | trial_040 v8 | EffNet multiwindow dry-run fix | ❌ silent | ❌ COMPLETE, publicScore 없음. dry-run 수정 후에도 채점 안 됨 → 플랫폼 이상 |
 | 34 | 2026-05-03 | trial_041 | ConvNeXt timeguard 114min (v30) | ❌ silent | ❌ COMPLETE, publicScore 없음. 114분 deadline도 경쟁 eval에서 부족. ConvNeXt 포기 |
-| 35 | 2026-05-04 | trial_042 | Gaussian smoothing σ=1.0 (v31) | PENDING | 🔍 확인 중 |
+| 35 | 2026-05-04 | trial_042 | Gaussian smoothing σ=1.0 (v31) | ❌ silent | ❌ COMPLETE, publicScore 없음. 플랫폼 채점 이상 지속 |

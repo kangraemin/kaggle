@@ -43,7 +43,7 @@
 | 039 | convnext_5fold | **26~30** | CV 0.9905 | ❌ silent | ConvNeXt-Base XCL fold0~4 5-fold. 4/30~5/1 총 5회 제출 변형(v24 batch, v25 ONNX INT8, v26 3fold, v27 1-fold). 전부 silent reject | ❌ 플랫폼 이상으로 채점 불가 |
 | 040 | effnet_multiwindow | **31,33** | Val AUC 0.9794 | ❌ silent | EfficientNetV2-B0 fold0 ep16. 5초 multiwindow 12개. 31: dry-run 24행 버그, 33: 수정 후 재제출. 둘 다 silent reject | ❌ 플랫폼 이상 |
 | 041 | convnext_timeguard | **34** | - | ❌ silent | ConvNeXt deadline 8h→114분. 경쟁 eval에서도 silent reject. ConvNeXt 3-way blend 운영 불가 판단 | ❌ 포기 |
-| 042 | gaussian_smoothing | **35** | - | PENDING | scipy gaussian_filter1d sigma=1.0 per soundscape, prior mask 후 적용. v31 push | 🔍 확인 중 |
+| 042 | gaussian_smoothing | **35** | - | ❌ silent | scipy gaussian_filter1d sigma=1.0 per soundscape, prior mask 후 적용. v31 push. 플랫폼 채점 이상으로 결과 미확인 | ❌ 플랫폼 이상 |
 
 ## 메트릭
 - Task: multi-label classification (5초 오디오에서 새 종 존재 여부 예측)
