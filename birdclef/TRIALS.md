@@ -44,7 +44,7 @@
 | 040 | effnet_multiwindow | **31,33** | Val AUC 0.9794 | ❌ silent | EfficientNetV2-B0 fold0 ep16. 5초 multiwindow 12개. 31: dry-run 24행 버그, 33: 수정 후 재제출. 둘 다 silent reject | ❌ 플랫폼 이상 |
 | 041 | convnext_timeguard | **34** | - | ❌ silent | ConvNeXt deadline 8h→114분. 경쟁 eval에서도 silent reject. ConvNeXt 3-way blend 운영 불가 판단 | ❌ 포기 |
 | 042 | gaussian_smoothing | **35** | - | ❌ silent | scipy gaussian_filter1d sigma=1.0 per soundscape, prior mask 후 적용. v31 push. 플랫폼 채점 이상으로 결과 미확인 | ❌ 플랫폼 이상 |
-| 043 | convnext_remove | **36** | - | ❌ silent | ConvNeXt 완전 제거. Perch 85%+EffNet 15% 2-way blend. Gaussian smoothing 유지. v32 push. 30분+ PENDING → 플랫폼 이상 지속 | ❌ 플랫폼 이상 |
+| 043 | convnext_remove | **36** | - | 0.928 | ConvNeXt 완전 제거. Perch 85%+EffNet 15% 2-way blend. Gaussian smoothing 유지. v32 push. 채점 정상화 확인 | ❌ -0.002 (best 0.930 대비) |
 
 ## 메트릭
 - Task: multi-label classification (5초 오디오에서 새 종 존재 여부 예측)
