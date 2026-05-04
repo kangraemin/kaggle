@@ -40,3 +40,4 @@
 | 36 | 2026-05-04 | trial_043 | ConvNeXt 제거 2-way blend (v32) | 0.928 | ❌ -0.002. 채점 정상화 확인. Gaussian smoothing 효과 미미 (0.930→0.928) |
 | 37 | 2026-05-04 | trial_044 | Gaussian smoothing 제거 (v33) | **0.930** | ➖ best 동률. Gaussian smoothing 역효과 확인, 기준선 복귀 |
 | 38 | 2026-05-04 | trial_045 | EffNet multiwindow standalone retry (kernel v9) | 0.836 | ❌ -0.094. Perch 없는 standalone EffNet 한계 확인 |
+| 39 | 2026-05-04 | trial_046 | EffNet fold0 3-way blend (Perch 80%+distill5fold 15%+fold0 5%) | TBD | ⏳ PENDING (ref 52318158) |
