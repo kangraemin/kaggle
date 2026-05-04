@@ -1,0 +1,15 @@
+{
+  "id": "043",
+  "name": "convnext_remove",
+  "base_trial": "trial_042 (Perch+EffNet+prior_mask+gaussian_smoothing)",
+  "created_at": "2026-05-04",
+  "hypothesis": "ConvNeXt 완전 제거 후 Perch 85% + EffNet 15% 2-way blend로 복귀하면 Notebook Timeout 해소 및 채점 재개 가능",
+  "changes": [
+    "Cell 63 전체 교체: ConvNeXt 설정/로딩/추론/3-way blend → 2-way blend 3줄",
+    "Cell 62: ConvNeXt 참조 주석 제거",
+    "Gaussian smoothing(σ=1.0) 유지",
+    "blend notebook v32 push"
+  ],
+  "rationale": "v30/v31 모두 Notebook Timeout(경쟁 eval 2h 초과). ConvNeXt 89분 + Perch+EffNet 합산 초과. sub_25(0.930) 기준 2-way blend는 timeout 없이 동작했음.",
+  "expected_impact": "medium"
+}
