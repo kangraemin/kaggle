@@ -1,0 +1,16 @@
+{
+  "id": "048",
+  "name": "distill30_swap",
+  "base_trial": "046",
+  "created_at": "2026-05-05",
+  "hypothesis": "블렌드의 5fold 컴포넌트를 epoch50 SoftAUC 모델에서 distill30 KD 모델로 교체하면 LB가 달라질 것",
+  "changes": [
+    "effnet-blend-kernel-metadata.json: dataset_sources epoch50 → distill",
+    "birdclef2026-effnet-5fold-blend.ipynb Cell62: glob 경로 epoch50 → distill",
+    "blend 가중치 Perch 80% + distill5fold 15% + fold0 5% 유지 (모델만 교체)"
+  ],
+  "rationale": "현재 blend가 epoch50 SoftAUC를 쓰고 있었음을 발견. 원래 distill30 KD 모델로 되돌리면 어느 쪽이 더 좋은지 단일 변수 실험",
+  "expected_impact": "low",
+  "public_score": 0.931,
+  "result": "epoch50 SoftAUC(0.932) > distill30 KD(0.931). -0.001 하락. epoch50 유지가 최적"
+}
