@@ -1,0 +1,15 @@
+{
+  "id": "ramkang/birdclef2026-effnet-multiwindow-infer",
+  "title": "BirdCLEF2026 EffNet Multiwindow Infer",
+  "code_file": "birdclef2026-effnet-multiwindow-infer.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": ["ramkang/birdclef2026-effnetv2s-xeno"],
+  "competition_sources": ["birdclef-2026"],
+  "kernel_sources": [],
+  "model_sources": []
+}
