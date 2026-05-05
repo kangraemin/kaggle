@@ -5,10 +5,13 @@
   "language": "python",
   "kernel_type": "notebook",
   "is_private": true,
-  "enable_gpu": true,
+  "enable_gpu": false,
   "enable_tpu": false,
   "enable_internet": true,
-  "dataset_sources": ["ramkang/birdclef2026-effnet-multiwindow", "vladimirsydor/bird-clef-2025-all-pretrained-models"],
+  "dataset_sources": [
+    "ramkang/birdclef2026-effnet-multiwindow",
+    "vladimirsydor/bird-clef-2025-all-pretrained-models"
+  ],
   "competition_sources": [],
   "kernel_sources": [],
   "model_sources": []
