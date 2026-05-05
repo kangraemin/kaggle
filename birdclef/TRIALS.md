@@ -48,6 +48,7 @@
 | 044 | gaussian_remove | **37** | - | **0.930** | Gaussian smoothing(σ=1.0) 제거. Perch 85%+EffNet 15%+prior_mask. v33 push | ➖ best 동률 |
 | 045 | effnet_mw_retry | **38** | Val AUC 0.9794 | 0.836 | EffNet multiwindow standalone 재시도. enable_gpu=false 수정 + IS_DRY_RUN v8. kernel v9 push | ❌ -0.094 (Perch 없이 standalone EffNet 한계) |
 | 046 | effnet_mw_blend | **39** | - | **0.932** | EffNetF0 fold0 standalone 3번째 컴포넌트 추가. Perch 80%+distill5fold 15%+fold0 5%. kernel v34 push | ✅ **new best** (+0.002) |
+| 047 | effnet_mw_blend | **40** | - | TBD | BLEND_MWF0 0.05→0.08 상향. Perch 77%+distill5fold 15%+fold0 8%. kernel v35 push | ⏳ PENDING |
 
 ## 메트릭
 - Task: multi-label classification (5초 오디오에서 새 종 존재 여부 예측)

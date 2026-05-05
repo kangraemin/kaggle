@@ -1,0 +1,13 @@
+{
+  "id": "047",
+  "name": "effnet_mw_blend",
+  "base_trial": "046",
+  "created_at": "2026-05-05",
+  "hypothesis": "BLEND_MWF0 0.05→0.08 상향. fold0 diversity 효과 더 활용 기대",
+  "changes": [
+    "BLEND_MWF0=0.05 → 0.08",
+    "Perch 비중 0.80 → 0.77 (1-0.15-0.08)",
+    "kernel v35 push"
+  ],
+  "expected_impact": "low"
+}
