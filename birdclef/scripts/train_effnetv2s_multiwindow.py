@@ -1,9 +1,11 @@
-"""EfficientNetV2-B0 5-fold training on multi-window spec cache.
+"""EfficientNetV2-S fold0 training on multi-window spec cache (local MPS).
 
-차이점 from train_effnet_5fold_pseudo.py:
-- Input: 사전 계산된 cache_v2.npy (multi-window spec) — 매 epoch random window 선택
-- Distillation 제거: projection head + perch_emb 없음
-- Mixup 단순화: (x, y) 만 mix
+Differences from train_effnet_multiwindow.py:
+- backbone = tf_efficientnetv2_s (EFFNET_DIM=1280 same as B0)
+- Xeno pretrain loading if available (torch.load .ckpt)
+- Augmentation moved to cpu_augment() outside model (MPS compatibility)
+- N_EPOCHS = 20, TRAIN_FOLDS = [0]
+- Output: models/effnetv2s_mw/
 """
 import os
 import random
@@ -15,7 +17,6 @@ import numpy as np
 import timm
 import torch
 import torch.nn as nn
-import torchaudio
 from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import StratifiedKFold
 from torch.utils.data import DataLoader, Dataset
@@ -26,7 +27,10 @@ DATA_V2 = ROOT / 'data' / 'v2'
 CACHE_PATH = DATA_V2 / 'cache_v2.npy'
 CACHE_META = DATA_V2 / 'cache_v2_meta.npz'
 LABELS_PATH = DATA_V2 / 'labels_v2.npz'
-WORK_DIR = DATA_V2.parent / 'models'
+XENO_CKPT_PATH = (ROOT / 'data' / 'bird-clef-2025-all-pretrained-models'
+                  / 'models_2025'
+                  / 'tf_efficientnetv2_s_in21k_pretrain_from_bigXCV2Ext_swa.ckpt')
+WORK_DIR = ROOT / 'models' / 'effnetv2s_mw'
 
 DEVICE = torch.device(
     'cuda' if torch.cuda.is_available()
@@ -35,10 +39,11 @@ DEVICE = torch.device(
 )
 
 N_FOLDS = 5
-N_EPOCHS = 30
+N_EPOCHS = 20
 BATCH_SIZE = 32
 LR = 5e-4
 EFFNET_DIM = 1280
+TRAIN_FOLDS = [0]
 
 
 def set_seed(seed=42):
@@ -48,20 +53,32 @@ def set_seed(seed=42):
     torch.manual_seed(seed)
 
 
-class SpecAugment(nn.Module):
-    def __init__(self, freq_mask_param=30, time_mask_param=40, n_freq_masks=2, n_time_masks=2):
-        super().__init__()
-        self.freq_masking = torchaudio.transforms.FrequencyMasking(freq_mask_param=freq_mask_param)
-        self.time_masking = torchaudio.transforms.TimeMasking(time_mask_param=time_mask_param)
-        self.n_freq_masks = n_freq_masks
-        self.n_time_masks = n_time_masks
+def load_xeno_pretrain(backbone, ckpt_path):
+    ckpt = torch.load(str(ckpt_path), map_location='cpu', weights_only=False)
+    sd = ckpt.get('state_dict', ckpt)
+    new_sd = {(k[6:] if k.startswith('model.') else k): v for k, v in sd.items()}
+    model_sd = backbone.state_dict()
+    filtered = {k: v for k, v in new_sd.items()
+                if k in model_sd and v.shape == model_sd[k].shape}
+    missing, _ = backbone.load_state_dict(filtered, strict=False)
+    print(f'[XenoPretrain] loaded={len(filtered)}/{len(new_sd)} missing={len(missing)}')
 
-    def forward(self, x):
-        for _ in range(self.n_freq_masks):
-            x = self.freq_masking(x)
-        for _ in range(self.n_time_masks):
-            x = self.time_masking(x)
-        return x
+
+def cpu_augment(x, y, freq_mask=30, time_mask=40, mixup_theta=0.8, mixup_alpha=1.0):
+    """SpecAugment + Mixup on CPU tensors (avoids MPS compatibility issues)."""
+    F, T = x.shape[-2], x.shape[-1]
+    for _ in range(2):
+        f0 = random.randint(0, max(0, F - freq_mask))
+        x[..., f0:f0 + freq_mask, :] = 0
+    for _ in range(2):
+        t0 = random.randint(0, max(0, T - time_mask))
+        x[..., :, t0:t0 + time_mask] = 0
+    if random.random() < mixup_theta:
+        lam = float(np.random.beta(mixup_alpha, mixup_alpha))
+        idx = torch.randperm(x.size(0))
+        x = lam * x + (1 - lam) * x[idx]
+        y = lam * y + (1 - lam) * y[idx]
+    return x, y
 
 
 class BirdCacheDataset(Dataset):
@@ -88,45 +105,22 @@ class BirdCacheDataset(Dataset):
         return spec, label
 
 
-class Mixup(nn.Module):
-    def __init__(self, alpha=1.0, theta=0.8):
+class EffNetS(nn.Module):
+    """EffNetV2-S: 1ch spec → stem_conv(1→3) → tf_efficientnetv2_s → linear head."""
+
+    def __init__(self, n_classes=234):
         super().__init__()
-        self.alpha = alpha
-        self.theta = theta
-
-    def forward(self, x, y):
-        if not self.training or random.random() > self.theta:
-            return x, y
-        lam = np.random.beta(self.alpha, self.alpha)
-        idx = torch.randperm(x.size(0)).to(x.device)
-        x = lam * x + (1 - lam) * x[idx]
-        y = lam * y + (1 - lam) * y[idx]
-        return x, y
-
-
-class EffNetMixup(nn.Module):
-    """1ch spec → stem_conv(1→3) → EffNetV2-B0 backbone → linear head."""
-
-    def __init__(self, n_classes=234, backbone='tf_efficientnetv2_b0',
-                 pretrained=True, effnet_dim=EFFNET_DIM):
-        super().__init__()
-        self.spec_aug = SpecAugment(freq_mask_param=30, time_mask_param=40,
-                                    n_freq_masks=2, n_time_masks=2)
-        self.mixup = Mixup(alpha=1.0, theta=0.8)
         self.stem_conv = nn.Conv2d(1, 3, kernel_size=3, stride=1, padding=1, bias=False)
-        self.backbone = timm.create_model(backbone, pretrained=pretrained,
+        self.backbone = timm.create_model('tf_efficientnetv2_s', pretrained=False,
                                           in_chans=3, num_classes=0)
-        self.head = nn.Linear(effnet_dim, n_classes)
+        if XENO_CKPT_PATH.exists():
+            load_xeno_pretrain(self.backbone, XENO_CKPT_PATH)
+        else:
+            print(f'[WARN] Xeno ckpt not found at {XENO_CKPT_PATH.name}, using random init')
+        self.head = nn.Linear(EFFNET_DIM, n_classes)
 
-    def forward(self, x, targets=None):
-        if self.training:
-            x = self.spec_aug(x)
-            if targets is not None:
-                x, targets = self.mixup(x, targets)
-        x = self.stem_conv(x)
-        feat = self.backbone(x)
-        logits = self.head(feat)
-        return logits, targets
+    def forward(self, x):
+        return self.head(self.backbone(self.stem_conv(x)))
 
 
 def train_fold(fold, labels_data, cache, meta):
@@ -173,7 +167,7 @@ def train_fold(fold, labels_data, cache, meta):
     print(f'{"=" * 50}')
 
     n_classes = labels.shape[1]
-    model = EffNetMixup(n_classes=n_classes).to(DEVICE)
+    model = EffNetS(n_classes=n_classes).to(DEVICE)
     criterion_cls = nn.BCEWithLogitsLoss()
     optimizer = torch.optim.AdamW(model.parameters(), lr=LR, weight_decay=1e-4)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
@@ -199,11 +193,12 @@ def train_fold(fold, labels_data, cache, meta):
         model.train()
         train_loss = 0.0
         for audio, target in train_loader:
+            audio, target = cpu_augment(audio, target)
             audio = audio.to(DEVICE)
             target = target.to(DEVICE)
 
-            logits, target_mixed = model(audio, target)
-            loss = criterion_cls(logits, target_mixed)
+            logits = model(audio)
+            loss = criterion_cls(logits, target)
 
             optimizer.zero_grad()
             loss.backward()
@@ -218,7 +213,7 @@ def train_fold(fold, labels_data, cache, meta):
         with torch.no_grad():
             for audio, target in val_loader:
                 audio = audio.to(DEVICE)
-                logits, _ = model(audio)
+                logits = model(audio)
                 all_preds.append(torch.sigmoid(logits).cpu().numpy())
                 all_targets.append(target.numpy())
 
@@ -256,21 +251,7 @@ def train_fold(fold, labels_data, cache, meta):
 
 
 def main():
-    import argparse
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--dry-run', action='store_true')
-    parser.add_argument('--folds', type=str, default=None,
-                        help='Comma-separated fold indices, e.g. "1,2,3,4"')
-    parser.add_argument('--out-dir', type=str, default=None,
-                        help='Output directory for weights (default: data/models/)')
-    args = parser.parse_args()
-
-    global WORK_DIR
-    if args.out_dir:
-        WORK_DIR = Path(args.out_dir)
-    train_folds = ([int(f) for f in args.folds.split(',')]
-                   if args.folds else list(range(N_FOLDS)))
-
+    dry_run = '--dry-run' in sys.argv
     set_seed(42)
 
     print(f'Device: {DEVICE}')
@@ -286,19 +267,22 @@ def main():
     labels_data = {
         'paths': labels_npz['paths'],
         'labels': labels_npz['labels'].astype(np.float32),
-        'source': labels_npz['source'],
-        'primary_strat': labels_npz['primary_strat'],
+        'source': np.array([str(s) for s in labels_npz['source']]),
+        'primary_strat': np.array([str(s) for s in labels_npz['primary_strat']]),
     }
     print(f'  paths={len(labels_data["paths"])}, labels={labels_data["labels"].shape}')
 
-    if args.dry_run:
+    if dry_run:
+        print(f'\nBuilding EffNetS model (Xeno pretrain check)...')
+        n_classes = labels_data['labels'].shape[1]
+        _ = EffNetS(n_classes=n_classes)
         print(f'\n[dry-run] Data loading OK. Device={DEVICE} WORK_DIR={WORK_DIR}')
-        print(f'train_folds={train_folds}')
+        print(f'train_folds={TRAIN_FOLDS}')
         return
 
     fold_aucs = []
     t_start = time.time()
-    for fold in train_folds:
+    for fold in TRAIN_FOLDS:
         best_path = WORK_DIR / f'best_fold{fold}.pth'
         ckpt_path = WORK_DIR / f'checkpoint_fold{fold}.pth'
         if best_path.exists() and not ckpt_path.exists():
@@ -309,10 +293,10 @@ def main():
         fold_aucs.append(auc)
 
     print(f'\n{"=" * 50}')
-    print('All folds complete!')
+    print('Training complete!')
     for i, auc in enumerate(fold_aucs):
         if auc > 0:
-            print(f'  Fold {i + 1}: {auc:.4f}')
+            print(f'  Fold {TRAIN_FOLDS[i] + 1}: {auc:.4f}')
     completed = [a for a in fold_aucs if a > 0]
     if completed:
         print(f'  Mean: {np.mean(completed):.4f}')

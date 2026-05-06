@@ -1,9 +1,10 @@
-"""EfficientNetV2-B0 5-fold training on multi-window spec cache.
+"""EfficientNetV2-B0 fold0 training: focal cache + pseudo-labeled ss10k.
 
-차이점 from train_effnet_5fold_pseudo.py:
-- Input: 사전 계산된 cache_v2.npy (multi-window spec) — 매 epoch random window 선택
-- Distillation 제거: projection head + perch_emb 없음
-- Mixup 단순화: (x, y) 만 mix
+Differences from train_effnet_multiwindow.py:
+- ADDS cache_ss10k.npy (30k ss windows) + ss10k_subset.npz soft labels to training
+- PseudoMixDataset handles two separate caches (cache_v2 focal + cache_ss ss)
+- Val set: focal_val only (same as baseline)
+- TRAIN_FOLDS = [0], output: models/effnet_pseudo_mix/
 """
 import os
 import random
@@ -26,7 +27,9 @@ DATA_V2 = ROOT / 'data' / 'v2'
 CACHE_PATH = DATA_V2 / 'cache_v2.npy'
 CACHE_META = DATA_V2 / 'cache_v2_meta.npz'
 LABELS_PATH = DATA_V2 / 'labels_v2.npz'
-WORK_DIR = DATA_V2.parent / 'models'
+SS_CACHE_PATH = DATA_V2 / 'cache_ss10k.npy'
+SS_SUBSET_PATH = DATA_V2 / 'ss10k_subset.npz'
+WORK_DIR = ROOT / 'models' / 'effnet_pseudo_mix'
 
 DEVICE = torch.device(
     'cuda' if torch.cuda.is_available()
@@ -39,6 +42,7 @@ N_EPOCHS = 30
 BATCH_SIZE = 32
 LR = 5e-4
 EFFNET_DIM = 1280
+TRAIN_FOLDS = [0]
 
 
 def set_seed(seed=42):
@@ -64,30 +68,6 @@ class SpecAugment(nn.Module):
         return x
 
 
-class BirdCacheDataset(Dataset):
-    """매 epoch random window from precomputed cache."""
-
-    def __init__(self, sample_indices, labels, window_lists, cache, is_train=True):
-        self.sample_indices = sample_indices
-        self.labels = labels
-        self.window_lists = window_lists
-        self.cache = cache
-        self.is_train = is_train
-
-    def __len__(self):
-        return len(self.sample_indices)
-
-    def __getitem__(self, idx):
-        windows = self.window_lists[idx]
-        if self.is_train and len(windows) > 1:
-            w = random.choice(windows)
-        else:
-            w = windows[0]
-        spec = torch.from_numpy(self.cache[w].astype(np.float32))  # (1, 128, T)
-        label = torch.from_numpy(np.asarray(self.labels[idx], dtype=np.float32))
-        return spec, label
-
-
 class Mixup(nn.Module):
     def __init__(self, alpha=1.0, theta=0.8):
         super().__init__()
@@ -102,6 +82,61 @@ class Mixup(nn.Module):
         x = lam * x + (1 - lam) * x[idx]
         y = lam * y + (1 - lam) * y[idx]
         return x, y
+
+
+class PseudoMixDataset(Dataset):
+    """Combined dataset: focal samples (multi-window) + ss10k pseudo (single-window each)."""
+
+    def __init__(self, focal_sample_indices, focal_labels, focal_window_lists, cache_v2,
+                 ss_indices, ss_labels, cache_ss, is_train=True):
+        self.focal_sample_indices = focal_sample_indices
+        self.focal_labels = focal_labels
+        self.focal_window_lists = focal_window_lists
+        self.cache_v2 = cache_v2
+        self.ss_indices = ss_indices      # indices into cache_ss (and ss_labels)
+        self.ss_labels = ss_labels
+        self.cache_ss = cache_ss
+        self.is_train = is_train
+        self.n_focal = len(focal_sample_indices)
+
+    def __len__(self):
+        return self.n_focal + len(self.ss_indices)
+
+    def __getitem__(self, idx):
+        if idx < self.n_focal:
+            windows = self.focal_window_lists[idx]
+            if self.is_train and len(windows) > 1:
+                w = random.choice(windows)
+            else:
+                w = windows[0]
+            spec = torch.from_numpy(self.cache_v2[w].astype(np.float32))
+            label = torch.from_numpy(np.asarray(self.focal_labels[idx], dtype=np.float32))
+        else:
+            ss_i = idx - self.n_focal
+            w = self.ss_indices[ss_i]
+            spec = torch.from_numpy(self.cache_ss[w].astype(np.float32))
+            label = torch.from_numpy(np.asarray(self.ss_labels[ss_i], dtype=np.float32))
+        return spec, label
+
+
+class FocalCacheDataset(Dataset):
+    """Validation: focal-only samples."""
+
+    def __init__(self, sample_indices, labels, window_lists, cache):
+        self.sample_indices = sample_indices
+        self.labels = labels
+        self.window_lists = window_lists
+        self.cache = cache
+
+    def __len__(self):
+        return len(self.sample_indices)
+
+    def __getitem__(self, idx):
+        windows = self.window_lists[idx]
+        w = windows[0]
+        spec = torch.from_numpy(self.cache[w].astype(np.float32))
+        label = torch.from_numpy(np.asarray(self.labels[idx], dtype=np.float32))
+        return spec, label
 
 
 class EffNetMixup(nn.Module):
@@ -129,7 +164,7 @@ class EffNetMixup(nn.Module):
         return logits, targets
 
 
-def train_fold(fold, labels_data, cache, meta):
+def train_fold(fold, labels_data, cache_v2, meta, ss_labels, cache_ss):
     set_seed(42 + fold)
 
     n = len(labels_data['paths'])
@@ -142,24 +177,26 @@ def train_fold(fold, labels_data, cache, meta):
     source = labels_data['source']
     primary_strat = labels_data['primary_strat']
 
+    # Use only focal for stratified k-fold split
     focal_idx = np.where(source == 'focal')[0]
-    ss_idx = np.where(source != 'focal')[0]
 
     skf = StratifiedKFold(n_splits=N_FOLDS, shuffle=True, random_state=42)
     focal_train_i, focal_val_i = list(
         skf.split(focal_idx, primary_strat[focal_idx])
     )[fold]
 
-    train_indices = np.concatenate([focal_idx[focal_train_i], ss_idx])
-    val_indices = focal_idx[focal_val_i]
+    train_focal = focal_idx[focal_train_i]
+    val_focal = focal_idx[focal_val_i]
+    ss10k_all = np.arange(len(ss_labels))  # all 30k pseudo-labeled ss windows
 
-    train_ds = BirdCacheDataset(
-        train_indices, labels[train_indices],
-        [window_lists[i] for i in train_indices], cache, is_train=True,
+    train_ds = PseudoMixDataset(
+        train_focal, labels[train_focal],
+        [window_lists[i] for i in train_focal], cache_v2,
+        ss10k_all, ss_labels, cache_ss, is_train=True,
     )
-    val_ds = BirdCacheDataset(
-        val_indices, labels[val_indices],
-        [window_lists[i] for i in val_indices], cache, is_train=False,
+    val_ds = FocalCacheDataset(
+        val_focal, labels[val_focal],
+        [window_lists[i] for i in val_focal], cache_v2,
     )
 
     train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True,
@@ -168,7 +205,7 @@ def train_fold(fold, labels_data, cache, meta):
 
     print(f'\n{"=" * 50}')
     print(f'Fold {fold + 1}/{N_FOLDS}: '
-          f'Train={len(train_ds)} (focal={len(focal_train_i)}, ss={len(ss_idx)}), '
+          f'Train={len(train_ds)} (focal={len(train_focal)}, ss10k={len(ss10k_all)}), '
           f'Val={len(val_ds)}')
     print(f'{"=" * 50}')
 
@@ -256,63 +293,61 @@ def train_fold(fold, labels_data, cache, meta):
 
 
 def main():
-    import argparse
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--dry-run', action='store_true')
-    parser.add_argument('--folds', type=str, default=None,
-                        help='Comma-separated fold indices, e.g. "1,2,3,4"')
-    parser.add_argument('--out-dir', type=str, default=None,
-                        help='Output directory for weights (default: data/models/)')
-    args = parser.parse_args()
-
-    global WORK_DIR
-    if args.out_dir:
-        WORK_DIR = Path(args.out_dir)
-    train_folds = ([int(f) for f in args.folds.split(',')]
-                   if args.folds else list(range(N_FOLDS)))
-
+    dry_run = '--dry-run' in sys.argv
     set_seed(42)
 
     print(f'Device: {DEVICE}')
-    print(f'Loading cache memmap: {CACHE_PATH}')
-    cache = np.load(CACHE_PATH, mmap_mode='r')
-    print(f'  cache shape: {cache.shape}, dtype: {cache.dtype}')
+    print(f'Loading focal cache: {CACHE_PATH}')
+    cache_v2 = np.load(CACHE_PATH, mmap_mode='r')
+    print(f'  cache_v2 shape: {cache_v2.shape}, dtype: {cache_v2.dtype}')
 
     print(f'Loading meta: {CACHE_META}')
     meta = np.load(CACHE_META, allow_pickle=True)
 
-    print(f'Loading labels: {LABELS_PATH}')
+    print(f'Loading focal labels: {LABELS_PATH}')
     labels_npz = np.load(LABELS_PATH, allow_pickle=True)
     labels_data = {
         'paths': labels_npz['paths'],
         'labels': labels_npz['labels'].astype(np.float32),
-        'source': labels_npz['source'],
-        'primary_strat': labels_npz['primary_strat'],
+        'source': np.array([str(s) for s in labels_npz['source']]),
+        'primary_strat': np.array([str(s) for s in labels_npz['primary_strat']]),
     }
-    print(f'  paths={len(labels_data["paths"])}, labels={labels_data["labels"].shape}')
+    n_focal = int((labels_data['source'] == 'focal').sum())
+    print(f'  paths={len(labels_data["paths"])}, focal={n_focal}')
 
-    if args.dry_run:
+    print(f'Loading ss10k cache: {SS_CACHE_PATH}')
+    cache_ss = np.load(SS_CACHE_PATH, mmap_mode='r')
+    print(f'  cache_ss shape: {cache_ss.shape}, dtype: {cache_ss.dtype}')
+
+    print(f'Loading ss10k subset: {SS_SUBSET_PATH}')
+    ss_npz = np.load(SS_SUBSET_PATH, allow_pickle=True)
+    ss_labels = ss_npz['labels'].astype(np.float32)  # (30000, 234) soft labels [0, 0.85]
+    print(f'  ss10k samples={len(ss_labels)}, label range=[{ss_labels.min():.3f}, {ss_labels.max():.3f}]')
+
+    print(f'Pseudo-SS added: {len(ss_labels)} windows (soft labels from Perch)')
+
+    if dry_run:
         print(f'\n[dry-run] Data loading OK. Device={DEVICE} WORK_DIR={WORK_DIR}')
-        print(f'train_folds={train_folds}')
+        print(f'train_folds={TRAIN_FOLDS}')
         return
 
     fold_aucs = []
     t_start = time.time()
-    for fold in train_folds:
+    for fold in TRAIN_FOLDS:
         best_path = WORK_DIR / f'best_fold{fold}.pth'
         ckpt_path = WORK_DIR / f'checkpoint_fold{fold}.pth'
         if best_path.exists() and not ckpt_path.exists():
             print(f'\nFold {fold + 1}: already completed, skipping')
             fold_aucs.append(-1)
             continue
-        auc = train_fold(fold, labels_data, cache, meta)
+        auc = train_fold(fold, labels_data, cache_v2, meta, ss_labels, cache_ss)
         fold_aucs.append(auc)
 
     print(f'\n{"=" * 50}')
-    print('All folds complete!')
+    print('Training complete!')
     for i, auc in enumerate(fold_aucs):
         if auc > 0:
-            print(f'  Fold {i + 1}: {auc:.4f}')
+            print(f'  Fold {TRAIN_FOLDS[i] + 1}: {auc:.4f}')
     completed = [a for a in fold_aucs if a > 0]
     if completed:
         print(f'  Mean: {np.mean(completed):.4f}')
