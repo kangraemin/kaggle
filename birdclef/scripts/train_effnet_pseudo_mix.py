@@ -200,8 +200,8 @@ def train_fold(fold, labels_data, cache_v2, meta, ss_labels, cache_ss):
     )
 
     train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True,
-                              num_workers=4, pin_memory=False, drop_last=True)
-    val_loader = DataLoader(val_ds, batch_size=BATCH_SIZE, shuffle=False, num_workers=4)
+                              num_workers=0, pin_memory=False, drop_last=True)
+    val_loader = DataLoader(val_ds, batch_size=BATCH_SIZE, shuffle=False, num_workers=0)
 
     print(f'\n{"=" * 50}')
     print(f'Fold {fold + 1}/{N_FOLDS}: '
