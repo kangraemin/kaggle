@@ -263,8 +263,9 @@ def train_fold(fold, labels_data, cache_v2, meta, ss_labels, cache_ss):
         targets = np.vstack(all_targets)
         aucs = []
         for j in range(n_classes):
-            if targets[:, j].sum() > 0:
-                aucs.append(roc_auc_score(targets[:, j], preds[:, j]))
+            t = (targets[:, j] > 0.5).astype(int)
+            if t.sum() > 0:
+                aucs.append(roc_auc_score(t, preds[:, j]))
         auc = float(np.mean(aucs)) if aucs else 0.0
 
         elapsed = time.time() - t0
