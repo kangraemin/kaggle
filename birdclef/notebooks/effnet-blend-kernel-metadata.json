@@ -7,15 +7,20 @@
   "is_private": true,
   "enable_gpu": false,
   "enable_internet": false,
-  "competition_sources": ["birdclef-2026"],
+  "competition_sources": [
+    "birdclef-2026"
+  ],
   "dataset_sources": [
     "jaejohn/perch-meta",
     "hideyukizushi/sgkfk-202604041716",
     "ramkang/perch-v2-onnx",
-    "ramkang/birdclef2026-effnet-5fold-distill",
+    "ramkang/birdclef2026-effnet-5fold-epoch50",
     "ramkang/birdclef2026-convnext-5fold",
     "denden12/birdset-convnext-base-xcl",
-    "ramkang/birdclef2026-effnet-multiwindow-fold0"
+    "ramkang/birdclef2026-effnet-multiwindow-fold0",
+    "ramkang/birdclef2026-effnet-pseudo-mix"
   ],
-  "model_sources": ["google/bird-vocalization-classifier/tensorFlow2/perch_v2_cpu/1"]
+  "model_sources": [
+    "google/bird-vocalization-classifier/tensorFlow2/perch_v2_cpu/1"
+  ]
 }
