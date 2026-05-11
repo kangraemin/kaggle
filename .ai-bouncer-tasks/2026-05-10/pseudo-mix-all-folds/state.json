@@ -1,0 +1,21 @@
+{
+  "workflow_phase": "done",
+  "plan_approved": true,
+  "current_dev_phase": 1,
+  "current_step": 1,
+  "resolved_agent_mode": "single",
+  "dev_phases": {
+    "1": {
+      "name": "argparse-all-folds",
+      "steps": {"1": "argparse 추가 + TRAIN_FOLDS 교체 + dry-run 확인"},
+      "depends_on": [],
+      "team_name": "",
+      "status": "done"
+    }
+  },
+  "phase_layers": [["1"]],
+  "current_layer": 0,
+  "verification": {"e2e_passed": true},
+  "task_dir": ".ai-bouncer-tasks/2026-05-10/pseudo-mix-all-folds",
+  "active_file": ".ai-bouncer-tasks/2026-05-10/pseudo-mix-all-folds/.active"
+}

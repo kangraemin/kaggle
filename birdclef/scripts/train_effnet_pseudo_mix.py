@@ -42,7 +42,6 @@ N_EPOCHS = 30
 BATCH_SIZE = 32
 LR = 5e-4
 EFFNET_DIM = 1280
-TRAIN_FOLDS = [0]
 
 
 def set_seed(seed=42):
@@ -294,7 +293,13 @@ def train_fold(fold, labels_data, cache_v2, meta, ss_labels, cache_ss):
 
 
 def main():
-    dry_run = '--dry-run' in sys.argv
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--folds', type=int, nargs='+', default=list(range(N_FOLDS)))
+    parser.add_argument('--dry-run', action='store_true')
+    args = parser.parse_args()
+    dry_run = args.dry_run
+    train_folds = args.folds
     set_seed(42)
 
     print(f'Device: {DEVICE}')
@@ -329,12 +334,12 @@ def main():
 
     if dry_run:
         print(f'\n[dry-run] Data loading OK. Device={DEVICE} WORK_DIR={WORK_DIR}')
-        print(f'train_folds={TRAIN_FOLDS}')
+        print(f'train_folds={train_folds}')
         return
 
     fold_aucs = []
     t_start = time.time()
-    for fold in TRAIN_FOLDS:
+    for fold in train_folds:
         best_path = WORK_DIR / f'best_fold{fold}.pth'
         ckpt_path = WORK_DIR / f'checkpoint_fold{fold}.pth'
         if best_path.exists() and not ckpt_path.exists():
@@ -348,7 +353,7 @@ def main():
     print('Training complete!')
     for i, auc in enumerate(fold_aucs):
         if auc > 0:
-            print(f'  Fold {TRAIN_FOLDS[i] + 1}: {auc:.4f}')
+            print(f'  Fold {train_folds[i] + 1}: {auc:.4f}')
     completed = [a for a in fold_aucs if a > 0]
     if completed:
         print(f'  Mean: {np.mean(completed):.4f}')
