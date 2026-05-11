@@ -45,3 +45,4 @@
 | 41 | 2026-05-05 | trial_048 | distill30 KD swap (epoch50 SoftAUC → distill30 KD) | 0.931 | ❌ -0.001 (epoch50 SoftAUC가 더 우수) |
 | 42 | 2026-05-12 | trial_050 | EffNet pseudo-mix fold0 4-way blend (epoch50 복원 + pmix 3%) | **0.933** | ✅ **new best** (+0.001, kernel v37, ralph it.1) |
 | 43 | 2026-05-12 | trial_051 | EffNet pseudo-mix fold0+fold1 2-fold 앙상블 (BLEND_PSEUDOMIX 0.03 고정) | 0.933 | ➖ best 동률 (kernel v38, ralph it.2, 2-fold 확장 LB 무효과) |
+| 44 | 2026-05-12 | trial_052 | EffNet 계열 weight 재배분 (Perch 72% + epoch50-5fold 15% + mwf0 7% + pmix 6%) | 채점중 | 🔄 kernel v39, ralph it.3 |

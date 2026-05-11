@@ -16,7 +16,7 @@
   "expected_impact": "low",
   "kernel_version": 39,
   "submitted_at": "2026-05-12",
-  "kernel_run_check": "PENDING",
-  "public_score": "PENDING",
-  "result": "PENDING"
+  "kernel_run_check": "kernel v39 COMPLETE. log: MODE=submit / 'Loaded 5 EffNet folds (global pool)' / 'EffNetF0 fold0 loaded' / 'EffNet Pseudo-Mix loaded 2 folds: [best_fold0.pth, best_fold1.pth]' / 'blend: Perch 72% + EffNet5fold 15% + fold0-B0 7% + fold0-S 0% + pmix 6%'. submission.csv 240 rows × 235 cols, no NaN, range [4.4e-15, 0.998], Final mean 0.0395 (trial_050/051 0.0577/0.0579 대비 크게 하락 — Perch logit이 EffNet보다 magnitude가 커서 Perch 비중을 5%p 줄이니 전체 score가 낮아짐; ROC-AUC는 rank 기반이라 무관할 수 있으나 prior_mask·per-class threshold 적용 후 영향 가능).",
+  "public_score": "채점중",
+  "result": "채점중 — 제출 PENDING (2026-05-12)"
 }
