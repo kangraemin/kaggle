@@ -1,0 +1,22 @@
+{
+  "id": "052",
+  "name": "effnet_reweight",
+  "base_trial": "051",
+  "created_at": "2026-05-12",
+  "hypothesis": "trial_051 reflection 1순위: EffNet 계열 weight 재배분. 현재 Perch 77% + (epoch50-5fold 15% + mwf0 5% + pmix 3% = EffNet 23%). prior 단일 weight sweep(trial_029 0.10, trial_030 0.15, trial_047 mwf0 0.08)은 효과 없었으나, 4종 EffNet 컴포넌트가 갖춰진 지금 standalone 컴포넌트(mwf0, pmix)를 함께 키우고 Perch를 72%까지 낮추면 (EffNet 합산 28%) 누적 diversity가 더 반영될 수 있다. 5fold(BLEND_EFFNET=0.15)는 trial_036에서 0.25가 -0.001이었으므로 건드리지 않고 standalone만 조정.",
+  "changes": [
+    "노트북 Cell62: BLEND_MWF0 0.05→0.07, BLEND_PSEUDOMIX 0.03→0.06 (코멘트도 trial_052로 갱신)",
+    "노트북 Cell65: blend 코멘트 trial_052로 갱신 (공식 자체는 가중치 변수만 변경)",
+    "5fold 컴포넌트(BLEND_EFFNET=0.15) 및 prior_mask, 모델/데이터셋 변경 없음",
+    "metadata 변경 없음",
+    "kernel ramkang/birdclef2026-effnet-5fold-blend v39 push",
+    "kaggle competitions submit -k ramkang/birdclef2026-effnet-5fold-blend -v 39 -f submission.csv"
+  ],
+  "blend": "Perch 72% + EffNet epoch50 5fold 15% + EffNet mwf0 fold0 7% + EffNet pseudo-mix (fold0+fold1 avg) 6%",
+  "expected_impact": "low",
+  "kernel_version": 39,
+  "submitted_at": "2026-05-12",
+  "kernel_run_check": "PENDING",
+  "public_score": "PENDING",
+  "result": "PENDING"
+}
