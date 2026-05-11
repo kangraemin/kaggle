@@ -51,6 +51,7 @@
 | 047 | effnet_mw_blend | **40** | - | 0.932 | BLEND_MWF0 0.05→0.08 상향. Perch 77%+distill5fold 15%+fold0 8%. kernel v35 push | ➖ best 동률 (비중 조정 효과 없음) |
 | 048 | distill30_swap | **41** | - | 0.931 | 5fold 컴포넌트 epoch50 SoftAUC → distill30 KD 교체. Perch 80%+distill30 15%+fold0 5%. kernel v36 push | ❌ -0.001 (epoch50 SoftAUC가 distill30 KD보다 우수) |
 | 050 | pseudo_mix_blend | **42** | - | **0.933** | epoch50 5fold 복원 + EffNet pseudo-mix fold0 (30k pseudo-labeled ss10k 혼합 학습, EffNetMixup arch) 4번째 컴포넌트 추가. Perch 77%+epoch50-5fold 15%+mwf0 5%+pmix 3%. 새 Kaggle dataset birdclef2026-effnet-pseudo-mix. kernel v37 | ✅ **new best** (+0.001, ralph it.1) |
+| 051 | pmix_2fold_blend | **43** | - | 채점중 | pseudo-mix fold0 → fold0+fold1 2-fold 앙상블로 교체 (fold1 로컬 학습 완료, val AUC ~0.981). BLEND_PSEUDOMIX 0.03 고정해 fold1 추가 효과만 격리. dataset birdclef2026-effnet-pseudo-mix v2 (best_fold1.pth 추가). kernel v38 | 🔄 ralph it.2 |
 
 ## 메트릭
 - Task: multi-label classification (5초 오디오에서 새 종 존재 여부 예측)

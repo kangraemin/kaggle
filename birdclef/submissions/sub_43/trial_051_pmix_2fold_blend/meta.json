@@ -1,0 +1,24 @@
+{
+  "id": "051",
+  "name": "pmix_2fold_blend",
+  "base_trial": "050",
+  "created_at": "2026-05-12",
+  "hypothesis": "trial_050에서 pseudo-mix fold0(focal + 30k pseudo-labeled ss10k 혼합 학습 EffNet)을 3% blend로 추가해 +0.001을 얻었다. 로컬에서 fold1 학습이 완료(val AUC ~0.981)되었으므로 pseudo-mix를 fold0+fold1 2-fold 앙상블로 교체하면, 단일 fold보다 노이즈가 적고 일반화가 좋아져 동일 3% weight에서 약간의 추가 이득(+0.000~0.001) 기대. weight는 0.03 고정해 fold1 추가 효과만 격리.",
+  "changes": [
+    "Kaggle dataset ramkang/birdclef2026-effnet-pseudo-mix 새 버전: best_fold1.pth 추가 (best_fold0.pth + best_fold1.pth)",
+    "노트북 Cell62: 코멘트 trial_051로 갱신, BLEND_PSEUDOMIX 0.03 유지(코멘트만 변경)",
+    "노트북 Cell63: 단일 _pmix_model → _pmix_models 리스트 (glob best_fold*.pth, 모든 fold 로드)",
+    "노트북 Cell64: pmix 추론을 _pmix_models 평균으로 변경 (mwf0 추론 루프에서 _mwf0_spec 재사용, 오디오 재읽기 없음)",
+    "노트북 Cell65: blend 코멘트 갱신 (공식 불변)",
+    "metadata 변경 없음 (kernel-metadata.json 이미 birdclef2026-effnet-pseudo-mix 포함)",
+    "kernel ramkang/birdclef2026-effnet-5fold-blend v38 push",
+    "kaggle competitions submit -k ramkang/birdclef2026-effnet-5fold-blend -v 38 -f submission.csv"
+  ],
+  "blend": "Perch 77% + EffNet epoch50 5fold 15% + EffNet mwf0 fold0 5% + EffNet pseudo-mix (fold0+fold1 avg) 3%",
+  "expected_impact": "low",
+  "kernel_version": 38,
+  "submitted_at": "2026-05-12",
+  "kernel_run_check": "kernel v38 COMPLETE. log: 'Loaded 5 EffNet folds (global pool)' / 'EffNetF0 fold0 loaded' / 'EffNet Pseudo-Mix loaded 2 folds: [best_fold0.pth, best_fold1.pth]' / 'blend: Perch 77% + EffNet5fold 15% + fold0-B0 5% + fold0-S 0% + pmix 3%'. submission.csv 240 rows, no NaN, range [1.3e-14, 0.999], mean 0.0579 (trial_050 0.0577과 거의 동일).",
+  "public_score": "PENDING",
+  "result": "PENDING"
+}
