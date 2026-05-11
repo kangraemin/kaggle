@@ -19,5 +19,6 @@
   "kernel_version": 37,
   "submitted_at": "2026-05-12",
   "kernel_dryrun_check": "MODE=submit OK, EffNet Pseudo-Mix fold0 loaded OK, blend Perch 77%+5fold 15%+fold0-B0 5%+pmix 3% confirmed, dry-run 240 rows, final mean 0.0577",
-  "public_score": "PENDING"
+  "public_score": 0.933,
+  "result": "new best (+0.001 vs trial_046/047 0.932). pseudo-label 학습 fold0이 기존 4종 컴포넌트와 다른 오류 분포 → 3% blend로 +0.001. 5fold 컴포넌트 epoch50 복원도 trial_048 distill30(0.931) 대비 정상화."
 }
