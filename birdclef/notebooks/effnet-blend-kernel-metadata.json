@@ -15,6 +15,7 @@
     "hideyukizushi/sgkfk-202604041716",
     "ramkang/perch-v2-onnx",
     "ramkang/birdclef2026-effnet-5fold-epoch50",
+    "ramkang/birdclef2026-effnet-5fold-distill",
     "ramkang/birdclef2026-convnext-5fold",
     "denden12/birdset-convnext-base-xcl",
     "ramkang/birdclef2026-effnet-multiwindow-fold0",
