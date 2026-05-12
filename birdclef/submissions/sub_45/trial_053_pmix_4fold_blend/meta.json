@@ -17,6 +17,6 @@
   "kernel_version": 40,
   "submitted_at": "2026-05-12",
   "kernel_run_check": "kernel v40 COMPLETE (wall 190.6s). log: MODE=submit / 'Loaded 5 EffNet folds (global pool)' / 'EffNetF0 fold0 loaded' / 'EffNet Pseudo-Mix loaded 4 folds: [best_fold0.pth, best_fold1.pth, best_fold2.pth, best_fold3.pth]' / 'blend: Perch 72% + EffNet5fold 15% + fold0-B0 7% + fold0-S 0% + pmix 6%'. submission.csv 240 rows × 235 cols, no NaN, range [4.8e-15, 0.998], Final mean 0.0396 (trial_052 0.0395와 거의 동일).",
-  "public_score": "채점중",
-  "result": "채점중 — 제출 PENDING (2026-05-12, ralph it.3 재개)"
+  "public_score": 0.934,
+  "result": "NEW BEST (+0.001 vs trial_050/051/052 0.933). pseudo-mix를 fold0+fold1 2-fold(trial_051, 동률) → fold0..3 4-fold 앙상블로 확장하니 LB +0.001 반영. 2-fold의 분산 감소는 LB에 안 보였지만 4-fold에서 누적된 노이즈 감소가 macro ROC-AUC에 반영된 것으로 보임. weight/다른 컴포넌트 모두 trial_052 고정이었으므로 이득은 순수하게 pmix 컴포넌트 품질 향상(fold2+fold3 추가)에서 나옴."
 }

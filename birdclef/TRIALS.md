@@ -53,7 +53,7 @@
 | 050 | pseudo_mix_blend | **42** | - | **0.933** | epoch50 5fold 복원 + EffNet pseudo-mix fold0 (30k pseudo-labeled ss10k 혼합 학습, EffNetMixup arch) 4번째 컴포넌트 추가. Perch 77%+epoch50-5fold 15%+mwf0 5%+pmix 3%. 새 Kaggle dataset birdclef2026-effnet-pseudo-mix. kernel v37 | ✅ **new best** (+0.001, ralph it.1) |
 | 051 | pmix_2fold_blend | **43** | - | 0.933 | pseudo-mix fold0 → fold0+fold1 2-fold 앙상블로 교체 (fold1 로컬 학습 완료, val AUC ~0.981). BLEND_PSEUDOMIX 0.03 고정해 fold1 추가 효과만 격리. dataset birdclef2026-effnet-pseudo-mix v2. kernel v38 | ➖ best 동률 (ralph it.2, 2-fold 확장 무효과) |
 | 052 | effnet_reweight | **44** | - | 0.933 | EffNet 계열 weight 재배분: BLEND_MWF0 0.05→0.07, BLEND_PSEUDOMIX 0.03→0.06 (Perch 77→72%, EffNet 합산 23→28%). 5fold(0.15)·prior_mask·모델 변경 없음. kernel v39. submission mean 0.0395 | ➖ best 동률 (ralph it.3, weight 재배분 무효과) |
-| 053 | pmix_4fold_blend | **45** | - | 채점중 | pseudo-mix 컴포넌트 fold0+fold1 2-fold → fold0..3 4-fold 앙상블 확장 (dataset v3). weight·다른 컴포넌트·prior_mask 모두 trial_052 고정 (Perch 72%). 코드 변경 0 (loader가 best_fold*.pth glob+mean). kernel v40. submission mean 0.0396 | 🔄 ralph it.3(재개), 채점중 |
+| 053 | pmix_4fold_blend | **45** | - | **0.934** | pseudo-mix 컴포넌트 fold0+fold1 2-fold → fold0..3 4-fold 앙상블 확장 (dataset v3). weight·다른 컴포넌트·prior_mask 모두 trial_052 고정 (Perch 72%). 코드 변경 0 (loader가 best_fold*.pth glob+mean). kernel v40. submission mean 0.0396 | ✅ **new best** (+0.001, ralph it.3 재개. 2-fold(trial_051)는 동률이었으나 4-fold에서 LB 반영) |
 
 ## 메트릭
 - Task: multi-label classification (5초 오디오에서 새 종 존재 여부 예측)
