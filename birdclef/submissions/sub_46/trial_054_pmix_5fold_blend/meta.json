@@ -17,6 +17,6 @@
   "kernel_version": 41,
   "submitted_at": "2026-05-13",
   "kernel_run_check": "kernel v41 COMPLETE (wall 216.0s). log: MODE=submit / 'Loaded 5 EffNet folds (global pool)' / 'EffNetF0 fold0 loaded' / 'EffNet Pseudo-Mix loaded 5 folds: [best_fold0.pth, best_fold1.pth, best_fold2.pth, best_fold3.pth, best_fold4.pth]' / 'blend: Perch 72% + EffNet5fold 15% + fold0-B0 7% + fold0-S 0% + pmix 6%'. submission.csv 240 rows × 235 cols, no NaN, range [4.6e-15, 0.998], Final mean 0.0396 (trial_053과 동일).",
-  "public_score": "채점중",
-  "result": "TBD (submitted, PENDING)"
+  "public_score": 0.934,
+  "result": "best 동률 (0.934, trial_053과 동일). pseudo-mix 4-fold → 5-fold 확장은 LB 무효과. trial_051(2-fold, 0.933)→trial_053(4-fold, 0.934)에서 +0.001 봤으나 4→5-fold는 한계효용 0 — 보조 컴포넌트(6% weight) fold 앙상블은 4개에서 사실상 포화. 회귀는 없으므로 5-fold 구성 그대로 유지."
 }
