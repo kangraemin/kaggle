@@ -1,0 +1,25 @@
+{
+  "id": "056",
+  "name": "pmix_weight_up",
+  "base_trial": "054",
+  "created_at": "2026-05-13",
+  "hypothesis": "trial_055(15% 슬롯 epoch50+distill 10ckpt 멀티로스 앙상블)는 -0.001 회귀(0.933) → 15% 슬롯을 epoch50 SoftAUC 5-fold 단일로 복원해 trial_054(0.934 best) 구성으로 되돌림. 그 위에서 sub_45 reflection이 제안한 'pmix 4-fold로 안정해졌으니 weight를 더 줄 여지' 적용: BLEND_PSEUDOMIX 0.06->0.08. Perch는 트레이드오프 위험(trial_036 Perch↓ 역효과) 피하려 72%로 고정 — 그 2pp는 가장 노이즈 많은 단일 fold0 컴포넌트(mwf0)에서 빼옴(BLEND_MWF0 0.07->0.05; trial_047이 mwf0 0.05~0.08 전 구간 neutral 확인). 즉 'EffNet 예산(28%) 안에서 단일 fold0 → 5-fold 앙상블 pmix 쪽으로 2pp 재배분' 격리 실험. pmix 5-fold가 6% weight에선 trial_053 4-fold 대비 한계효용 0이었으나(trial_054 동률), 8% weight에선 분산 절감이 LB granularity를 넘을 수도 있다는 베팅. 회귀 위험 낮음(2pp 이동, Perch 불변).",
+  "changes": [
+    "Cell62: 15% EffNet 슬롯 로더를 epoch50+distill 두 데이터셋 glob(10ckpt) → epoch50 단일(5ckpt)로 복원. _slug 리스트 ['birdclef2026-effnet-5fold-epoch50'] only. _BirdEffNet 동일 arch, _EffSpec 동일.",
+    "Cell62: BLEND_MWF0 0.07 -> 0.05",
+    "Cell62: BLEND_PSEUDOMIX 0.06 -> 0.08",
+    "Cell62/63/65: 코멘트를 trial_056으로 갱신",
+    "BLEND_EFFNET=0.15, BLEND_EFFNET_S=0 — trial_054 그대로. Perch = 1-0.15-0.05-0.08 = 0.72 (불변)",
+    "pmix 컴포넌트(fold0..4 5-fold) 모델 변경 없음",
+    "kernel-metadata.json 변경 없음 (distill 데이터셋은 attached 유지, 미사용 — 무해)",
+    "kernel ramkang/birdclef2026-effnet-5fold-blend v43 push",
+    "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 43 -f submission.csv"
+  ],
+  "blend": "Perch 72% + EffNet epoch50 5fold 15% + EffNet mwf0 fold0 5% + EffNet pseudo-mix (fold0..4 avg) 8%",
+  "expected_impact": "low",
+  "kernel_version": 43,
+  "submitted_at": "2026-05-13",
+  "kernel_run_check": "kernel v43 COMPLETE (wall 203.6s, dry-run 20 soundscapes). log: MODE=submit / 'Loaded 5 EffNet folds (global pool, epoch50 SoftAUC): [epoch50/best_fold0..4]' / 'BLEND_EFFNET=0.15, BLEND_MWF0=0.05' / 'BLEND_PSEUDOMIX=0.08' / 'EffNetF0 fold0 loaded' / 'EffNet Pseudo-Mix loaded 5 folds: [best_fold0..4]' / 'EffNetS skipped' / 'blend: Perch 72% + EffNet5fold 15% + fold0-B0 5% + fold0-S 0% + pmix 8%'. submission.csv 240x235, no NaN, range [0.0, 0.998], Final mean 0.0425 (trial_054 0.0396 / trial_055 0.0400 대비 상승 — pmix weight↑로 정상). Wall 203.6s (trial_055 254.5s에서 감소 — 5ckpt로 복원, 타임아웃 여유 충분).",
+  "public_score": "채점중",
+  "result": "TBD — 채점 대기"
+}
