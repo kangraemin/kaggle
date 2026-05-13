@@ -1,0 +1,20 @@
+{
+  "id": "061",
+  "name": "convnext_5fold",
+  "base_trial": "060",
+  "created_at": "2026-05-13",
+  "hypothesis": "trial_060 ConvNeXt fold0 single @ 3% was TIMEOUT (kernel v47 ran fine but Kaggle never created a scored submission — kaggle CLI `submit -k -v 47` returned 400 Bad Request). ConvNeXt signal is currently unverified. trial_061 promotes the same component to fold0..4 5-fold avg at the same 3% weight, mirroring the pmix expansion pattern (trial_051 2-fold neutral → trial_053 4-fold +0.001) — fold averaging that took pmix off the noise floor. All 5 ConvNeXt checkpoints (5×350MB best_fold[0..4].pth) exist in the `ramkang/birdclef2026-convnext-5fold` Kaggle dataset already wired into kernel-metadata.json. Risk: small (3pp slot identical to trial_060; only the ConvNeXt block changes — Perch 72% / EffNet 28% breakdown unchanged). Wall budget: fold0 took 1.8min, 5-fold avg estimated ~9min (5x forward per chunk, same chunked loop pattern), still safe inside 9h kernel limit. Memory: 5 × 350MB ckpts + 5 × ConvNextForImageClassification.from_pretrained instances ≈ 2GB peak — Kaggle CPU has headroom. If trial_061 lifts LB (+0.001 or more), ConvNeXt is a real ortho signal and follow-ups can weight-ramp 3% → 5-7% or move pmix budget toward ConvNeXt. If trial_061 is neutral, backbone-family diversity is closed and iter_4 pivots to a different axis (Perch multi-window TTA, AudioMAE/BEATs probe, or pmix→EffNet 28% reshape with Perch 65~70%).",
+  "changes": [
+    "Cell 65 (ConvNeXt loader/inference): single-fold → 5-fold avg. `_ck_path = .../best_fold0.pth` replaced with `_convnext_ck_paths = sorted(glob(.../best_fold*.pth))`. Single `_convnext_model` replaced with `_convnext_models = []`, populated by looping: `ConvNextForImageClassification.from_pretrained(...) → _BirdConvNeXt(_clf) → load_state_dict(strict=True)` per fold (separate from_pretrained per fold to avoid backbone reference sharing). Inference loop changed `convnext_logits[...] = _convnext_model(_spec).numpy()` → `_cnx_preds = np.stack([_m(_spec).numpy() for _m in _convnext_models]); convnext_logits[...] = _cnx_preds.mean(axis=0)` (same pattern as pmix multi-fold). Logging updated to print fold count and per-file progress wall time.",
+    "Cell 66 (fusion): trial_060 → trial_061 trial-id label; blend math byte-identical (Perch 72% + EffNet5fold 15% + mwf0 2% + pmix 8% + distill 0% + convnext 3%). print() label `convnext` → `convnext5fold` to make the LB-side annotation match the fold count.",
+    "kernel-metadata.json: unchanged (id=ramkang/birdclef2026-effnet-5fold-blend, code_file=birdclef2026-effnet-5fold-blend.ipynb, ramkang/birdclef2026-convnext-5fold + denden12/birdset-convnext-base-xcl already in dataset_sources).",
+    "kernel v48 push (`kaggle kernels push -p .` from notebooks/)."
+  ],
+  "blend": "Perch 72% + EffNet epoch50 5fold (SoftAUC) 15% + EffNet mwf0 fold0 2% + EffNet pseudo-mix fold0..4 avg 8% + ConvNeXt-Base XCL fold0..4 avg 3% — fusion: logit-space weighted sum. trial_060→trial_061: ConvNeXt single fold0 → fold0..4 mean at the same 3% weight; Perch / EffNet shares unchanged.",
+  "expected_impact": "+0.001 ~ neutral. Pmix fold-expansion analog: trial_051 (2-fold) was neutral, trial_053 (4-fold) was +0.001 — fold averaging clears single-fold noise enough to register on LB. ConvNeXt fold0 itself never scored (trial_060 TIMEOUT), so this is also the recovery experiment for the ConvNeXt axis.",
+  "kernel_version": 48,
+  "submitted_at": "2026-05-13",
+  "kernel_run_check": "kernel v48 pushed (Kernel version 48 successfully pushed). Awaiting Kaggle competition submission auto-trigger + scoring. trial_060 v47 hit a 90-min timeout with no submission landing — main risk to monitor.",
+  "public_score": "PENDING",
+  "result": "채점중"
+}

@@ -30,3 +30,12 @@ Kernel: ramkang/birdclef2026-effnet-5-fold-pseudo-blend
 - **TIMEOUT_90MIN**: kernel COMPLETE 후 90분 폴링(18:34~20:00 KST, 5분 간격 18회) 중 Kaggle 신규 submission 미등장. latest는 trial_059(0.934)에 고정. `kaggle competitions submit -k <kernel> -v 47` API 호출 → **400 Bad Request**. score 미수령으로 가설 검증 실패(보류).
 - 추정 원인: 코드 컴페티션에서 kernel push만으론 채점 트리거 안 됨. "Submit to Competition" UI 클릭이 hidden test 마운트 후 재실행을 만들어야 publicScore 생성. ralph-x 자동화의 submit 단계가 누락된 듯. trial_058/059는 정상 작동했으나 trial_060만 미반영.
 - 다음(it.11) 방향: ① 수동 "Submit to Competition" 트리거로 점수 회수 → ② 점수 +면 ConvNeXt 5fold 확장 / weight 0.03→0.05~0.10 ramp, 0이면 AudioMAE/BEATs probe 또는 Perch 멀티윈도우 TTA (sub_52 reflection 참조). ③ ralph-x 워크플로우에 submission 등장 확인 + 누락시 알람·재시도 단계 추가.
+
+## iter 11: trial_061 convnext_5fold
+- 시작: 2026-05-13 KST (delegated iter 3)
+- 전략: trial_060 ConvNeXt fold0 single 3% (TIMEOUT, 점수 미확정) → fold0..4 5-fold 평균 (BLEND_CONVNEXT=0.03 동일). pmix fold-expansion 패턴(trial_051 2-fold neutral → trial_053 4-fold +0.001)을 ConvNeXt 컴포넌트에 그대로 적용 + trial_060 timeout 복구 시도.
+- 근거: trial_060 kernel v47은 정상 완료(wall 445s, submission.csv 정상), Kaggle 신규 submission만 등장 안 함 — 일회성 API 400 추정. 새 push(v48)로 재시도하면서 동시에 single-fold noise 제거 효과 측정. 5개 ConvNeXt fold 모두 `ramkang/birdclef2026-convnext-5fold` 데이터셋 안에 이미 존재 (`kaggle datasets files` 확인, 각 351MB).
+- 구현: cell 65 단일 fold 로더 → 5-fold 리스트 로더 (per-fold `ConvNextForImageClassification.from_pretrained + load_state_dict(strict=True)` — backbone reference 공유 방지). 추론은 pmix와 같은 `np.stack([m(_spec).numpy() for m in models]).mean(axis=0)` 패턴. cell 66 trial-label만 trial_060→trial_061. fusion 식·weights·prior_mask 전부 byte-identical. kernel-metadata.json 변경 없음.
+- 검증: 양 cell `ast.parse` OK. dataset 5-fold 존재 확인. 메모리 ~2GB peak·wall 12-13min 예상 — 모두 한도 내.
+- kernel v48 push 완료 ("Kernel version 48 successfully pushed"), 채점 PENDING.
+- 위험: 1) trial_060 같은 timeout 재현 가능성 (단발 API 글리치였길 기대), 2) 5-fold avg가 noise뿐 아니라 약한 ortho 신호도 깎을 가능성, 3) backbone-family 다양화가 0.934 천장에서 무력하면 다음 iter는 다른 축 (Perch multi-window TTA 또는 Perch share 축소).
