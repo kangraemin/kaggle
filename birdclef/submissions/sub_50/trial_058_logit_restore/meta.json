@@ -1,0 +1,21 @@
+{
+  "id": "058",
+  "name": "logit_restore",
+  "base_trial": "056",
+  "created_at": "2026-05-13",
+  "hypothesis": "trial_057(ralph it.7)이 cell 65의 앙상블 fusion을 가중 logit 합 → 클래스별 percentile rank-average로 바꿔 0.929(-0.005, trial_022~025 수준)로 큰 폭 후퇴. reflection 결론: logit 공간의 magnitude가 실제 신호 — Perch(72%)가 logit으로 강하게 'present'라 말하는 강도가 rank로 변환되면 묽어지고, EffNet 보조 컴포넌트(15/5/8%)가 logit 가중합에서 다이내믹 레인지 차이로 명목 weight보다 큰 effective weight로 기여하던 게 사실 +방향이었음. ralph reflection it.7 + sub_49 reflection 둘 다 '[필수] 다음 trial은 trial_056 logit-space 블렌드 즉시 복원해 0.934 회귀' 명시. 이 trial은 cell 65를 `2c2a948^`(=trial_056) 버전으로 되돌려 0.934 복귀 확인 — trial_057 -0.005 청소. 모델·blend weight(Perch 72%·EffNet5fold 15%·mwf0 5%·pmix 8%)·후처리 전부 trial_056 동일. 회귀 위험: 없음(trial_056 0.934 검증된 구성으로의 복귀, 코드는 git에서 그대로 가져옴).",
+  "changes": [
+    "Cell65: trial_057 가중 percentile rank-average fusion 제거 → trial_056 logit-space 가중 합 복원: `final_test_scores = _perch_scores_raw*(1-BLEND_EFFNET-BLEND_MWF0-BLEND_EFFNET_S-BLEND_PSEUDOMIX) + BLEND_EFFNET*effnet_logits + BLEND_MWF0*mwf0_logits + BLEND_EFFNET_S*effnets_logits + BLEND_PSEUDOMIX*pmix_logits`. scipy.stats.rankdata import 및 rank-blend 루프 삭제. 코멘트/print만 trial_058로 갱신 (logit-blend 코드 자체는 trial_056과 byte-identical).",
+    "Cell62: 헤더 코멘트만 trial_058 복원 명시로 갱신 — 컴포넌트/weight/모델/후처리 전부 trial_056 그대로 (BLEND_EFFNET=0.15, BLEND_MWF0=0.05, BLEND_PSEUDOMIX=0.08, BLEND_EFFNET_S=0 → Perch 72%)",
+    "kernel-metadata.json 변경 없음 (id ramkang/birdclef2026-effnet-5fold-blend, code_file birdclef2026-effnet-5fold-blend.ipynb)",
+    "kernel v45 push",
+    "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 45 -f submission.csv -m 'trial_058 restore logit blend'"
+  ],
+  "blend": "Perch 72% + EffNet epoch50 5fold 15% + EffNet mwf0 fold0 5% + EffNet pseudo-mix (fold0..4 avg) 8% — fusion: logit-space 가중 합 (trial_056 0.934 구성 복원)",
+  "expected_impact": "none (0.934 회귀)",
+  "kernel_version": 45,
+  "submitted_at": "2026-05-13",
+  "kernel_run_check": "kernel v45 COMPLETE (wall 136.1s, dry-run 20 soundscapes). log: MODE=submit / 'Loaded 5 EffNet folds (global pool, epoch50 SoftAUC): [epoch50/best_fold0..4]' / 'BLEND_EFFNET=0.15, BLEND_MWF0=0.05' / 'BLEND_PSEUDOMIX=0.08' / 'EffNetF0 fold0 loaded' / 'EffNet Pseudo-Mix loaded 5 folds: [best_fold0..4]' / 'EffNetS skipped (BLEND_EFFNET_S=0.0)' / 'blend (logit-space weighted sum, trial_058 restore): Perch 72% + EffNet5fold 15% + fold0-B0 5% + fold0-S 0% + pmix 8%' / 'final_test_scores (logit) range: [-11.792, 6.819], mean -2.980' (trial_057 rank-space mean 0.021과 대조 — logit 공간 복원 확인). submission.csv 240x235, no NaN, range [0.0, 0.997835], Final mean 0.0425 — trial_056(0.0425)와 동일값 → 복원 byte-identical 동작 확인.",
+  "public_score": "채점중",
+  "result": "채점중"
+}
