@@ -50,4 +50,4 @@
 | 46 | 2026-05-13 | trial_054 | pseudo-mix 5-fold 앙상블 (fold0..4) — weights = trial_053 (Perch 72%) | 0.934 | ➖ best 동률 (kernel v41, ralph it.4. 4→5-fold 한계효용 0 — 보조 컴포넌트 fold 앙상블 4개에서 포화) |
 | 47 | 2026-05-13 | trial_055 | EffNet 15% 슬롯 multi-loss 앙상블 (epoch50 SoftAUC 5ckpt + distill KD 5ckpt = 10ckpt avg) — 다른 컴포넌트·weight 전부 trial_054 고정 (Perch 72%) | 0.933 | ❌ -0.001 (kernel v42, ralph it.5. distill 섞으면 epoch50 단일보다 못함) |
 | 48 | 2026-05-13 | trial_056 | 15% 슬롯 epoch50 5ckpt 복원 + EffNet weight 재배분 mwf0 0.07→0.05 / pmix 0.06→0.08 (Perch 72% 고정) | 0.934 | ➖ best 동률 (kernel v43, ralph it.6. trial_054 0.934 복귀 + EffNet 내부 2pp 재배분 LB 무효과) |
-| 49 | 2026-05-13 | trial_057 | 앙상블 fusion 연산자 변경: 가중 logit 합 → 클래스별 percentile rank-average (모델·weight·후처리 전부 trial_056 동일) | 채점중 | 🔄 채점 대기 (kernel v44, ralph it.7) |
+| 49 | 2026-05-13 | trial_057 | 앙상블 fusion 연산자 변경: 가중 logit 합 → 클래스별 percentile rank-average (모델·weight·후처리 전부 trial_056 동일) | 0.929 | ❌ -0.005 (kernel v44, ralph it.7. logit 공간 magnitude가 실제 신호 — rank-avg는 Perch confidence를 묽게 하고 후퇴. 다음: logit 블렌드 복원) |

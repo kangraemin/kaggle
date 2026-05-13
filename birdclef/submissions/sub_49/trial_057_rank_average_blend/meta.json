@@ -16,6 +16,6 @@
   "kernel_version": 44,
   "submitted_at": "2026-05-13",
   "kernel_run_check": "kernel v44 COMPLETE (wall 214.0s, dry-run 20 soundscapes). log: MODE=submit / 'Loaded 5 EffNet folds (global pool, epoch50 SoftAUC): [epoch50/best_fold0..4]' / 'BLEND_EFFNET=0.15, BLEND_MWF0=0.05' / 'EffNetF0 fold0 loaded' / 'EffNet Pseudo-Mix loaded 5 folds: [best_fold0..4]' / 'EffNetS skipped (BLEND_EFFNET_S=0.0)' / 'rank-avg blend: Perch 72% + EffNet5fold 15% + fold0-B0 5% + fold0-S 0% + pmix 8% (weighted percentile-rank, n_rows=240)' / 'final_test_scores (logit) range: [-4.297, 9.210], mean 0.021'. submission.csv 240x235, no NaN, range [0.000475, 0.993394], Final mean 0.2476 (trial_056 0.0425 대비 대폭 상승 — rank-avg는 percentile이 0.5 근처에 모이므로 정상, macro ROC-AUC는 scale-invariant). scipy.stats.rankdata 정상 동작, 에러 없음.",
-  "public_score": "채점중",
-  "result": "채점 대기"
+  "public_score": "0.929",
+  "result": "❌ -0.005 (0.929, best 0.934 대비 큰 폭 하락 — trial_022~025(pmix 추가 전, Perch+EffNet) 시절 수준으로 후퇴). 결론: logit 공간의 *magnitude* 가 실제 신호를 담고 있음 — Perch(72%)가 logit으로 강하게 'present'라고 말하는 신호가 percentile rank로 변환되면 같은 ordering이라도 다른 컴포넌트들과 섞일 때 묽어진다. 또한 EffNet 보조 컴포넌트들이 logit 가중합에서 명목 weight보다 더 큰 effective weight로 기여하던 것(다이내믹 레인지 차이)이 사실은 +방향이었음 — rank-avg로 명목 weight만큼만 기여하게 만들자 오히려 손해. 다음: trial_056 logit-space 블렌드로 즉시 복원."
 }
