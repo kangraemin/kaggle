@@ -14,7 +14,7 @@
   "expected_impact": "+0.001 ~ neutral. Pmix fold-expansion analog: trial_051 (2-fold) was neutral, trial_053 (4-fold) was +0.001 — fold averaging clears single-fold noise enough to register on LB. ConvNeXt fold0 itself never scored (trial_060 TIMEOUT), so this is also the recovery experiment for the ConvNeXt axis.",
   "kernel_version": 48,
   "submitted_at": "2026-05-13",
-  "kernel_run_check": "kernel v48 pushed (Kernel version 48 successfully pushed). Awaiting Kaggle competition submission auto-trigger + scoring. trial_060 v47 hit a 90-min timeout with no submission landing — main risk to monitor.",
-  "public_score": "PENDING",
-  "result": "채점중"
+  "kernel_run_check": "kernel v48 KernelWorkerStatus.COMPLETE 확인. 90분 폴링(20:29~21:55 KST, 5분 간격 20회) 동안 Kaggle 신규 submission CSV에 trial_061 행 미등장 — latest는 여전히 trial_059(2026-05-13 08:02). trial_060과 같은 증상으로 'Submit to Competition' 자동 트리거 누락.",
+  "public_score": "TIMEOUT",
+  "result": "TIMEOUT_90MIN (2연속 ConvNeXt-axis 점수 미확정, ralph it.11)"
 }

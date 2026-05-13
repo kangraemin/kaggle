@@ -39,3 +39,8 @@ Kernel: ramkang/birdclef2026-effnet-5-fold-pseudo-blend
 - 검증: 양 cell `ast.parse` OK. dataset 5-fold 존재 확인. 메모리 ~2GB peak·wall 12-13min 예상 — 모두 한도 내.
 - kernel v48 push 완료 ("Kernel version 48 successfully pushed"), 채점 PENDING.
 - 위험: 1) trial_060 같은 timeout 재현 가능성 (단발 API 글리치였길 기대), 2) 5-fold avg가 noise뿐 아니라 약한 ortho 신호도 깎을 가능성, 3) backbone-family 다양화가 0.934 천장에서 무력하면 다음 iter는 다른 축 (Perch multi-window TTA 또는 Perch share 축소).
+- kernel COMPLETE 확인: KernelWorkerStatus.COMPLETE. 정상 종료.
+- **TIMEOUT_90MIN (2연속)**: kernel COMPLETE 후 90분 폴링(20:29~21:55 KST, 5분 간격 20회) 동안 Kaggle 신규 submission 미등장. latest 행은 여전히 trial_059(2026-05-13 08:02, 0.934). trial_060 v47에 이어 v48도 동일 증상 — kernel 정상이지만 "Submit to Competition" 자동 트리거 누락. score 미수령으로 가설 검증 보류.
+- 진단: trial_058 v45 / trial_059 v46는 정상 채점됐으므로 단순 API 글리치가 아닌 ConvNeXt 컴포넌트 추가 후 패턴화된 현상. 코드 컴페티션 hidden re-run 단계에서 ConvNeXt 데이터셋(`birdset-convnext-base-xcl` + `birdclef2026-convnext-5fold`) 마운트 거부 또는 wall 증가로 timeout 처리되어 publicScore 생성 단계 미도달 가능. 어느 쪽이든 ralph-x 자동 워크플로우로는 ConvNeXt-axis 검증 불가 확정.
+- 결론: 2연속 TIMEOUT으로 ConvNeXt-axis 잠정 동결. ralph 비용 60분+ 낭비(2회 90분 폴링).
+- 다음(it.12) 방향: ① ConvNeXt 컴포넌트 cell 65/66 제거, trial_058(0.934 best 동률) 베이스로 회귀 — 자동 submit 트리거 정상 작동 재확인. ② 그 위에서 새 축 시도 1순위 = Perch 멀티윈도우 TTA (sub_51 rec #3, kernel 변경 작고 자동 제출 트리거 정상화 확인용으로도 활용). ③ ralph-x 워크플로우 개선: kernel COMPLETE → 10분 timeout submission CSV 검증 단계 추가, 미생성 시 즉시 fallback. 자세한 가설은 sub_53 reflection.md.
