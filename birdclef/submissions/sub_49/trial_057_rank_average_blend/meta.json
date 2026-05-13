@@ -1,0 +1,21 @@
+{
+  "id": "057",
+  "name": "rank_average_blend",
+  "base_trial": "056",
+  "created_at": "2026-05-13",
+  "hypothesis": "trial_053(pmix 2→4-fold)이 0.934로 평형점을 잡은 뒤 trial_054(5-fold 확장)·trial_055(멀티로스, -0.001)·trial_056(EffNet 내부 2pp 재배분) 모두 무효 — 'EffNet 보조 컴포넌트' 한 축의 탐색 공간 소진. ralph reflection it.6 제안 #4: 앙상블 *방식* 변경. 현재 cell 65는 단순 가중 logit 합(Perch 72% + EffNet5fold 15% + mwf0 5% + pmix 8%)인데, logit 공간에서는 logit 다이내믹 레인지가 큰 컴포넌트가 명목 weight보다 더 기여한다(trial_034 HGNet에서 raw logit scale 불일치 삽질 전례). 각 컴포넌트를 클래스별 percentile rank로 변환 → 같은 weight로 평균 → 다시 logit 공간으로 매핑(downstream 온도/file-level/rank-aware/delta-shift/prior-mask 파이프라인 무변경). 이렇게 하면 각 컴포넌트가 정확히 명목 weight만큼만 ordering에 기여. 모델·weight·후처리 전부 trial_056(0.934)과 동일, fusion 연산자만 logit 가중합 → 가중 percentile rank-average. 회귀 위험: 낮음(reflection 판단) — logit 공간 mixing이 실제로 의미 있었다면 -0.001 가능.",
+  "changes": [
+    "Cell65: 가중 logit 합 `_perch*(1-..) + BLEND_EFFNET*effnet + BLEND_MWF0*mwf0 + BLEND_PSEUDOMIX*pmix` → 가중 percentile rank-average. 각 컴포넌트 `np.apply_along_axis(scipy.stats.rankdata, 0, arr)` → (rank-1)/(n-1) ∈ [0,1] → weight 합산 → /wsum → clip(1e-4, 1-1e-4) → `np.log(p/(1-p))`로 logit 공간 복원. effnets_logits(weight 0)는 스킵.",
+    "Cell62: 헤더 코멘트만 trial_057로 갱신 — 컴포넌트/weight/모델/후처리 전부 trial_056 그대로(BLEND_EFFNET=0.15, BLEND_MWF0=0.05, BLEND_PSEUDOMIX=0.08, BLEND_EFFNET_S=0 → Perch 72%)",
+    "kernel-metadata.json 변경 없음",
+    "kernel ramkang/birdclef2026-effnet-5fold-blend v44 push",
+    "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 44 -f submission.csv"
+  ],
+  "blend": "Perch 72% + EffNet epoch50 5fold 15% + EffNet mwf0 fold0 5% + EffNet pseudo-mix (fold0..4 avg) 8% — fusion: 클래스별 percentile rank의 가중 평균 (logit 가중합 아님)",
+  "expected_impact": "low",
+  "kernel_version": 44,
+  "submitted_at": "2026-05-13",
+  "kernel_run_check": "kernel v44 COMPLETE (wall 214.0s, dry-run 20 soundscapes). log: MODE=submit / 'Loaded 5 EffNet folds (global pool, epoch50 SoftAUC): [epoch50/best_fold0..4]' / 'BLEND_EFFNET=0.15, BLEND_MWF0=0.05' / 'EffNetF0 fold0 loaded' / 'EffNet Pseudo-Mix loaded 5 folds: [best_fold0..4]' / 'EffNetS skipped (BLEND_EFFNET_S=0.0)' / 'rank-avg blend: Perch 72% + EffNet5fold 15% + fold0-B0 5% + fold0-S 0% + pmix 8% (weighted percentile-rank, n_rows=240)' / 'final_test_scores (logit) range: [-4.297, 9.210], mean 0.021'. submission.csv 240x235, no NaN, range [0.000475, 0.993394], Final mean 0.2476 (trial_056 0.0425 대비 대폭 상승 — rank-avg는 percentile이 0.5 근처에 모이므로 정상, macro ROC-AUC는 scale-invariant). scipy.stats.rankdata 정상 동작, 에러 없음.",
+  "public_score": "채점중",
+  "result": "채점 대기"
+}
