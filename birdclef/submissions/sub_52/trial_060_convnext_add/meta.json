@@ -1,0 +1,21 @@
+{
+  "id": "060",
+  "name": "convnext_add",
+  "base_trial": "058",
+  "created_at": "2026-05-13",
+  "hypothesis": "trial_054~059 6연속 0.934 천장. sub_51 reflection 진단: 'EffNet 28% 예산 내 모든 재분배·KD 다양화가 닫혔다 — Perch 72% 또는 EffNet 28% 비율 자체를 흔드는 새 1차 모델 컴포넌트가 필요'. 추천 #2: ConvNeXt-Base XCL (DBD-research-group/ConvNeXT-Base-BirdSet-XCL, 9736-species XCL pretrain, transformer-style 백본). 5fold-distill 컴포넌트(별도 KD 손실, 같은 EffNet 백본)는 trial_059에서 LB 0 효과 확정. 이번 trial은 distill 3% 슬롯을 ConvNeXt fold0 3%로 정확히 치환 — '같은 weight에서 손실함수 다양화(distill)는 0 효과, 백본 가족 다양화(convnext)는 +효과인가?' 격리 검증. ConvNeXt는 1) Mel-spec 입력 동일(_mwf0_spec, n_fft=1024, n_mels=128, XCL norm), 2) 출력 234 클래스 head 정렬, 3) 백본 가족(transformer-style) + 사전학습(XCL 9736종) 모두 EffNet/Perch와 다름. trial_037에서 ConvNeXt 20% blend(Perch 65%+EffNet 15%+ConvNeXt 20%)는 0.930 = 당시 baseline 동률(즉 0 효과)이었으나 그때는 mwf0/pmix 없는 단순 구성. 현재 ensemble은 5개 EffNet 변종을 포함하므로 ConvNeXt의 ortho 신호가 더 명확히 드러날 가능성. 회귀 위험: 작음(distill 슬롯 3pp 1:1 swap, Perch/EffNet5fold/mwf0/pmix 그대로). 추가 위험: 1) transformers 라이브러리 의존(Kaggle base image 기본 포함), 2) ConvNeXt-Base CPU 추론 wall 추가(예상 +10~20분), 3) 과거 silent reject 이력(4/30~5/1)이 있으나 그건 플랫폼 이슈이고 5/4 이후 채점 정상화.",
+  "changes": [
+    "Cell65 신규 추가 (NEW): ConvNeXt-Base XCL fold0 loader+inference. transformers.ConvNextForImageClassification.from_pretrained(local_files_only=True) → backbone+head(1024→234) 추출. /kaggle/input/datasets/denden12/birdset-convnext-base-xcl 또는 /kaggle/input/birdset-convnext-base-xcl 자동 탐색. /kaggle/input/datasets/ramkang/birdclef2026-convnext-5fold/best_fold0.pth 로드, strict=True. 입력 _mwf0_spec(B, 1, 128, T) — XCL training과 동일 mel/norm. inference loop는 mwf0/pmix와 같은 패턴 (per-file N_WINDOWS chunks, batch forward). 예외 발생시 BLEND_CONVNEXT=0으로 자동 폴백.",
+    "Cell66(구 cell65) fusion 수정: BLEND_DISTILL=0.0 (drop, was 0 effect in trial_059). fusion 식에 `+ BLEND_CONVNEXT * convnext_logits` 추가. Perch 계수에 `- BLEND_CONVNEXT` 추가. print 라인에 `+ convnext {BLEND_CONVNEXT:.0%}`. 헤더 코멘트 trial_060.",
+    "Cell62 변경 없음 (distill loader/inference 유지 — wall cost ~1min 그대로 지불, BLEND_DISTILL=0이지만 distill_logits 계산은 계속 — 향후 distill 재활성화 옵션 유지 위해).",
+    "kernel-metadata.json 변경 없음 (id=ramkang/birdclef2026-effnet-5fold-blend, code_file=birdclef2026-effnet-5fold-blend.ipynb, denden12/birdset-convnext-base-xcl + ramkang/birdclef2026-convnext-5fold dataset_sources 이미 포함).",
+    "kernel v47 push (kaggle kernels push -p .)"
+  ],
+  "blend": "Perch 72% + EffNet epoch50 5fold (SoftAUC) 15% + EffNet mwf0 fold0 2% + EffNet pseudo-mix (fold0..4 avg) 8% + ConvNeXt-Base XCL fold0 3% — fusion: logit-space 가중 합. distill 3% → convnext 3% 1:1 치환, Perch 72% 그대로.",
+  "expected_impact": "+0.001 ~ neutral (백본 가족 다양화 가설). 회귀 가능성: 작음(distill swap, Perch share 불변).",
+  "kernel_version": 47,
+  "submitted_at": "2026-05-13",
+  "kernel_run_check": "kernel v47 RUNNING (push at 2026-05-13 KST). dry-run on first 20 soundscapes (no hidden test mount). 채점 결과 PENDING.",
+  "public_score": "PENDING",
+  "result": "채점중"
+}

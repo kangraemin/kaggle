@@ -53,3 +53,4 @@
 | 49 | 2026-05-13 | trial_057 | 앙상블 fusion 연산자 변경: 가중 logit 합 → 클래스별 percentile rank-average (모델·weight·후처리 전부 trial_056 동일) | 0.929 | ❌ -0.005 (kernel v44, ralph it.7. logit 공간 magnitude가 실제 신호 — rank-avg는 Perch confidence를 묽게 하고 후퇴. 다음: logit 블렌드 복원) |
 | 50 | 2026-05-13 | trial_058 | trial_056 logit-space 가중 합 fusion 복원 (rank-avg 제거, Perch 72%+EffNet5fold 15%+mwf0 5%+pmix 8%; 모델·weight·후처리 = trial_056) | **0.934** | ✅ best 동률 (kernel v45, ralph it.8. rank-avg -0.005 회귀 청소 성공, logit-blend 복원 검증) |
 | 51 | 2026-05-13 | trial_059 | distill_5fold 5th component 추가 (BLEND_DISTILL=0.03, mwf0 0.05→0.02, Perch 72% 고정, kernel v46) | 0.934 | ➖ best 동률 (ralph it.9, loss-fn diversity 가설 검증 실패 — KD 별도 컴포넌트로도 0.934 천장 못 깸) |
+| 52 | 2026-05-13 | trial_060 | ConvNeXt-Base XCL fold0 6th component 추가 (BLEND_CONVNEXT=0.03, BLEND_DISTILL 0.03→0 1:1 치환, Perch 72% 그대로, kernel v47) | PENDING | 🔄 채점중 (ralph it.10, 새 백본 가족 다양화 — sub_51 reflection rec #2) |
