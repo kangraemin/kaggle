@@ -44,3 +44,12 @@ Kernel: ramkang/birdclef2026-effnet-5-fold-pseudo-blend
 - 진단: trial_058 v45 / trial_059 v46는 정상 채점됐으므로 단순 API 글리치가 아닌 ConvNeXt 컴포넌트 추가 후 패턴화된 현상. 코드 컴페티션 hidden re-run 단계에서 ConvNeXt 데이터셋(`birdset-convnext-base-xcl` + `birdclef2026-convnext-5fold`) 마운트 거부 또는 wall 증가로 timeout 처리되어 publicScore 생성 단계 미도달 가능. 어느 쪽이든 ralph-x 자동 워크플로우로는 ConvNeXt-axis 검증 불가 확정.
 - 결론: 2연속 TIMEOUT으로 ConvNeXt-axis 잠정 동결. ralph 비용 60분+ 낭비(2회 90분 폴링).
 - 다음(it.12) 방향: ① ConvNeXt 컴포넌트 cell 65/66 제거, trial_058(0.934 best 동률) 베이스로 회귀 — 자동 submit 트리거 정상 작동 재확인. ② 그 위에서 새 축 시도 1순위 = Perch 멀티윈도우 TTA (sub_51 rec #3, kernel 변경 작고 자동 제출 트리거 정상화 확인용으로도 활용). ③ ralph-x 워크플로우 개선: kernel COMPLETE → 10분 timeout submission CSV 검증 단계 추가, 미생성 시 즉시 fallback. 자세한 가설은 sub_53 reflection.md.
+
+## iter 12: trial_062 pmix_weight_up
+- 시작: 2026-05-13 KST (delegated iter 4)
+- 전략: sub_53 reflection it.12+ rec #1·#2 실행 — ConvNeXt-axis 잠정 동결(trial_060/061 2x TIMEOUT 회수) 후 freed 3pp 슬롯을 검증된 5-fold pseudo-mix 컴포넌트에 재배분. BLEND_PSEUDOMIX 0.08→0.11. mwf0 0.02 (trial_059 유지), distill·convnext 모두 0. Perch 72% 고정.
+- 근거: trial_056 (mwf0 0.07→0.05 / pmix 0.06→0.08) 직선 방향을 한 단계 더 연장(=pmix weight up). pmix는 5-fold 검증된 컴포넌트, ConvNeXt는 검증 불가. 동시에 ConvNeXt 데이터셋 2개(`ramkang/birdclef2026-convnext-5fold`, `denden12/birdset-convnext-base-xcl`) 를 kernel-metadata 에서 제거 — sub_53 reflection 의 'ConvNeXt 데이터셋 마운트가 코드 컴페티션 hidden re-run에서 거부되어 auto-submit 트리거 누락' 가설 정면 테스트. 본 trial 채점이 정상 등장하면 가설 확정.
+- 구현: Cell 62 `BLEND_PSEUDOMIX = 0.08` → `0.11` (코멘트 갱신). Cell 65 `BLEND_CONVNEXT = 0.03` → `0.0` 상단에서 조기 차단 — ConvNeXt 로드/추론 자체가 if 분기로 skip. Cell 66 헤더 코멘트+print label trial_061→trial_062 (수식은 byte-identical, BLEND_CONVNEXT*x 항은 0*x로 죽음). `kernel-metadata.json` ↔ `effnet-blend-kernel-metadata.json` 동기화 후 push (ConvNeXt 2개 dataset 제거).
+- 검증: 변경 cell 3개 모두 `ast.parse` OK. Perch share = 1 - 0.15 - 0.02 - 0.11 - 0 - 0 = 0.72 ✓ (수식 직접 계산). 모델 가중치/prior_mask/postproc 전부 trial_058 byte-identical.
+- kernel v49 push 완료 ("Kernel version 49 successfully pushed"). 채점 PENDING.
+- 위험: 1) trial_056 → 0.08 변화 무효(trial_054 동률)였음 — 0.08 → 0.11도 동률 가능성. 2) pmix 11% 가 5-fold pmix 의 calibration 한계 초과시 -0.001 회귀 가능. 3) ConvNeXt 데이터셋 제거가 auto-submit 트리거 정상화에 영향 없으면(=무관 가설) 인프라 이슈가 여전히 미해결 — 그래도 본 trial 은 ConvNeXt 미사용으로 trial_058 v45/trial_059 v46 패턴(정상 채점)에 합류해야 함.

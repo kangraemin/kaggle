@@ -1,0 +1,29 @@
+{
+  "trial_id": "trial_062",
+  "name": "pmix_weight_up",
+  "sub_id": "sub_54",
+  "iter": 12,
+  "ralph_iter": 12,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "kernel_version": 49,
+  "date": "2026-05-13",
+  "base_trial": "trial_058 (0.934 best, logit-blend baseline)",
+  "strategy": "Revert ConvNeXt-axis (trial_060/061 2x TIMEOUT). Redirect freed 3pp slot to validated 5-fold pseudo-mix component: BLEND_PSEUDOMIX 0.08 -> 0.11. mwf0 stays 0.02 (trial_059), distill stays 0, convnext stays 0. ConvNeXt datasets removed from kernel-metadata to test 'ConvNeXt dataset mount blocks auto-submit trigger' hypothesis from sub_53 reflection.",
+  "weights": {
+    "perch": 0.72,
+    "effnet5fold_epoch50": 0.15,
+    "mwf0_fold0": 0.02,
+    "pmix_fold0_to_4": 0.11,
+    "distill": 0.0,
+    "convnext": 0.0
+  },
+  "files_changed": [
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 62 (BLEND_PSEUDOMIX 0.08->0.11)",
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 65 (BLEND_CONVNEXT 0.03->0)",
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 66 (header comment + print label trial_061->trial_062)",
+    "notebooks/effnet-blend-kernel-metadata.json (removed ramkang/birdclef2026-convnext-5fold, denden12/birdset-convnext-base-xcl)",
+    "notebooks/kernel-metadata.json (synced)"
+  ],
+  "expected": "0.934 +- 0.001. Validated 5-fold pmix component getting 3pp more weight from defunct ConvNeXt slot. trial_056 (mwf0 0.07->0.05 / pmix 0.06->0.08) was the last validated direction; trial_062 extends same direction one more 3pp step.",
+  "score": "PENDING"
+}
