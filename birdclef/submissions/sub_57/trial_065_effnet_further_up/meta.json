@@ -1,0 +1,29 @@
+{
+  "trial_id": "trial_065",
+  "name": "effnet_further_up",
+  "sub_id": "sub_57",
+  "iter": 15,
+  "ralph_iter": 15,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-05-15",
+  "base_trial": "trial_064 (Perch 70% + EffNet5fold 17% + mwf0 2% + pmix 11% → 0.934 동률)",
+  "strategy": "trial_064 동률 분석: EffNet 15%→17% LB 무반응. Continue push to confirm saturation: BLEND_EFFNET 0.17→0.19 (+2pp), Perch 0.70→0.68 (-2pp). mwf0/pmix fixed.",
+  "weights": {
+    "perch": 0.68,
+    "effnet5fold_epoch50": 0.19,
+    "mwf0_fold0": 0.02,
+    "pmix_fold0_to_4": 0.11,
+    "distill": 0.0,
+    "convnext": 0.0
+  },
+  "files_changed": [
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 62 (BLEND_EFFNET 0.17->0.19)",
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 66 (header comment + print label trial_064->trial_065)"
+  ],
+  "expected": "0.934 (동률 예상) or possible change. Confirming EffNet weight axis saturation.",
+  "score": "PENDING",
+  "kernel_version": 52,
+  "submitted_at": "2026-05-15 13:51:11 UTC",
+  "kernel_log_check": "kernel v52 COMPLETE (wall ~265s). log: 'blend (logit-space weighted sum, trial_065): Perch 68% + EffNet5fold 19% + fold0-B0 2% + fold0-S 0% + pmix 11% + distill 0% + convnext5fold 0%'. Final mean: 0.0349.",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 52 -f submission.csv -m 'trial_065 effnet_further_up: Perch 68% + EffNet5fold 19% + mwf0 2% + pmix 11% kernel v52'"
+}

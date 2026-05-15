@@ -69,3 +69,11 @@ Kernel: ramkang/birdclef2026-effnet-5-fold-pseudo-blend
 - **mwf0 noisy 가설 기각**: mwf0이 실제 신호 기여 확인됨
 - pmix 방향 완전 소진: 0.08→0.11→0.13 모두 0.934 이하
 - 다음(iter 14): trial_064 EffNet weight 0.15→0.17, Perch 0.72→0.70 (mwf0/pmix 원복)
+
+## iter 14 — trial_064 effnet_weight_up (2026-05-15)
+
+- 제출: 2026-05-15 12:37:19 UTC, 채점: 2026-05-15 13:44 UTC (67분 소요)
+- score: **0.934** ➖ (best 동률)
+- EffNet 15%→17%, Perch 72%→70% → LB 무반응
+- EffNet weight 방향 포화 가능성 확인
+- 다음(iter 15): trial_065 EffNet 0.17→0.19, Perch 0.70→0.68 (방향 포화 최종 검증)
