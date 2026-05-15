@@ -60,3 +60,12 @@ Kernel: ramkang/birdclef2026-effnet-5-fold-pseudo-blend
 - BLEND_PSEUDOMIX 0.08→0.11 (+3pp): 무효과. pmix weight 포화 확인.
 - ConvNeXt dataset 제거 → auto-submit 정상화 확인 ✓ (trial_060/061 TIMEOUT 원인 확정)
 - 다음(iter 13): trial_063 mwf0_zero_pmix13 (kernel v50 COMPLETE)
+
+## iter 13 — trial_063 mwf0_zero_pmix13 (2026-05-15)
+
+- 제출: 2026-05-15 11:12:27 UTC, 채점: 2026-05-15 12:28 UTC (76분 소요)
+- score: **0.933** ❌ (-0.001 vs best 0.934)
+- mwf0 완전 제거(0.02→0.00) + pmix 2pp up(0.11→0.13) → 역효과
+- **mwf0 noisy 가설 기각**: mwf0이 실제 신호 기여 확인됨
+- pmix 방향 완전 소진: 0.08→0.11→0.13 모두 0.934 이하
+- 다음(iter 14): trial_064 EffNet weight 0.15→0.17, Perch 0.72→0.70 (mwf0/pmix 원복)

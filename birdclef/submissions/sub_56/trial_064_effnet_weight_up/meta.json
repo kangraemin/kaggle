@@ -1,0 +1,28 @@
+{
+  "trial_id": "trial_064",
+  "name": "effnet_weight_up",
+  "sub_id": "sub_56",
+  "iter": 14,
+  "ralph_iter": 14,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-05-15",
+  "base_trial": "trial_062 (Perch 72% + EffNet5fold 15% + mwf0 2% + pmix 11%) — restoring trial_062 state after trial_063 degradation",
+  "strategy": "trial_063 reverse analysis: mwf0 noisy hypothesis rejected (removal caused -0.001), pmix direction exhausted (0.08→0.11→0.13 all at/below 0.934). New axis: increase EffNet 5-fold weight 0.15→0.17, compress Perch 0.72→0.70. mwf0 and pmix restored to trial_062 values.",
+  "weights": {
+    "perch": 0.70,
+    "effnet5fold_epoch50": 0.17,
+    "mwf0_fold0": 0.02,
+    "pmix_fold0_to_4": 0.11,
+    "distill": 0.0,
+    "convnext": 0.0
+  },
+  "files_changed": [
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 62 (BLEND_EFFNET 0.15->0.17, BLEND_MWF0 0.00->0.02, BLEND_PSEUDOMIX 0.13->0.11)",
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 66 (header comment + print label trial_063->trial_064)"
+  ],
+  "expected": "0.934 or higher. EffNet 5-fold is the most validated secondary component. Shifting 2pp from Perch to EffNet tests whether Perch is over-weighted relative to its marginal contribution.",
+  "score": "PENDING",
+  "kernel_version": 51,
+  "submitted_at": "PENDING",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 51 -f submission.csv -m 'trial_064 effnet_weight_up: Perch 70% + EffNet5fold 17% + mwf0 2% + pmix 11% kernel v51'"
+}
