@@ -23,6 +23,7 @@
   "expected": "0.934 or higher. EffNet 5-fold is the most validated secondary component. Shifting 2pp from Perch to EffNet tests whether Perch is over-weighted relative to its marginal contribution.",
   "score": "PENDING",
   "kernel_version": 51,
-  "submitted_at": "PENDING",
+  "submitted_at": "2026-05-15 12:37:19 UTC",
+  "kernel_log_check": "kernel v51 COMPLETE (wall ~312s). log: 'blend (logit-space weighted sum, trial_064): Perch 70% + EffNet5fold 17% + fold0-B0 2% + fold0-S 0% + pmix 11% + distill 0% + convnext5fold 0%'. Final mean: 0.0406. submission.csv generated.",
   "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 51 -f submission.csv -m 'trial_064 effnet_weight_up: Perch 70% + EffNet5fold 17% + mwf0 2% + pmix 11% kernel v51'"
 }
