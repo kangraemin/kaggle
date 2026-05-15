@@ -1,0 +1,30 @@
+{
+  "trial_id": "trial_063",
+  "name": "mwf0_zero_pmix13",
+  "sub_id": "sub_55",
+  "iter": 13,
+  "ralph_iter": 13,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-05-15",
+  "base_trial": "trial_062 (Perch 72% + EffNet5fold 15% + mwf0 2% + pmix 11%)",
+  "strategy": "Zero out mwf0 (noisy single fold0, sub_48 reflection confirmed noisy), redirect freed 2pp to validated 5-fold pmix. BLEND_MWF0 0.02->0.00, BLEND_PSEUDOMIX 0.11->0.13. Perch 72% fixed. Same direction as trial_062 (pmix ramp) but replaces noisy mwf0 component entirely.",
+  "weights": {
+    "perch": 0.72,
+    "effnet5fold_epoch50": 0.15,
+    "mwf0_fold0": 0.0,
+    "pmix_fold0_to_4": 0.13,
+    "distill": 0.0,
+    "convnext": 0.0
+  },
+  "files_changed": [
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 62 (BLEND_MWF0 0.02->0.00, BLEND_PSEUDOMIX 0.11->0.13)",
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 66 (header comment + print label trial_062->trial_063)"
+  ],
+  "expected": "0.934 +- 0.001. mwf0 was confirmed noisy (single fold0) — removing it should reduce noise. pmix 5-fold is validated component (trial_053 +0.001, fold 4 = saturation). Extra 2pp to validated pmix over noisy mwf0.",
+  "score": "PENDING",
+  "kernel_version": 50,
+  "submitted_at": "2026-05-15 11:12:27 UTC",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 50 -f submission.csv -m 'trial_063 mwf0_zero_pmix13: Perch 72% + EffNet5fold 15% + mwf0 0% + pmix 13% kernel v50'",
+  "kernel_log_check": "kernel v50 COMPLETE (wall ~352s). log: 'blend (logit-space weighted sum, trial_063): Perch 72% + EffNet5fold 15% + fold0-B0 0% + fold0-S 0% + pmix 13% + distill 0% + convnext5fold 0%'. Final mean: 0.0507. submission.csv 240x235 valid.",
+  "submit_note": "Required '-f submission.csv' flag for code competition submit — without it, CreateCodeSubmission returns 400"
+}

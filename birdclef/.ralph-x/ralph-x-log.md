@@ -53,3 +53,10 @@ Kernel: ramkang/birdclef2026-effnet-5-fold-pseudo-blend
 - 검증: 변경 cell 3개 모두 `ast.parse` OK. Perch share = 1 - 0.15 - 0.02 - 0.11 - 0 - 0 = 0.72 ✓ (수식 직접 계산). 모델 가중치/prior_mask/postproc 전부 trial_058 byte-identical.
 - kernel v49 push 완료 ("Kernel version 49 successfully pushed"). 채점 PENDING.
 - 위험: 1) trial_056 → 0.08 변화 무효(trial_054 동률)였음 — 0.08 → 0.11도 동률 가능성. 2) pmix 11% 가 5-fold pmix 의 calibration 한계 초과시 -0.001 회귀 가능. 3) ConvNeXt 데이터셋 제거가 auto-submit 트리거 정상화에 영향 없으면(=무관 가설) 인프라 이슈가 여전히 미해결 — 그래도 본 trial 은 ConvNeXt 미사용으로 trial_058 v45/trial_059 v46 패턴(정상 채점)에 합류해야 함.
+
+## iter 12: trial_062 pmix_weight_up 결과
+- 제출: 2026-05-15 09:51:50 UTC, 채점: 2026-05-15 11:10 UTC (78분 소요 — Kaggle 서버 지연)
+- score: **0.934** (best 동률)
+- BLEND_PSEUDOMIX 0.08→0.11 (+3pp): 무효과. pmix weight 포화 확인.
+- ConvNeXt dataset 제거 → auto-submit 정상화 확인 ✓ (trial_060/061 TIMEOUT 원인 확정)
+- 다음(iter 13): trial_063 mwf0_zero_pmix13 (kernel v50 COMPLETE)
