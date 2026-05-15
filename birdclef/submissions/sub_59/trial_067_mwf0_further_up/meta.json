@@ -1,0 +1,30 @@
+{
+  "trial_id": "trial_067",
+  "name": "mwf0_further_up",
+  "sub_id": "sub_59",
+  "iter": 17,
+  "ralph_iter": 17,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-05-16",
+  "base_trial": "trial_066 (Perch 72% + EffNet5fold 15% + mwf0 3% + pmix 10% → 0.934 동률)",
+  "strategy": "mwf0 0.03=동률 confirmed. Push to 0.04 to establish saturation boundary. BLEND_MWF0 0.03->0.04, BLEND_PSEUDOMIX 0.10->0.09. Perch/EffNet fixed at 0.72/0.15.",
+  "weights": {
+    "perch": 0.72,
+    "effnet5fold_epoch50": 0.15,
+    "mwf0_fold0": 0.04,
+    "pmix_fold0_to_4": 0.09,
+    "distill": 0.0,
+    "convnext": 0.0
+  },
+  "files_changed": [
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 62 (BLEND_MWF0 0.03->0.04, BLEND_PSEUDOMIX 0.10->0.09)",
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 66 (header comment + print label trial_066->trial_067)"
+  ],
+  "expected": "0.934 (동률 예상) or possible degradation. Confirming mwf0 saturation.",
+  "score": "PENDING",
+  "kernel_version": 54,
+  "submitted_at": "BLOCKED",
+  "submit_note": "일일 제출 한도 초과 (2026-05-15 UTC 5회: trial_062~066). 2026-05-16 00:00 UTC (09:00 KST) 리셋 후 재시도.",
+  "kernel_log_check": "kernel v54 COMPLETE (wall ~302s). 'blend (trial_067): Perch 72% + EffNet5fold 15% + fold0-B0 4% + fold0-S 0% + pmix 9%'. Final mean: 0.0440.",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 54 -f submission.csv -m 'trial_067 mwf0_further_up: Perch 72% + EffNet5fold 15% + mwf0 4% + pmix 9% kernel v54'"
+}
