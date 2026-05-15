@@ -21,7 +21,9 @@
     "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 66 (header comment + print label trial_064->trial_065)"
   ],
   "expected": "0.934 (동률 예상) or possible change. Confirming EffNet weight axis saturation.",
-  "score": "PENDING",
+  "score": "0.933",
+  "scored_at": "2026-05-15 14:58 UTC (67 min PENDING)",
+  "result": "❌ -0.001. EffNet 19%→하락 확정. EffNet weight↑ 방향 역효과. 다음: 원복 후 mwf0 증량 시도.",
   "kernel_version": 52,
   "submitted_at": "2026-05-15 13:51:11 UTC",
   "kernel_log_check": "kernel v52 COMPLETE (wall ~265s). log: 'blend (logit-space weighted sum, trial_065): Perch 68% + EffNet5fold 19% + fold0-B0 2% + fold0-S 0% + pmix 11% + distill 0% + convnext5fold 0%'. Final mean: 0.0349.",
