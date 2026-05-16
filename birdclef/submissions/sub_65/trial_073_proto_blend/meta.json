@@ -7,10 +7,10 @@
   "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
   "date": "2026-05-17",
   "base_trial": "trial_072 (SED 15% — ProtoSSM 출력이 blend에 반영 안 됐던 버그 수정)",
-  "strategy": "ProtoSSM v4+MLP 50% blend 추가. cell 61 final_test_scores를 proto_logits로 저장 후 cell 68 blend에 포함. Perch 63%→13% (-50pp). 0.947 클러스터 전략.",
+  "strategy": "ProtoSSM v4+MLP 50% blend 추가. EffNet 5fold 제거(SED 추가 시 삭제됨)로 Perch 28%. 0.947 클러스터 ProtoSSM 전략. blend-varfix(v62)로 NameError 수정.",
   "weights": {
-    "perch": 0.13,
-    "effnet5fold_epoch50": 0.15,
+    "perch": 0.28,
+    "effnet5fold_epoch50": 0.0,
     "mwf0_fold0": 0.02,
     "pmix_fold0_to_4": 0.05,
     "sed_5fold": 0.15,
@@ -20,12 +20,12 @@
   },
   "files_changed": [
     "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 61 (proto_logits = final_test_scores.copy() 저장)",
-    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 63 (BLEND_PROTO = 0.50 추가)",
-    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 68 (blend formula ProtoSSM 50% 추가, Perch 63%→13%)"
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 63 (BLEND_PROTO=0.50 + BLEND_EFFNET=0.0 + BLEND_MWF0=0.02 + effnet_logits placeholder)",
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 68 (blend formula ProtoSSM 50% 추가, Perch 28%)"
   ],
-  "expected": "0.947+ 예상 (ProtoSSM이 0.947 클러스터의 핵심 모델. OOF ENSEMBLE_WEIGHT_PROTO=0.50 최적값 사용)",
+  "expected": "0.947+ 예상 (ProtoSSM 50%가 0.947 클러스터 핵심. EffNet 없어도 ProtoSSM 신호가 지배적이면 개선)",
   "score": "PENDING",
-  "kernel_version": 61,
+  "kernel_version": 62,
   "submitted_at": "PENDING",
-  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 61 -f submission.csv -m 'trial_073 proto_blend: ProtoSSM 50% + Perch 13% + EffNet 15% + mwf0 2% + pmix 5% + SED 15% kernel v61'"
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 62 -f submission.csv -m 'trial_073 proto_blend: ProtoSSM 50% + Perch 28% + mwf0 2% + pmix 5% + SED 15% kernel v62 (blend-varfix)'"
 }
