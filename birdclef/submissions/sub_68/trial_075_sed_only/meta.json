@@ -1,0 +1,30 @@
+{
+  "trial_id": "trial_075",
+  "name": "sed_only",
+  "sub_id": "sub_68",
+  "iter": 25,
+  "ralph_iter": 25,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-05-17",
+  "base_trial": "trial_074 proto_up (kernel v65, BLEND_SED fix)",
+  "strategy": "ProtoSSM 제거(BLEND_PROTO 0.65→0), SED 15% 단독 유지. Perch 13%→78%. 진단 목적: ProtoSSM 없이 SED 15%만으로 0.934 천장 돌파 여부 확인. SED가 EffNet5fold 대체재인지 측정.",
+  "weights": {
+    "perch": 0.78,
+    "effnet5fold_epoch50": 0.0,
+    "mwf0_fold0": 0.02,
+    "pmix_fold0_to_4": 0.05,
+    "sed_5fold": 0.15,
+    "proto_ssm": 0.0,
+    "distill": 0.0,
+    "convnext": 0.0
+  },
+  "files_changed": [
+    "birdclef2026-effnet-5fold-blend.ipynb cells[62] (BLEND_PROTO 0.65→0.0)",
+    "birdclef2026-effnet-5fold-blend.ipynb cells[67] (blend label trial_074→trial_075, Perch 78%, ProtoSSM 0%)"
+  ],
+  "expected": "0.934 예상 (SED가 Perch-distilled이므로 diversity 미확보 가능). 개선되면 SED가 EffNet5fold 대체 확인.",
+  "score": "PENDING",
+  "kernel_version": 66,
+  "submitted_at": "PENDING",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 66 -f submission.csv -m 'trial_075 sed_only: Perch 78% + SED 15% + mwf0 2% + pmix 5% kernel v66 (ProtoSSM=0 isolation)'"
+}

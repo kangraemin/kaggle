@@ -1,0 +1,23 @@
+{
+  "workflow_phase": "done",
+  "plan_approved": true,
+  "current_dev_phase": 1,
+  "current_step": 1,
+  "resolved_agent_mode": "single",
+  "dev_phases": {
+    "1": {
+      "name": "trial075-sed-only",
+      "steps": {
+        "1": "cells[62]/cells[67] 수정 + 검증 PASS"
+      },
+      "depends_on": [],
+      "team_name": "",
+      "status": "done"
+    }
+  },
+  "phase_layers": [["1"]],
+  "current_layer": 0,
+  "verification": {"e2e_passed": true},
+  "task_dir": ".ai-bouncer-tasks/2026-05-16/trial075-sed-only",
+  "active_file": ".ai-bouncer-tasks/2026-05-16/trial075-sed-only/.active"
+}
