@@ -25,7 +25,7 @@
   ],
   "expected": "0.940+ 예상 (SED 15% 정상 반영 + ProtoSSM 65% = 첫 valid ProtoSSM 신호 측정)",
   "score": "PENDING",
-  "kernel_version": 64,
+  "kernel_version": 65,
   "submitted_at": "PENDING",
-  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 64 -f submission.csv -m 'trial_074 proto_up: ProtoSSM 65% + Perch 13% + SED 15% + mwf0 2% + pmix 5% kernel v64 (BLEND_SED fix)'"
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 65 -f submission.csv -m 'trial_074 proto_up: ProtoSSM 65% + Perch 13% + SED 15% + mwf0 2% + pmix 5% kernel v65 (distill_logits+BLEND_SED fix)'"
 }
