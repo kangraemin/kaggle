@@ -1,0 +1,26 @@
+{
+  "trial_id": "trial_077",
+  "name": "birdnet_add",
+  "sub_id": "sub_70",
+  "iter": 27,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-05-17",
+  "base_trial": "trial_076 effnet_sed (kernel v67)",
+  "strategy": "BirdNET v2.4 TFLite 신규 추가(BLEND_BIRDNET=0.10) + blend formula 버그 수정(cells[68]에 실제 공식 추가). BLEND_PROTO=0.60 복원. trial_073~076은 blend 공식 없어 전부 ProtoSSM 단독 출력이었음.",
+  "weights": {
+    "perch": 0.13,
+    "proto_ssm": 0.60,
+    "birdnet_v2.4": 0.10,
+    "sed_5fold": 0.10,
+    "mwf0_fold0": 0.02,
+    "pmix_fold0": 0.05,
+    "effnet5fold": 0.0,
+    "distill": 0.0,
+    "convnext": 0.0
+  },
+  "expected": "0.934+ (blend 공식 수정 + BirdNET 추가. 0.947 참조 구성과 유사)",
+  "score": "PENDING",
+  "kernel_version": 68,
+  "submitted_at": "PENDING",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 68 -f submission.csv -m 'trial_077 birdnet_add: Perch 13%+ProtoSSM 60%+BirdNET 10%+SED 10%+mwf0 2%+pmix 5% kernel v68 (blend 버그 수정 + BirdNET 추가)'"
+}
