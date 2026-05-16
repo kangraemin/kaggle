@@ -1,0 +1,30 @@
+{
+  "trial_id": "trial_074",
+  "name": "proto_heavy",
+  "sub_id": "sub_67",
+  "iter": 24,
+  "ralph_iter": 24,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "TBD — 073 결과 확인 후",
+  "base_trial": "trial_073 proto_blend (ProtoSSM neutral/0.934 시 대안)",
+  "strategy": "USE IF trial_073 = 0.934. ProtoSSM 50%→75%, Perch 28%→03%. 극단적 ProtoSSM 비중으로 신호 존재 여부 최종 확인. 0.934 유지면 ProtoSSM≡Perch 결론.",
+  "weights": {
+    "perch": 0.03,
+    "effnet5fold_epoch50": 0.0,
+    "mwf0_fold0": 0.02,
+    "pmix_fold0_to_4": 0.05,
+    "sed_5fold": 0.15,
+    "proto_ssm": 0.75,
+    "distill": 0.0,
+    "convnext": 0.0
+  },
+  "files_changed": [
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 63 (BLEND_PROTO 0.50→0.75)",
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 68 (blend formula label: Perch 3% + ProtoSSM 75%)"
+  ],
+  "expected": "neutral (0.934) 예상. ProtoSSM가 Perch 임베딩 기반이라 diversity 없을 가능성 높음.",
+  "score": "NOT_YET",
+  "kernel_version": "TBD",
+  "submitted_at": "NOT_YET",
+  "submit_command": "TBD after kernel push"
+}
