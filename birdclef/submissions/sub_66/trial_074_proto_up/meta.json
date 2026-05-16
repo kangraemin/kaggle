@@ -5,9 +5,9 @@
   "iter": 24,
   "ralph_iter": 24,
   "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
-  "date": "TBD — 073 결과 확인 후",
-  "base_trial": "trial_073 proto_blend (ProtoSSM 50% → 개선 확인 시)",
-  "strategy": "USE IF trial_073 >= 0.940. ProtoSSM 50%→65%, Perch 28%→13%. SED/mwf0/pmix 유지. 더 강한 ProtoSSM 신호로 개선 폭 확인.",
+  "date": "2026-05-17",
+  "base_trial": "trial_073 proto_blend (kernel v63, BLEND_SED=0 bug → skipped. trial_074가 first valid ProtoSSM 제출)",
+  "strategy": "ProtoSSM 65% + Perch 13% + SED 15% + mwf0 2% + pmix 5%. BLEND_SED 0.0 override 버그(cells[66]) 동시 수정.",
   "weights": {
     "perch": 0.13,
     "effnet5fold_epoch50": 0.0,
@@ -19,12 +19,13 @@
     "convnext": 0.0
   },
   "files_changed": [
-    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 63 (BLEND_PROTO 0.50→0.65)",
-    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 68 (blend formula label: Perch 13% + ProtoSSM 65%)"
+    "birdclef2026-effnet-5fold-blend.ipynb cells[62] (BLEND_PROTO 0.50→0.65, BLEND_SED=0.15 추가)",
+    "birdclef2026-effnet-5fold-blend.ipynb cells[66] (BLEND_SED=0.0 override 제거 → 주석으로 교체)",
+    "birdclef2026-effnet-5fold-blend.ipynb cells[67] (blend label trial_073→trial_074, Perch 28%→13%, ProtoSSM 50%→65%)"
   ],
-  "expected": "0.950+ 예상 (073이 개선되면 더 강한 ProtoSSM이 추가 개선 가능)",
-  "score": "NOT_YET",
-  "kernel_version": "TBD",
-  "submitted_at": "NOT_YET",
-  "submit_command": "TBD after kernel push"
+  "expected": "0.940+ 예상 (SED 15% 정상 반영 + ProtoSSM 65% = 첫 valid ProtoSSM 신호 측정)",
+  "score": "PENDING",
+  "kernel_version": 64,
+  "submitted_at": "PENDING",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 64 -f submission.csv -m 'trial_074 proto_up: ProtoSSM 65% + Perch 13% + SED 15% + mwf0 2% + pmix 5% kernel v64 (BLEND_SED fix)'"
 }
