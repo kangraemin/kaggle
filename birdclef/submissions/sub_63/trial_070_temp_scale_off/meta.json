@@ -1,0 +1,18 @@
+{
+  "trial_id": "trial_070",
+  "name": "temp_scale_off",
+  "sub_id": "sub_63",
+  "iter": 20,
+  "ralph_iter": 20,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-05-16",
+  "base_trial": "trial_069 (prior mask 0.5, Perch 76%+EffNet 15%+mwf0 2%+pmix 7% → 0.934 동률)",
+  "strategy": "ROC-AUC는 rank-based metric → temperature scaling 이론적으로 불필요. T_AVES 1.10→1.0 제거. rank_aware_scale과의 상호작용 제거 목적. blend weights 동일.",
+  "weights": {"perch": 0.76, "effnet5fold_epoch50": 0.15, "mwf0_fold0": 0.02, "pmix_fold0_to_4": 0.07},
+  "score": "0.934",
+  "scored_at": "2026-05-16 ~09:46 UTC",
+  "result": "동률 ➖",
+  "kernel_version": 57,
+  "submitted_at": "2026-05-16 08:32:15 UTC",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 57 -f submission.csv -m 'trial_070 temp_scale_off: T_AVES 1.10→1.0, Perch 76%+EffNet 15%+mwf0 2%+pmix 7% kernel v57'"
+}

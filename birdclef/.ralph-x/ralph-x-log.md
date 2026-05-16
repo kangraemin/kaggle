@@ -122,3 +122,18 @@ Kernel: ramkang/birdclef2026-effnet-5-fold-pseudo-blend
 - **post-processing 방향도 포화**: prior mask 완화 무효과 확정
 - **이번 세션(iter 13~19) 결론**: blend weight space + prior mask 전 방향 소진. 0.934 천장 구조적 한계.
 - **세션 루프 종료** — 다음 접근: temperature 조정, prior mask 비활성화, 또는 새 모델 학습
+
+## iter 20 — trial_070 temp_scale_off (2026-05-16)
+
+- 제출: 2026-05-16 08:32:15 UTC, 채점: 2026-05-16 ~09:46 UTC (~74분 소요)
+- score: **0.934** ➖ (best 동률)
+- T_AVES 1.10→1.0 (온도 스케일링 제거) → 동률 유지
+- **T_AVES 완전 무의미**: ROC-AUC는 rank-based → temperature scaling이 rank 보존 확인. 이론대로.
+- 다음(iter 21): trial_071 채점 대기 중 (SED diversity 결과 확인 후 결정)
+
+## iter 21 — trial_071 sed_blend (2026-05-16)
+
+- 제출: 2026-05-16 08:37:48 UTC, 채점: **PENDING**
+- strategy: Tucker Arrants Distilled-SED 5-fold ONNX 추가. BLEND_SED=0.05, pmix 0.07→0.06, Perch 0.76→0.72 (implicit)
+- EfficientNetB0 + Perch 지식증류 + attention head → 완전히 다른 model family diversity
+- 채점 완료 후 기록 예정
