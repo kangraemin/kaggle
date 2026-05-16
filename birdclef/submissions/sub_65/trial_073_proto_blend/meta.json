@@ -25,7 +25,7 @@
   ],
   "expected": "0.947+ 예상 (ProtoSSM 50%가 0.947 클러스터 핵심. EffNet 없어도 ProtoSSM 신호가 지배적이면 개선)",
   "score": "PENDING",
-  "kernel_version": 62,
+  "kernel_version": 63,
   "submitted_at": "PENDING",
-  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 62 -f submission.csv -m 'trial_073 proto_blend: ProtoSSM 50% + Perch 28% + mwf0 2% + pmix 5% + SED 15% kernel v62 (blend-varfix)'"
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 63 -f submission.csv -m 'trial_073 proto_blend: ProtoSSM 50% + Perch 28% + mwf0 2% + pmix 5% + SED 15% kernel v63 (perch-raw-fix)'"
 }
