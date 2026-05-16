@@ -137,3 +137,25 @@ Kernel: ramkang/birdclef2026-effnet-5-fold-pseudo-blend
 - strategy: Tucker Arrants Distilled-SED 5-fold ONNX 추가. BLEND_SED=0.05, pmix 0.07→0.06, Perch 0.76→0.72 (implicit)
 - EfficientNetB0 + Perch 지식증류 + attention head → 완전히 다른 model family diversity
 - 채점 완료 후 기록 예정
+
+## iter 21 결과 업데이트 — trial_071 sed_blend (2026-05-16)
+
+- 채점: 2026-05-16 ~10:10 UTC (~92분 소요)
+- score: **0.934** ➖ (best 동률)
+- SED 5-fold ONNX 5% 블렌드 → 동률 유지
+- **SED diversity 무효과**: Tucker SED가 Perch로 지식증류됨 → Perch 예측과 유사 가능성. 또는 5%가 너무 작음.
+- **10연속 0.934 천장 확정**: blend weight / post-processing / temperature / SED diversity 모두 소진
+- Top LB 0.961 vs 현재 0.934 = **0.027 gap** — 구조적 한계
+- **다음 전략 옵션**:
+  A. BLEND_SED 0.05→0.15 (SED 신호 존재 여부 최종 확인)
+  B. 완전히 다른 접근: 로컬 mwf0 fold1~4 학습 + 5-fold 앙상블
+  C. Public 고득점 노트북 탐색 및 새 모델 통합
+- 일일 한도 5/5 소진. UTC midnight (KST 09:00 내일) 리셋 후 제출 가능.
+
+## iter 22 — trial_072 sed_up (2026-05-17 예정)
+
+- 전략: BLEND_SED 0.05→0.15 (SED 신호 최종 검증). Perch 0.72→0.63 (-9pp). pmix 0.06→0.05 (-1pp).
+- 가설: trial_071 SED 5%가 너무 작아서 neutral. 15%에서 신호 존재 여부 확인.
+- 반가설: Tucker SED = Perch-distilled → 두 모델 예측 유사 → 어떤 비중에도 중립
+- kernel v59 push 완료. 일일 한도 5/5 소진 → UTC midnight (KST 09:00 2026-05-17) 리셋 후 제출.
+- 채점: TBD

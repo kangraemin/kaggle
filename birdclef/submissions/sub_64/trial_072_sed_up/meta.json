@@ -1,0 +1,29 @@
+{
+  "trial_id": "trial_072",
+  "name": "sed_up",
+  "sub_id": "sub_64",
+  "iter": 22,
+  "ralph_iter": 22,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-05-17",
+  "base_trial": "trial_071 (SED 5% neutral → 5%가 너무 작았는지 검증)",
+  "strategy": "BLEND_SED 0.05→0.15 (SED 신호 존재 여부 최종 확인). Perch 0.72→0.63 (-9pp). BLEND_PSEUDOMIX 0.06→0.05 (-1pp). SED Perch-distilled model이므로 diversity 없을 가능성. 15%에서도 neutral이면 SED≡Perch 결론 확정.",
+  "weights": {
+    "perch": 0.63,
+    "effnet5fold_epoch50": 0.15,
+    "mwf0_fold0": 0.02,
+    "pmix_fold0_to_4": 0.05,
+    "sed_5fold": 0.15,
+    "distill": 0.0,
+    "convnext": 0.0
+  },
+  "files_changed": [
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 62 (BLEND_SED 0.05→0.15, BLEND_PSEUDOMIX 0.06→0.05)",
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 67 (fusion formula label trial_071→trial_072, Perch 72%→63%, pmix 6%→5%, SED 5%→15%)"
+  ],
+  "expected": "neutral 예상 (SED가 Perch-distilled이므로 diversity 미확보 가능). 개선되면 SED weight 신호 확인.",
+  "score": "PENDING",
+  "kernel_version": 59,
+  "submitted_at": "PENDING",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 59 -f submission.csv -m 'trial_072 sed_up: Perch 63% + EffNet 15% + mwf0 2% + pmix 5% + SED 15% kernel v59'"
+}
