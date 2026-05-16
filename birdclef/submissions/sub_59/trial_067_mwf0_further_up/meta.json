@@ -23,8 +23,8 @@
   "expected": "0.934 (동률 예상) or possible degradation. Confirming mwf0 saturation.",
   "score": "PENDING",
   "kernel_version": 54,
-  "submitted_at": "BLOCKED",
-  "submit_note": "일일 제출 한도 초과 (2026-05-15 UTC 5회: trial_062~066). 2026-05-16 00:00 UTC (09:00 KST) 리셋 후 재시도.",
+  "submitted_at": "2026-05-16 00:03:11 UTC",
+  "submit_note": "일일 제출 한도 초과로 BLOCKED (2026-05-15 UTC 5회: trial_062~066). 2026-05-16 00:03 UTC 리셋 후 제출 성공.",
   "kernel_log_check": "kernel v54 COMPLETE (wall ~302s). 'blend (trial_067): Perch 72% + EffNet5fold 15% + fold0-B0 4% + fold0-S 0% + pmix 9%'. Final mean: 0.0440.",
   "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 54 -f submission.csv -m 'trial_067 mwf0_further_up: Perch 72% + EffNet5fold 15% + mwf0 4% + pmix 9% kernel v54'"
 }
