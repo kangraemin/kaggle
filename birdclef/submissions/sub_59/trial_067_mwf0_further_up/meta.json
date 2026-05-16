@@ -21,7 +21,9 @@
     "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 66 (header comment + print label trial_066->trial_067)"
   ],
   "expected": "0.934 (동률 예상) or possible degradation. Confirming mwf0 saturation.",
-  "score": "PENDING",
+  "score": "0.934",
+  "scored_at": "2026-05-16 ~01:05 UTC",
+  "result": "동률 ➖",
   "kernel_version": 54,
   "submitted_at": "2026-05-16 00:03:11 UTC",
   "submit_note": "일일 제출 한도 초과로 BLOCKED (2026-05-15 UTC 5회: trial_062~066). 2026-05-16 00:03 UTC 리셋 후 제출 성공.",

@@ -1,0 +1,28 @@
+{
+  "trial_id": "trial_068",
+  "name": "perch_up",
+  "sub_id": "sub_60",
+  "iter": 18,
+  "ralph_iter": 18,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-05-16",
+  "base_trial": "trial_067 (Perch 72% + EffNet5fold 15% + mwf0 4% + pmix 9% → 0.934 동률)",
+  "strategy": "mwf0 0.02~0.04 전 범위 동률 확정 → mwf0 원복 0.02 (-2pp). pmix도 0.09→0.07 (-2pp). freed 4pp → Perch 0.72→0.76 (+4pp). 주요 컴포넌트(Perch) 비중 증가 방향 재탐색.",
+  "weights": {
+    "perch": 0.76,
+    "effnet5fold_epoch50": 0.15,
+    "mwf0_fold0": 0.02,
+    "pmix_fold0_to_4": 0.07,
+    "distill": 0.0,
+    "convnext": 0.0
+  },
+  "files_changed": [
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 62 (BLEND_MWF0 0.04->0.02, BLEND_PSEUDOMIX 0.09->0.07)",
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 66 (header comment + print label trial_067->trial_068)"
+  ],
+  "expected": "0.934 (동률 예상) or possible improvement/degradation. Perch 비중 증가가 유효한지 테스트.",
+  "score": "PENDING",
+  "kernel_version": 55,
+  "submitted_at": "PENDING",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 55 -f submission.csv -m 'trial_068 perch_up: Perch 76% + EffNet5fold 15% + mwf0 2% + pmix 7% kernel v55'"
+}

@@ -93,3 +93,14 @@ Kernel: ramkang/birdclef2026-effnet-5-fold-pseudo-blend
 - mwf0 0.02→0.03, pmix 0.11→0.10 → 동률 유지
 - **blend weight 전 방향 포화 확정**: pmix/mwf0/EffNet/distill 모든 방향 탐색 완료
 - 다음(iter 17): trial_067 mwf0 0.04 push — 포화 경계 최종 확정
+
+## iter 17 — trial_067 mwf0_further_up (2026-05-16)
+
+- 제출: 2026-05-16 00:03:11 UTC (일일 한도 초과로 2026-05-15 BLOCKED → UTC 리셋 후 제출)
+- 채점: 2026-05-16 ~01:05 UTC (~62분 소요)
+- score: **0.934** ➖ (best 동률)
+- mwf0 0.03→0.04, pmix 0.10→0.09 → 동률 유지
+- **mwf0 증량 방향 완전 포화 확정**: 0.02→0.03→0.04 전부 0.934 (제거만 0.933 역효과)
+- **blend weight space 전 방향 소진**: pmix/mwf0/EffNet/distill 모든 축 완료
+- 다음(iter 18): trial_068 — mwf0 0.04→0.02 원복 + pmix 0.09→0.07 (-2pp) → Perch 0.72→0.76 (+4pp)
+  (주요 컴포넌트 Perch 비중 증가 방향 재탐색. BLEND_EFFNET 고정 0.15)
