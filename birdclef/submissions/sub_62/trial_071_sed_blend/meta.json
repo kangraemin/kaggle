@@ -26,6 +26,6 @@
   "expected": "개선 기대 (SED diversity). top LB팀 0.961 vs 현재 0.934 gap이 model diversity 부족에서 기인.",
   "score": "PENDING",
   "kernel_version": 58,
-  "submitted_at": "PENDING",
+  "submitted_at": "2026-05-16 08:37:48 UTC",
   "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 58 -f submission.csv -m 'trial_071 sed_blend: Perch 72% + EffNet 15% + mwf0 2% + pmix 6% + SED 5% kernel v58'"
 }
