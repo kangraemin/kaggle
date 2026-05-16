@@ -21,7 +21,9 @@
     "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 66 (header comment + print label trial_068→trial_069)"
   ],
   "expected": "개선 가능성 불명. prior mask가 너무 강했다면 +0.001 이상. 과도하게 완화되면 ❌.",
-  "score": "PENDING",
+  "score": "0.934",
+  "scored_at": "2026-05-16 ~08:10 UTC",
+  "result": "동률 ➖",
   "kernel_version": 56,
   "submitted_at": "2026-05-16 06:54:13 UTC",
   "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 56 -f submission.csv -m 'trial_069 prior_mask_relax: prior mask 0.3→0.5, Perch 76% + EffNet5fold 15% + mwf0 2% + pmix 7% kernel v56'"

@@ -113,3 +113,12 @@ Kernel: ramkang/birdclef2026-effnet-5-fold-pseudo-blend
 - **Perch 비중 증량도 포화**: 0.72→0.76 무효과 확정
 - **blend weight space 완전 소진**: 모든 컴포넌트(Perch/EffNet/mwf0/pmix/distill) 방향 전체 탐색 완료. 0.934 천장 확정.
 - 다음(iter 19): trial_069 — post-processing 방향 탐색. CLASS_PRIOR_MASK 완화 (비사이트 종 억제 0.3→0.5)
+
+## iter 19 — trial_069 prior_mask_relax (2026-05-16)
+
+- 제출: 2026-05-16 06:54:13 UTC, 채점: 2026-05-16 ~08:10 UTC (~76분 소요)
+- score: **0.934** ➖ (best 동률)
+- prior mask 0.3→0.5 완화 → 동률 유지
+- **post-processing 방향도 포화**: prior mask 완화 무효과 확정
+- **이번 세션(iter 13~19) 결론**: blend weight space + prior mask 전 방향 소진. 0.934 천장 구조적 한계.
+- **세션 루프 종료** — 다음 접근: temperature 조정, prior mask 비활성화, 또는 새 모델 학습
