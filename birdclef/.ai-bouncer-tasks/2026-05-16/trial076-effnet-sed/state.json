@@ -1,0 +1,23 @@
+{
+  "workflow_phase": "done",
+  "plan_approved": true,
+  "current_dev_phase": 1,
+  "current_step": 1,
+  "resolved_agent_mode": "single",
+  "dev_phases": {
+    "1": {
+      "name": "trial076-effnet-sed",
+      "steps": {
+        "1": "노트북 수정 (3개 변경 + cell 삽입) + meta.json 생성 + 10-TC 검증 PASS"
+      },
+      "depends_on": [],
+      "team_name": "",
+      "status": "done"
+    }
+  },
+  "phase_layers": [["1"]],
+  "current_layer": 0,
+  "verification": {"e2e_passed": true},
+  "task_dir": ".ai-bouncer-tasks/2026-05-16/trial076-effnet-sed",
+  "active_file": ".ai-bouncer-tasks/2026-05-16/trial076-effnet-sed/.active"
+}
