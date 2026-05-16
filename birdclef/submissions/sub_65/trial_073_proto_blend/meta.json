@@ -1,0 +1,31 @@
+{
+  "trial_id": "trial_073",
+  "name": "proto_blend",
+  "sub_id": "sub_65",
+  "iter": 23,
+  "ralph_iter": 23,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-05-17",
+  "base_trial": "trial_072 (SED 15% — ProtoSSM 출력이 blend에 반영 안 됐던 버그 수정)",
+  "strategy": "ProtoSSM v4+MLP 50% blend 추가. cell 61 final_test_scores를 proto_logits로 저장 후 cell 68 blend에 포함. Perch 63%→13% (-50pp). 0.947 클러스터 전략.",
+  "weights": {
+    "perch": 0.13,
+    "effnet5fold_epoch50": 0.15,
+    "mwf0_fold0": 0.02,
+    "pmix_fold0_to_4": 0.05,
+    "sed_5fold": 0.15,
+    "proto_ssm": 0.50,
+    "distill": 0.0,
+    "convnext": 0.0
+  },
+  "files_changed": [
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 61 (proto_logits = final_test_scores.copy() 저장)",
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 63 (BLEND_PROTO = 0.50 추가)",
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 68 (blend formula ProtoSSM 50% 추가, Perch 63%→13%)"
+  ],
+  "expected": "0.947+ 예상 (ProtoSSM이 0.947 클러스터의 핵심 모델. OOF ENSEMBLE_WEIGHT_PROTO=0.50 최적값 사용)",
+  "score": "PENDING",
+  "kernel_version": 61,
+  "submitted_at": "PENDING",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 61 -f submission.csv -m 'trial_073 proto_blend: ProtoSSM 50% + Perch 13% + EffNet 15% + mwf0 2% + pmix 5% + SED 15% kernel v61'"
+}
