@@ -29,7 +29,8 @@
       "mcp__kaggle__search_datasets",
       "mcp__kaggle__list_hackathon_write_ups",
       "mcp__kaggle__get_writeup_by_slug",
-      "mcp__kaggle__list_dataset_files"
+      "mcp__kaggle__list_dataset_files",
+      "Skill(worklog)"
     ]
   }
 }
