@@ -1,0 +1,31 @@
+{
+  "trial_id": "trial_071",
+  "name": "sed_blend",
+  "sub_id": "sub_62",
+  "iter": 20,
+  "ralph_iter": 20,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-05-16",
+  "base_trial": "trial_070 (Perch 76% + EffNet 15% + mwf0 2% + pmix 7%, T_AVES=1.0 → TBD)",
+  "strategy": "Tucker Arrants의 Distilled-SED 5-fold ONNX (bc2026-distilled-sed-public) 추가. SED = EfficientNet-B0 + Perch 지식증류 + attention 기반 clip/frame logits. 전혀 다른 모델 family → diversity 확보. BLEND_SED=0.05, pmix 0.07→0.06, Perch 0.76→0.72 (implicit). T_AVES=1.0 유지.",
+  "weights": {
+    "perch": 0.72,
+    "effnet5fold_epoch50": 0.15,
+    "mwf0_fold0": 0.02,
+    "pmix_fold0_to_4": 0.06,
+    "sed_5fold": 0.05,
+    "distill": 0.0,
+    "convnext": 0.0
+  },
+  "files_changed": [
+    "notebooks/kernel-metadata.json (tuckerarrants/bc2026-distilled-sed-public 추가)",
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 66 (신규: SED ONNX 5-fold inference)",
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 62 (BLEND_PSEUDOMIX 0.07→0.06, BLEND_SED=0.05 추가)",
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 67 (fusion formula에 BLEND_SED * sed_logits 추가, trial_070→trial_071 label)"
+  ],
+  "expected": "개선 기대 (SED diversity). top LB팀 0.961 vs 현재 0.934 gap이 model diversity 부족에서 기인.",
+  "score": "PENDING",
+  "kernel_version": 58,
+  "submitted_at": "PENDING",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 58 -f submission.csv -m 'trial_071 sed_blend: Perch 72% + EffNet 15% + mwf0 2% + pmix 6% + SED 5% kernel v58'"
+}

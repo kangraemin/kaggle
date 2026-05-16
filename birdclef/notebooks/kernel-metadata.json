@@ -17,7 +17,8 @@
     "ramkang/birdclef2026-effnet-5fold-epoch50",
     "ramkang/birdclef2026-effnet-5fold-distill",
     "ramkang/birdclef2026-effnet-multiwindow-fold0",
-    "ramkang/birdclef2026-effnet-pseudo-mix"
+    "ramkang/birdclef2026-effnet-pseudo-mix",
+    "tuckerarrants/bc2026-distilled-sed-public"
   ],
   "model_sources": [
     "google/bird-vocalization-classifier/tensorFlow2/perch_v2_cpu/1"
