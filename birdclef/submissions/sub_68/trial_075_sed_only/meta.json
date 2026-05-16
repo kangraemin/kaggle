@@ -23,8 +23,8 @@
     "birdclef2026-effnet-5fold-blend.ipynb cells[67] (blend label trial_074→trial_075, Perch 78%, ProtoSSM 0%)"
   ],
   "expected": "0.934 예상 (SED가 Perch-distilled이므로 diversity 미확보 가능). 개선되면 SED가 EffNet5fold 대체 확인.",
-  "score": "PENDING",
+  "score": "SKIP",
   "kernel_version": 66,
-  "submitted_at": "PENDING",
+  "submitted_at": "SKIP — blend formula bug (cells[68] 주석만, 실제로는 ProtoSSM 단독 출력)",
   "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 66 -f submission.csv -m 'trial_075 sed_only: Perch 78% + SED 15% + mwf0 2% + pmix 5% kernel v66 (ProtoSSM=0 isolation)'"
 }
