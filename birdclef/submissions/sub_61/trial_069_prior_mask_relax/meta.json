@@ -1,0 +1,28 @@
+{
+  "trial_id": "trial_069",
+  "name": "prior_mask_relax",
+  "sub_id": "sub_61",
+  "iter": 19,
+  "ralph_iter": 19,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-05-16",
+  "base_trial": "trial_068 (Perch 76% + EffNet5fold 15% + mwf0 2% + pmix 7% → 0.934 동률)",
+  "strategy": "blend weight space 완전 소진 → post-processing 방향 탐색. CLASS_PRIOR_MASK 비사이트 종 억제값 0.3→0.5 완화. blend weights 동일 유지 (Perch 76%/EffNet 15%/mwf0 2%/pmix 7%). 가설: 0.3 suppression이 너무 강해서 실제로 존재하는 비사이트 종 신호 억누름.",
+  "weights": {
+    "perch": 0.76,
+    "effnet5fold_epoch50": 0.15,
+    "mwf0_fold0": 0.02,
+    "pmix_fold0_to_4": 0.07,
+    "distill": 0.0,
+    "convnext": 0.0
+  },
+  "files_changed": [
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 17 (CLASS_PRIOR_MASK mask[i] 0.3→0.5)",
+    "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 66 (header comment + print label trial_068→trial_069)"
+  ],
+  "expected": "개선 가능성 불명. prior mask가 너무 강했다면 +0.001 이상. 과도하게 완화되면 ❌.",
+  "score": "PENDING",
+  "kernel_version": 56,
+  "submitted_at": "PENDING",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 56 -f submission.csv -m 'trial_069 prior_mask_relax: prior mask 0.3→0.5, Perch 76% + EffNet5fold 15% + mwf0 2% + pmix 7% kernel v56'"
+}

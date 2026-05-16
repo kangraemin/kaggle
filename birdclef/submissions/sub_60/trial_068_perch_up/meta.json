@@ -21,7 +21,9 @@
     "notebooks/birdclef2026-effnet-5fold-blend.ipynb cell 66 (header comment + print label trial_067->trial_068)"
   ],
   "expected": "0.934 (동률 예상) or possible improvement/degradation. Perch 비중 증가가 유효한지 테스트.",
-  "score": "PENDING",
+  "score": "0.934",
+  "scored_at": "2026-05-16 ~05:50 UTC",
+  "result": "동률 ➖",
   "kernel_version": 55,
   "submitted_at": "2026-05-16 04:38:56 UTC",
   "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 55 -f submission.csv -m 'trial_068 perch_up: Perch 76% + EffNet5fold 15% + mwf0 2% + pmix 7% kernel v55'"

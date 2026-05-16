@@ -104,3 +104,12 @@ Kernel: ramkang/birdclef2026-effnet-5-fold-pseudo-blend
 - **blend weight space 전 방향 소진**: pmix/mwf0/EffNet/distill 모든 축 완료
 - 다음(iter 18): trial_068 — mwf0 0.04→0.02 원복 + pmix 0.09→0.07 (-2pp) → Perch 0.72→0.76 (+4pp)
   (주요 컴포넌트 Perch 비중 증가 방향 재탐색. BLEND_EFFNET 고정 0.15)
+
+## iter 18 — trial_068 perch_up (2026-05-16)
+
+- 제출: 2026-05-16 04:38:56 UTC, 채점: 2026-05-16 ~05:50 UTC (~72분 소요)
+- score: **0.934** ➖ (best 동률)
+- mwf0 0.04→0.02 원복 + pmix 0.09→0.07 → Perch 0.72→0.76 → 동률
+- **Perch 비중 증량도 포화**: 0.72→0.76 무효과 확정
+- **blend weight space 완전 소진**: 모든 컴포넌트(Perch/EffNet/mwf0/pmix/distill) 방향 전체 탐색 완료. 0.934 천장 확정.
+- 다음(iter 19): trial_069 — post-processing 방향 탐색. CLASS_PRIOR_MASK 완화 (비사이트 종 억제 0.3→0.5)
