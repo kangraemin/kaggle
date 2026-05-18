@@ -31,7 +31,8 @@
       "mcp__kaggle__get_writeup_by_slug",
       "mcp__kaggle__list_dataset_files",
       "Skill(worklog)",
-      "Skill(session-review)"
+      "Skill(session-review)",
+      "Skill(dev-bounce)"
     ]
   }
 }
