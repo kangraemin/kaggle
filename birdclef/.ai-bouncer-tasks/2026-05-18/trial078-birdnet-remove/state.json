@@ -1,0 +1,15 @@
+{
+  "workflow_phase": "done",
+  "plan_approved": true,
+  "current_dev_phase": 2,
+  "current_step": 1,
+  "resolved_agent_mode": "single",
+  "dev_phases": {
+    "1": {"name": "trial078-birdnet-remove", "steps": {"1": "done"}, "depends_on": [], "team_name": "", "status": "done"}
+  },
+  "phase_layers": [["1"]],
+  "current_layer": 0,
+  "verification": {"e2e_passed": true},
+  "task_dir": ".ai-bouncer-tasks/2026-05-18/trial078-birdnet-remove",
+  "active_file": ".ai-bouncer-tasks/2026-05-18/trial078-birdnet-remove/.active"
+}
