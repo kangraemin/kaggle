@@ -1,0 +1,24 @@
+{
+  "trial_id": "trial_078",
+  "name": "birdnet_remove",
+  "sub_id": "sub_71",
+  "iter": 28,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-05-18",
+  "base_trial": "trial_077 birdnet_add (kernel v68, silent reject — jarturo/birdnet 거부)",
+  "strategy": "jarturo/birdnet dataset 제거 (trial_077 silent reject 원인). BLEND_BIRDNET=0, Perch 13%→23%. ProtoSSM 60% + SED 10% + mwf0 2% + pmix 5% 유지. blend 공식 수정 효과 첫 번째 유효 검증.",
+  "weights": {
+    "perch": 0.23,
+    "proto_ssm": 0.60,
+    "sed_5fold": 0.10,
+    "mwf0_fold0": 0.02,
+    "pmix_fold0_to_4": 0.05,
+    "effnet5fold": 0.0,
+    "birdnet_v2.4": 0.0
+  },
+  "expected": "0.934+ (blend 공식 수정 + ProtoSSM 60% 첫 유효 제출)",
+  "score": "PENDING",
+  "kernel_version": 69,
+  "submitted_at": "PENDING",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 69 -f submission.csv -m 'trial_078 birdnet_remove: Perch 23%+ProtoSSM 60%+SED 10%+mwf0 2%+pmix 5% kernel v69 (jarturo/birdnet 제거, blend 공식 격리)'"
+}
