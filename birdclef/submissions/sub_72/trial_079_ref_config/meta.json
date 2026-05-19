@@ -1,0 +1,24 @@
+{
+  "trial_id": "trial_079",
+  "name": "ref_config",
+  "sub_id": "sub_72",
+  "iter": 29,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-05-20",
+  "base_trial": "trial_078 birdnet_remove (kernel v69, 0.933)",
+  "strategy": "0.947 reference config 직접 적용. ProtoSSM 72% + SED 18% + Perch 10%. mwf0/pmix/effnet/birdnet 모두 0.",
+  "weights": {
+    "perch": 0.10,
+    "proto_ssm": 0.72,
+    "sed_5fold": 0.18,
+    "mwf0_fold0": 0.0,
+    "pmix_fold0_to_4": 0.0,
+    "effnet5fold": 0.0,
+    "birdnet_v2.4": 0.0
+  },
+  "expected": "0.940+ (0.947 reference config 근사)",
+  "score": "PENDING",
+  "kernel_version": 70,
+  "submitted_at": "PENDING",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 70 -f submission.csv -m 'trial_079 ref_config: Perch 10%+ProtoSSM 72%+SED 18% kernel v70 (0.947 reference config)'"
+}
