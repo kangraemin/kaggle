@@ -17,7 +17,7 @@
     "birdnet_v2.4": 0.0
   },
   "expected": "0.934+ (blend 공식 수정 + ProtoSSM 60% 첫 유효 제출)",
-  "score": "PENDING",
+  "score": "0.933",
   "kernel_version": 69,
   "submitted_at": "2026-05-19 13:47:50 UTC",
   "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 69 -f submission.csv -m 'trial_078 birdnet_remove: Perch 23%+ProtoSSM 60%+SED 10%+mwf0 2%+pmix 5% kernel v69 (jarturo/birdnet 제거, blend 공식 격리)'"
