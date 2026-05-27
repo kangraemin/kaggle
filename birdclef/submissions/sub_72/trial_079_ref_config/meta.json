@@ -17,8 +17,8 @@
     "birdnet_v2.4": 0.0
   },
   "expected": "0.940+ (0.947 reference config 근사)",
-  "score": "PENDING",
-  "kernel_version": 70,
-  "submitted_at": "PENDING",
+  "score": "0.935",
+  "kernel_version": 71,
+  "submitted_at": "2026-05-22 01:12:17 UTC",
   "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 70 -f submission.csv -m 'trial_079 ref_config: Perch 10%+ProtoSSM 72%+SED 18% kernel v70 (0.947 reference config)'"
 }
