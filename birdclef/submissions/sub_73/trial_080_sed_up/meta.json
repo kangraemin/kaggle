@@ -1,0 +1,24 @@
+{
+  "trial_id": "trial_080",
+  "name": "sed_up",
+  "sub_id": "sub_73",
+  "iter": 30,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-05-29",
+  "base_trial": "trial_079 ref_config (kernel v71, 0.935)",
+  "strategy": "SED 기여도 테스트. ProtoSSM 50% + SED 40% + Perch 10%. mwf0/pmix/effnet/birdnet 모두 0.",
+  "weights": {
+    "perch": 0.10,
+    "proto_ssm": 0.50,
+    "sed_5fold": 0.40,
+    "mwf0_fold0": 0.0,
+    "pmix_fold0_to_4": 0.0,
+    "effnet5fold": 0.0,
+    "birdnet_v2.4": 0.0
+  },
+  "expected": "0.935+ (SED 기여도 확인)",
+  "score": "PENDING",
+  "kernel_version": 72,
+  "submitted_at": "PENDING",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 72 -f submission.csv -m 'trial_080 sed_up: Perch 10%+ProtoSSM 50%+SED 40% kernel v72 (SED 기여도 테스트)'"
+}
