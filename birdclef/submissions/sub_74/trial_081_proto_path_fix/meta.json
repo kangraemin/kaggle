@@ -1,0 +1,24 @@
+{
+  "trial_id": "trial_081",
+  "name": "proto_path_fix",
+  "sub_id": "sub_74",
+  "iter": 31,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-05-30",
+  "base_trial": "trial_080 sed_up (kernel v72, 0.938)",
+  "strategy": "ProtoSSM pretrained 경로 수정. /kaggle/input/datasets/hideyukizushi/sgkfk-202604041716/ → /kaggle/input/sgkfk-202604041716/. blend weights 동일 (Proto 50%+SED 40%+Perch 10%).",
+  "weights": {
+    "perch": 0.10,
+    "proto_ssm": 0.50,
+    "sed_5fold": 0.40,
+    "mwf0_fold0": 0.0,
+    "pmix_fold0_to_4": 0.0,
+    "effnet5fold": 0.0,
+    "birdnet_v2.4": 0.0
+  },
+  "expected": "0.945+ (pretrained ProtoSSM 적용 시 대폭 개선 기대)",
+  "score": "PENDING",
+  "kernel_version": 73,
+  "submitted_at": "PENDING",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 73 -f submission.csv -m 'trial_081 proto_path_fix: ProtoSSM pretrained 경로 수정 kernel v73 (dataset_sources mount path)'"
+}
