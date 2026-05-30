@@ -17,8 +17,8 @@
     "birdnet_v2.4": 0.0
   },
   "expected": "0.935+ (SED 기여도 확인)",
-  "score": "PENDING",
+  "score": "0.938",
   "kernel_version": 72,
-  "submitted_at": "PENDING",
+  "submitted_at": "2026-05-29 13:50:37 UTC",
   "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 72 -f submission.csv -m 'trial_080 sed_up: Perch 10%+ProtoSSM 50%+SED 40% kernel v72 (SED 기여도 테스트)'"
 }
