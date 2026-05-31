@@ -1,0 +1,25 @@
+{
+  "trial_id": "trial_085",
+  "name": "effnet_readd",
+  "sub_id": "sub_78",
+  "iter": 35,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-06-01",
+  "base_trial": "trial_080 sed_up (kernel v72, 0.938 best)",
+  "strategy": "weight·scale 축 포화(trial_082~084) → 새 모델 가족으로 row-rank 변경. EffNet5fold(EfficientNetV2-B0 epoch50 SoftAUC, 과거 검증된 0.15 컴포넌트, 현재 BLEND_EFFNET=0)를 0.05 재도입. ProtoSSM/Perch/SED와 다른 백본 가족 → 독립 오류 패턴. Proto 0.50→0.45 (-5pp 재배분), SED 0.40/Perch 0.10 유지. effnet_logits 인프라(cell63)·dataset 이미 존재해 weight만 변경.",
+  "weights": {
+    "perch": 0.10,
+    "proto_ssm": 0.45,
+    "sed_5fold": 0.40,
+    "effnet5fold": 0.05,
+    "mwf0_fold0": 0.0,
+    "pmix_fold0_to_4": 0.0,
+    "birdnet_v2.4": 0.0
+  },
+  "hypothesis": "EffNet5fold(다른 모델 가족) 5% 재도입이 row-rank를 바꿔 0.938 천장을 돌파한다.",
+  "expected": "0.938~0.941 (모델 다양성 효과 있으면 개선, 약한 컴포넌트면 동률/하락)",
+  "score": "PENDING",
+  "kernel_version": 77,
+  "submitted_at": "PENDING",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 77 -f submission.csv -m 'trial_085 effnet_readd: EffNet5fold 0.05 재도입(모델 가족 다양성), Proto 0.45/SED 0.40/Perch 0.10 kernel v77'"
+}
