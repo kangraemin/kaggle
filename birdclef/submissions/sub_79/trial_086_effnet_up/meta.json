@@ -1,0 +1,25 @@
+{
+  "trial_id": "trial_086",
+  "name": "effnet_up",
+  "sub_id": "sub_79",
+  "iter": 36,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-06-01",
+  "base_trial": "trial_080 sed_up (kernel v72, 0.938 best)",
+  "strategy": "trial_085(EffNet 5% 무효과)의 '비중 부족' vs 'EffNet 기여 한계' 구분. EffNet 0.05→0.10 push (Proto 0.45→0.40 추가 차출). SED 0.40/Perch 0.10 유지. 효과 나오면 EffNet 신호 유효(더 push), 동률이면 EffNet 기여 한계 확정 → 방향 전환.",
+  "weights": {
+    "perch": 0.10,
+    "proto_ssm": 0.40,
+    "sed_5fold": 0.40,
+    "effnet5fold": 0.10,
+    "mwf0_fold0": 0.0,
+    "pmix_fold0_to_4": 0.0,
+    "birdnet_v2.4": 0.0
+  },
+  "hypothesis": "EffNet 비중을 5%→10%로 올리면 모델 다양성 효과가 드러나 0.938 천장을 돌파한다.",
+  "expected": "0.938~0.940 (비중 부족이 원인이었으면 개선, EffNet 기여 한계면 동률/하락)",
+  "score": "PENDING",
+  "kernel_version": 78,
+  "submitted_at": "PENDING",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 78 -f submission.csv -m 'trial_086 effnet_up: EffNet 0.05->0.10, Proto 0.40/SED 0.40/Perch 0.10 kernel v78'"
+}
