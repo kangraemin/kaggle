@@ -18,8 +18,8 @@
   },
   "hypothesis": "SED 비중을 0.40→0.50으로 한 단계 더 올리면 LB가 0.938에서 추가 개선되거나 포화점이 드러난다.",
   "expected": "0.938~0.941 (SED push 효과 잔존 시 개선, 포화 시 동률)",
-  "score": "PENDING",
+  "score": "0.937",
   "kernel_version": 74,
-  "submitted_at": "PENDING",
+  "submitted_at": "2026-05-31 10:51:38",
   "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 74 -f submission.csv -m 'trial_082 sed_heavy: SED 0.40->0.50, Proto 0.50->0.40, Perch 0.10 kernel v74 (SED 비중 포화점 탐색)'"
 }

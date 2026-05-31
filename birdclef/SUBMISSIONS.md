@@ -71,6 +71,7 @@
 | 72 | 2026-05-20 | trial_079 | ref_config. 0.947 reference config 적용. Proto 72%+SED 18%+Perch 10%. kernel v71 | 0.935 | ✅ best 경신 (0.933→0.935) |
 | 73 | 2026-05-29 | trial_080 | sed_up. SED 기여도 테스트. SED 40%+Proto 50%+Perch 10%. kernel v72 | **0.938** | ✅ **new best** (0.935→0.938, SED 40% 효과) |
 | 74 | 2026-05-31 | trial_081 | proto_path_fix. ProtoSSM pretrained 경로 수정. blend 동일 (Proto 50%+SED 40%+Perch 10%). kernel v73 | 0.938 | ➖ best 동률 (경로 수정 채점 무변경) |
+| 75 | 2026-05-31 | trial_082 | sed_heavy. SED 0.40→0.50 (+10pp), Proto 0.50→0.40 (-10pp), Perch 0.10 고정. kernel v74 | 0.937 | ❌ -0.001 (SED 40%가 포화점, 50% 과다 역효과) |
 | 60 | 2026-05-16 | trial_068 | mwf0 0.04→0.02 원복 (-2pp), pmix 0.09→0.07 (-2pp), Perch 0.72→0.76 (+4pp). EffNet 0.15 고정. kernel v55 | 0.934 | ➖ best 동률 (ralph it.18. Perch 증량도 포화 — weight space 전 방향 소진 확정) |
 | 59 | 2026-05-16 | trial_067 | mwf0 0.03→0.04 (+1pp), pmix 0.10→0.09. EffNet/Perch 고정(0.15/0.72). kernel v54 | 0.934 | ➖ best 동률 (ralph it.17. mwf0 0.04도 동률 — 증량 방향 포화 확정) |
 | 58 | 2026-05-15 | trial_066 | EffNet 0.19→0.15 원복, mwf0 0.02→0.03 (+1pp), pmix 0.11→0.10, Perch 0.72. kernel v53 | 0.934 | ➖ best 동률 (ralph it.16. mwf0 증량 LB 무효과) |
