@@ -18,8 +18,8 @@
   },
   "hypothesis": "SED 40% 고정 상태에서 Perch 10%→12% (Proto -2pp) 미세 재배분이 0.938 천장을 돌파한다.",
   "expected": "0.938~0.940 (Perch 강한 base 증량 효과 잔존 시 개선, 포화 시 동률)",
-  "score": "PENDING",
+  "score": "0.938",
   "kernel_version": 75,
-  "submitted_at": "PENDING",
+  "submitted_at": "2026-05-31 12:51:32",
   "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 75 -f submission.csv -m 'trial_083 perch_up: SED 0.40, Proto 0.48, Perch 0.12 kernel v75 (Perch 0.10->0.12 미세 그리드)'"
 }
