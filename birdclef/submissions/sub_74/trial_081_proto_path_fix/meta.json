@@ -17,8 +17,8 @@
     "birdnet_v2.4": 0.0
   },
   "expected": "0.945+ (pretrained ProtoSSM 적용 시 대폭 개선 기대)",
-  "score": "PENDING",
+  "score": "0.938",
   "kernel_version": 73,
-  "submitted_at": "PENDING",
+  "submitted_at": "2026-05-31 07:11:01",
   "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 73 -f submission.csv -m 'trial_081 proto_path_fix: ProtoSSM pretrained 경로 수정 kernel v73 (dataset_sources mount path)'"
 }
