@@ -1,0 +1,25 @@
+{
+  "trial_id": "trial_082",
+  "name": "sed_heavy",
+  "sub_id": "sub_75",
+  "iter": 32,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-05-31",
+  "base_trial": "trial_080 sed_up (kernel v72, 0.938 best)",
+  "strategy": "SED 비중 포화점 탐색. trial_079(SED 18%, 0.935)→trial_080(SED 40%, 0.938) +0.003로 SED가 핵심 레버 입증. SED 0.40→0.50 (+10pp), Proto 0.50→0.40 (-10pp), Perch 0.10 고정. 단일 축(SED↔Proto) 재배분 격리 실험.",
+  "weights": {
+    "perch": 0.10,
+    "proto_ssm": 0.40,
+    "sed_5fold": 0.50,
+    "mwf0_fold0": 0.0,
+    "pmix_fold0_to_4": 0.0,
+    "effnet5fold": 0.0,
+    "birdnet_v2.4": 0.0
+  },
+  "hypothesis": "SED 비중을 0.40→0.50으로 한 단계 더 올리면 LB가 0.938에서 추가 개선되거나 포화점이 드러난다.",
+  "expected": "0.938~0.941 (SED push 효과 잔존 시 개선, 포화 시 동률)",
+  "score": "PENDING",
+  "kernel_version": 74,
+  "submitted_at": "PENDING",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 74 -f submission.csv -m 'trial_082 sed_heavy: SED 0.40->0.50, Proto 0.50->0.40, Perch 0.10 kernel v74 (SED 비중 포화점 탐색)'"
+}
