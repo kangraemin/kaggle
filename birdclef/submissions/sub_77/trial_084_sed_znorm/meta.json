@@ -1,0 +1,25 @@
+{
+  "trial_id": "trial_084",
+  "name": "sed_znorm",
+  "sub_id": "sub_77",
+  "iter": 34,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-06-01",
+  "base_trial": "trial_080 sed_up (kernel v72, 0.938 best)",
+  "strategy": "blend logit 스케일 불일치 검증. proto_logits/_perch_scores_raw는 확률 공간(0~1)인데 sed_logits는 SED ONNX raw clip_logit (정규화 안 됨) → 명목 weight(SED40%)≠실효 weight 의심. SED를 proto 분포로 global z-score 매칭(sed=(sed-mean)/std*proto.std+proto.mean) 후 best weight(SED40/Proto50/Perch10) 재적용. blend 산술 앞에 진단 print(proto/sed/perch mean·std·range) 추가 — kernel 로그에서 실제 스케일 측정.",
+  "weights": {
+    "perch": 0.10,
+    "proto_ssm": 0.50,
+    "sed_5fold": 0.40,
+    "mwf0_fold0": 0.0,
+    "pmix_fold0_to_4": 0.0,
+    "effnet5fold": 0.0,
+    "birdnet_v2.4": 0.0
+  },
+  "hypothesis": "SED raw logit을 proto 확률 분포로 z-score 매칭하면 명목=실효 weight 일치 → 0.938 천장 돌파.",
+  "expected": "0.938~0.942 (스케일 불일치가 컸으면 개선, 이미 맞았으면 동률 또는 하락)",
+  "score": "PENDING",
+  "kernel_version": 76,
+  "submitted_at": "PENDING",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 76 -f submission.csv -m 'trial_084 sed_znorm: SED logit z-score 정규화(proto 분포 매칭) + 진단 print, weight SED40/Proto50/Perch10 kernel v76'"
+}
