@@ -1,0 +1,25 @@
+{
+  "trial_id": "trial_083",
+  "name": "perch_up",
+  "sub_id": "sub_76",
+  "iter": 33,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-05-31",
+  "base_trial": "trial_080 sed_up (kernel v72, 0.938 best)",
+  "strategy": "SED 40% 포화점 고정 후 Proto↔Perch 축 sweet spot 탐색. trial_082(SED 50%)=0.937로 SED 포화 확인됨. SED 0.40 복원, Proto 0.50→0.48 (-2pp), Perch 0.10→0.12 (+2pp). Perch는 prior-fused 가장 검증된 base인데 지금껏 10% 고정만 테스트 — 미세 그리드 첫 조합.",
+  "weights": {
+    "perch": 0.12,
+    "proto_ssm": 0.48,
+    "sed_5fold": 0.40,
+    "mwf0_fold0": 0.0,
+    "pmix_fold0_to_4": 0.0,
+    "effnet5fold": 0.0,
+    "birdnet_v2.4": 0.0
+  },
+  "hypothesis": "SED 40% 고정 상태에서 Perch 10%→12% (Proto -2pp) 미세 재배분이 0.938 천장을 돌파한다.",
+  "expected": "0.938~0.940 (Perch 강한 base 증량 효과 잔존 시 개선, 포화 시 동률)",
+  "score": "PENDING",
+  "kernel_version": 75,
+  "submitted_at": "PENDING",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 75 -f submission.csv -m 'trial_083 perch_up: SED 0.40, Proto 0.48, Perch 0.12 kernel v75 (Perch 0.10->0.12 미세 그리드)'"
+}
