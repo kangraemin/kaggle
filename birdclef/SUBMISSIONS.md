@@ -75,6 +75,7 @@
 | 76 | 2026-05-31 | trial_083 | perch_up. SED 0.40 고정, Proto 0.50→0.48 (-2pp), Perch 0.10→0.12 (+2pp). kernel v75 | 0.938 | ➖ best 동률 (Perch 증량 무효과, weight 미세조정 천장) |
 | 77 | 2026-05-31 | trial_084 | sed_znorm. SED logit을 proto 분포로 z-score 정규화 + 진단 print. weight SED40/Proto50/Perch10. kernel v76 | 0.938 | ➖ best 동률 (logit affine 정규화 무효과, ROC-AUC rank-based) |
 | 78 | 2026-06-01 | trial_085 | effnet_readd. EffNet5fold 0.05 재도입, Proto 0.50→0.45. kernel v77 | 0.938 | ➖ best 동률 (EffNet 5% 다양성 무효과) |
+| 79 | 2026-06-01 | trial_086 | effnet_up. EffNet 0.05→0.10, Proto 0.45→0.40. kernel v78 | 0.937 | ❌ -0.001 (EffNet 기여 한계 확정, 비중↑ 역효과) |
 | 60 | 2026-05-16 | trial_068 | mwf0 0.04→0.02 원복 (-2pp), pmix 0.09→0.07 (-2pp), Perch 0.72→0.76 (+4pp). EffNet 0.15 고정. kernel v55 | 0.934 | ➖ best 동률 (ralph it.18. Perch 증량도 포화 — weight space 전 방향 소진 확정) |
 | 59 | 2026-05-16 | trial_067 | mwf0 0.03→0.04 (+1pp), pmix 0.10→0.09. EffNet/Perch 고정(0.15/0.72). kernel v54 | 0.934 | ➖ best 동률 (ralph it.17. mwf0 0.04도 동률 — 증량 방향 포화 확정) |
 | 58 | 2026-05-15 | trial_066 | EffNet 0.19→0.15 원복, mwf0 0.02→0.03 (+1pp), pmix 0.11→0.10, Perch 0.72. kernel v53 | 0.934 | ➖ best 동률 (ralph it.16. mwf0 증량 LB 무효과) |

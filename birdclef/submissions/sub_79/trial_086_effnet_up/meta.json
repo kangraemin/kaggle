@@ -18,8 +18,8 @@
   },
   "hypothesis": "EffNet 비중을 5%→10%로 올리면 모델 다양성 효과가 드러나 0.938 천장을 돌파한다.",
   "expected": "0.938~0.940 (비중 부족이 원인이었으면 개선, EffNet 기여 한계면 동률/하락)",
-  "score": "PENDING",
+  "score": "0.937",
   "kernel_version": 78,
-  "submitted_at": "PENDING",
+  "submitted_at": "2026-06-01 00:04:46",
   "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 78 -f submission.csv -m 'trial_086 effnet_up: EffNet 0.05->0.10, Proto 0.40/SED 0.40/Perch 0.10 kernel v78'"
 }
