@@ -32,7 +32,9 @@
       "mcp__kaggle__list_dataset_files",
       "Skill(worklog)",
       "Skill(session-review)",
-      "Skill(dev-bounce)"
+      "Skill(dev-bounce)",
+      "Bash(cat)",
+      "Read(//Users/ram/.claude/plans/**)"
     ]
   }
 }
