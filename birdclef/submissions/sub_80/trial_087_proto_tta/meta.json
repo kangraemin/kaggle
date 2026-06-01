@@ -1,0 +1,26 @@
+{
+  "trial_id": "trial_087",
+  "name": "proto_tta",
+  "sub_id": "sub_80",
+  "iter": 37,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-06-01",
+  "base_trial": "trial_080 sed_up (kernel v72, 0.938 best)",
+  "strategy": "blend weight·scale·보조컴포넌트 전 축 0.938 포화(15+ trial) → 추론 품질로 전환. 최대 비중(50%) ProtoSSM의 시간축 TTA를 5→7 shift로 강화(CFG tta_shifts [0,1,-1,2,-2]→[0,1,-1,2,-2,3,-3]). 12-window 시퀀스를 더 많은 shift로 roll·앙상블 → 예측 rank 개선. best weight 복원(Proto0.50/SED0.40/Perch0.10), EffNet 제거(기여 한계 확정).",
+  "weights": {
+    "perch": 0.10,
+    "proto_ssm": 0.50,
+    "sed_5fold": 0.40,
+    "effnet5fold": 0.0,
+    "mwf0_fold0": 0.0,
+    "pmix_fold0_to_4": 0.0,
+    "birdnet_v2.4": 0.0
+  },
+  "tta_shifts": [0, 1, -1, 2, -2, 3, -3],
+  "hypothesis": "ProtoSSM TTA shift를 5→7로 늘리면 시간축 앙상블이 강화돼 예측 rank가 개선되고 0.938 천장을 돌파한다.",
+  "expected": "0.938~0.940 (TTA 강화 효과 있으면 개선, V18에서 이미 5-shift라 한계효용 작으면 동률)",
+  "score": "PENDING",
+  "kernel_version": 79,
+  "submitted_at": "PENDING",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 79 -f submission.csv -m 'trial_087 proto_tta: ProtoSSM TTA 5->7 shift, Proto0.50/SED0.40/Perch0.10 kernel v79'"
+}
