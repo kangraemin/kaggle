@@ -19,8 +19,8 @@
   "tta_shifts": [0, 1, -1, 2, -2, 3, -3],
   "hypothesis": "ProtoSSM TTA shift를 5→7로 늘리면 시간축 앙상블이 강화돼 예측 rank가 개선되고 0.938 천장을 돌파한다.",
   "expected": "0.938~0.940 (TTA 강화 효과 있으면 개선, V18에서 이미 5-shift라 한계효용 작으면 동률)",
-  "score": "PENDING",
+  "score": "0.938",
   "kernel_version": 79,
-  "submitted_at": "PENDING",
+  "submitted_at": "2026-06-01 02:09:48",
   "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 79 -f submission.csv -m 'trial_087 proto_tta: ProtoSSM TTA 5->7 shift, Proto0.50/SED0.40/Perch0.10 kernel v79'"
 }
