@@ -4,7 +4,7 @@
 |------|------|-------------|------|
 | `churn/` | Playground S6E3 — 고객 이탈 예측 | 0.91704 (private 0.91815) | 84 trial, 15 제출, 대회 종료 |
 | `irrigation/` | Playground S6E4 — 관개 수준 분류 | 0.97833 | 15 trial, 14 제출, 진행 중 |
-| `birdclef/` | BirdCLEF+ 2026 — 새소리 종 분류 | 0.929 | 25 trial, 14 제출, 진행 중 |
+| `birdclef/` | BirdCLEF+ 2026 — 새소리 종 분류 | **0.938** | 87 trial, 80 제출, 진행 중 (2026-06-03 마감) |
 | `ts-forecasting/` | Hedge Fund — 시계열 예측 | 0.1499 | 4번 제출, 3번 0점 |
 | `march-mania/` | March Mania 2026 — NCAA 농구 예측 | 미제출 | 마감 놓침 |
 
@@ -86,26 +86,45 @@
 
 ## birdclef (BirdCLEF+ 2026)
 
-**한 줄 요약**: 60초 야외 녹음을 5초씩 잘라서 234종의 새/개구리/곤충을 맞추는 multi-label 분류. macro-averaged ROC-AUC.
-**핵심 난관**: Code Competition이라 Kaggle 노트북에서만 제출 가능. CPU 90분 제한. 자체 파이프라인 16번 연속 실패 후 공개노트북 fork로 전환.
+**한 줄 요약**: 60초 야외 녹음을 5초씩 잘라서 234종의 새/개구리/곤충을 맞추는 multi-label 분류. macro-averaged ROC-AUC. 2026-06-03 마감.
+**핵심 난관**: Code Competition이라 Kaggle 노트북에서만 제출 가능, CPU 90분 제한. 사전학습 컴포넌트(Perch·ProtoSSM·SED) blend가 강하게 정체 — 마지막 ~16 trial이 전부 같은 천장에 막혔다.
+**Best**: Public **0.938** (trial_080, ProtoSSM 50% + SED 40% + Perch 10%). 87 trial, 80 제출.
 
-> 대회 진행 중 — 접근법 비공개
+### 실험 흐름
 
-### 제출 기록
+| Trial | 왜 시도했나 | 결과 | 다음엔 |
+|-------|------------|------|--------|
+| ~001–015 | 0.926 공개 노트북 fork → 대회 데이터 재학습 → ONNX Perch(빠른 추론 모델)로 90분 타임아웃 돌파 | 0.912 → **0.928**. 진짜 적은 정확도가 아니라 타임아웃이었다 | blend에 2번째 모델 추가 |
+| ~016–044 | Perch blend에 EffNet/ConvNeXt/멀티윈도 컴포넌트 추가 | **0.929–0.932**. ConvNeXt 5-fold가 계속 *silent reject* — hidden re-run이 데이터셋 마운트를 거부 | 불안정 컴포넌트 제거, auto-submit이 받는 것만 격리 |
+| 050–061 | pseudo-label mix, 약한 컴포넌트 fold 앙상블, ConvNeXt 축 | **0.934** 천장. 2→4 fold는 +0.001, 그 외 10+ trial 0.934 고착 | Perch blend보다 강한 1차 모델 필요 |
+| 079–080 | reference config 적용(ProtoSSM 메인 + SED 컴포넌트), SED 비중 18% → 40% push | **0.935 → 0.938**. SED 비중이 유일한 실효 레버(+0.003) | SED 포화점 탐색 |
+| 082–087 | 0.938 best 주변 4축 전수 sweep | 전부 **0.937–0.938** — 포화 (아래 참조) | 파라미터 공간 소진 → 모델 재학습 |
 
-| sub | public | 상태 |
-|-----|--------|------|
+### 0.938 천장 — 4축 전부 포화
+
+trial_080이 0.938을 찍은 뒤, 6개 trial이 모든 blend 파라미터를 훑었지만 **아무것도 못 뚫었다**:
+
+| 축 | Trial | 무엇 | 결과 |
+|------|-------|------|------|
+| weight | 082, 083 | SED 40%→50%, Perch 10%→12% | 0.937 / 0.938 — SED 40%가 peak, ±2pp 무효 |
+| scale | 084 | SED logit을 Proto 분포로 z-score 정규화 | 0.938 — 무효. ROC-AUC는 **rank 기반**이라 단조 변환은 no-op |
+| 컴포넌트 | 085, 086 | EffNet 5% / 10% 재도입 | 0.938 / 0.937 — 다른 모델 가족도 row-rank 못 바꿈, 비중 키우면 강한 ProtoSSM만 약화 |
+| 추론 | 087 | ProtoSSM TTA 5→7 time shift | 0.938 — time-shift 앙상블 이미 5에서 포화 |
+
+**교훈**: blend가 정체되면 파라미터 튜닝(weight·scaling·컴포넌트 추가·TTA)으로는 rank 기반 metric을 못 움직인다. 남은 레버는 base 모델 재학습뿐. trial ~084에서 이미 한계가 보였지만 각 축을 한 번씩 sweep해 확정.
+
+### 제출 기록 (마일스톤)
+
+| sub | public | 왜 이 결과 |
+|-----|--------|-----------|
 | 01 | 0.912 | 첫 유효 제출 |
-| 02 | 0.910 | 후처리 악화 |
-| 03 | 0.904 | 파라미터 변경 하락 |
-| 04 | **0.928** | 0.926 fork + dataset 재학습 |
-| 05~08 | 실패 | 노트북 에러/타임아웃 |
-| 09 | 0.928 | ONNX Perch, 타임아웃 해결 |
-| 10 | 0.925 | 0.93 fork, 하락 |
-| 11 | 0.928 | audio FE, 효과 없음 |
-| 12 | **0.929** | Perch + EffNet blend. **best** |
-| 13 | 0.922 | LSE inference, 역효과 |
-| 14 | 0.929 | 5-fold global pool, best 동일 |
+| 04 | 0.928 | fork + 대회 데이터 재학습 |
+| 09 | 0.928 | ONNX Perch — 90분 타임아웃 돌파 |
+| 12 | 0.929 | Perch + EffNet blend |
+| 50–61 | 0.934 | pseudo-mix + fold 앙상블, 10+ trial 천장 |
+| 72 | 0.935 | reference config (ProtoSSM 메인 + SED) |
+| 73 | **0.938** | SED 비중 18%→40% — 돌파 레버 |
+| 75–80 | 0.937–0.938 | weight/scale/컴포넌트/TTA sweep — 전부 포화 |
 
 ---
 

@@ -14,7 +14,7 @@
 |--------|-------------|-------------|--------|
 | `churn/` | Playground S6E3 — Customer Churn | 0.91704 (private 0.91815) | 84 trials, 15 subs, ended |
 | `irrigation/` | Playground S6E4 — Irrigation Need | 0.97833 | 15 trials, 14 subs, in progress |
-| `birdclef/` | BirdCLEF+ 2026 — Bird Species | 0.929 | 25 trials, 14 subs, in progress |
+| `birdclef/` | BirdCLEF+ 2026 — Bird Species | **0.938** | 87 trials, 80 subs, in progress (ends 2026-06-03) |
 | `ts-forecasting/` | Hedge Fund — Time Series | 0.1499 | 4 subs, 3 scored zero |
 | `march-mania/` | March Mania 2026 — NCAA Basketball | not submitted | missed deadline |
 
@@ -90,26 +90,45 @@
 
 ## birdclef (BirdCLEF+ 2026)
 
-**TL;DR**: Classify 234 bird/frog/insect species from 60s field recordings (5s segments). Macro-averaged ROC-AUC.
-**Key challenge**: Code Competition — submissions only via Kaggle notebooks. CPU 90min limit.
+**TL;DR**: Classify 234 bird/frog/insect species from 60s field recordings (5s segments). Macro-averaged ROC-AUC. Ends 2026-06-03.
+**Key challenge**: Code Competition — submissions only via Kaggle notebooks, CPU 90min limit. A blend of pretrained components (Perch, ProtoSSM, SED) plateaus hard — the last ~16 trials all land on the same ceiling.
+**Best**: Public **0.938** (trial_080, ProtoSSM 50% + SED 40% + Perch 10%). 87 trials, 80 submissions.
 
-> Competition in progress — approaches hidden until competition ends.
+### Experiment flow
 
-### Submissions
+| Trial | Why tried | Result | Next |
+|-------|-----------|--------|------|
+| ~001–015 | Fork a 0.926 public notebook, retrain on competition data, swap to ONNX Perch (faster inference model) to beat the 90min timeout | Climbed 0.912 → **0.928**. Timeout was the real enemy, not accuracy | Add a second model to the blend |
+| ~016–044 | Add EffNet / ConvNeXt / multi-window components to the Perch blend | **0.929–0.932**. ConvNeXt 5-fold kept getting *silently rejected* — the hidden re-run refused its dataset mount | Drop unstable components, isolate what the auto-submit accepts |
+| 050–061 | pseudo-label mix, fold-ensemble the weak components, ConvNeXt axis | **0.934** ceiling. 2→4 fold helped (+0.001), but everything stuck at 0.934 for 10+ trials | Try a stronger primary model than the Perch blend |
+| 079–080 | Apply a reference config (ProtoSSM as main + SED component); push SED weight 18% → 40% | **0.935 → 0.938**. SED weight was the one real lever (+0.003) | Find where SED saturates |
+| 082–087 | Sweep all four blend axes around the 0.938 best | All **0.937–0.938** — saturated (see below) | Parameter space exhausted → model retrain |
 
-| sub | public | status |
-|-----|--------|--------|
-| 01 | 0.912 | first valid |
-| 02 | 0.910 | post-processing worsened |
-| 03 | 0.904 | param change worsened |
-| 04 | **0.928** | 0.926 fork + dataset retrain |
-| 05–08 | failed | notebook errors / timeouts |
-| 09 | 0.928 | ONNX Perch, timeout solved |
-| 10 | 0.925 | 0.93 fork, worsened |
-| 11 | 0.928 | audio FE, no effect |
-| 12 | **0.929** | Perch + EffNet blend. **best** |
-| 13 | 0.922 | LSE inference, worsened |
-| 14 | 0.929 | 5-fold global pool, same as best |
+### The 0.938 ceiling — four axes all saturated
+
+After trial_080 hit 0.938, 6 trials swept every blend parameter and **none broke through**:
+
+| Axis | Trial | What | Result |
+|------|-------|------|--------|
+| weight | 082, 083 | SED 40%→50%, Perch 10%→12% | 0.937 / 0.938 — SED 40% is the peak, ±2pp does nothing |
+| scale | 084 | z-score normalize SED logits to match Proto | 0.938 — no effect. ROC-AUC is **rank-based**, so any monotonic transform is a no-op |
+| component | 085, 086 | re-add EffNet 5% / 10% | 0.938 / 0.937 — a different model family still can't shift the row-ranks; bigger weight just drowns the strong ProtoSSM |
+| inference | 087 | ProtoSSM TTA 5→7 time shifts | 0.938 — time-shift ensemble already saturated at 5 |
+
+**Lesson**: once a blend plateaus, parameter tuning (weights, scaling, extra components, TTA) cannot move a rank-based metric. The only remaining lever is retraining the base models. Diminishing returns were obvious by trial ~084 but confirmed by sweeping each axis once.
+
+### Submissions (milestones)
+
+| sub | public | why this number |
+|-----|--------|-----------------|
+| 01 | 0.912 | first valid submission |
+| 04 | 0.928 | fork + retrain on competition data |
+| 09 | 0.928 | ONNX Perch — finally beat the 90min timeout |
+| 12 | 0.929 | Perch + EffNet blend |
+| 50–61 | 0.934 | pseudo-mix + fold ensembles; hard ceiling for 10+ trials |
+| 72 | 0.935 | reference config (ProtoSSM main + SED) |
+| 73 | **0.938** | SED weight 18%→40% — the breakthrough lever |
+| 75–80 | 0.937–0.938 | swept weight/scale/component/TTA — all saturated |
 
 ---
 
