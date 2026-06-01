@@ -1,0 +1,26 @@
+{
+  "trial_id": "trial_088",
+  "name": "proto_dual",
+  "sub_id": "sub_81",
+  "iter": 38,
+  "kernel": "ramkang/birdclef2026-effnet-5fold-blend",
+  "date": "2026-06-01",
+  "base_trial": "trial_080 sed_up (kernel v72, 0.938 best)",
+  "strategy": "자체학습 ProtoSSM(우리 8-soundscape, v80, LB 0.938 동률 실측) + 외부 pretrained ProtoSSM(sgkfk 작년데이터, 0.938) 앙상블. 다른 데이터 학습 → 오류패턴 다양성으로 0.938 돌파 시도. proto_scores_flat 추론 평균(deepcopy(model)로 구조복제 + 자체 weight load). dataset ramkang/birdclef2026-self-protossm 마운트. blend best 유지. 마지막 미탐색 레버.",
+  "weights": {
+    "perch": 0.10,
+    "proto_ssm": 0.50,
+    "sed_5fold": 0.40,
+    "effnet5fold": 0.0,
+    "mwf0_fold0": 0.0,
+    "pmix_fold0_to_4": 0.0,
+    "birdnet_v2.4": 0.0
+  },
+  "dual_protossm": true,
+  "hypothesis": "자체학습+외부 ProtoSSM 추론 평균이 다른 데이터 학습으로 인한 오류패턴 다양성으로 0.938을 돌파한다.",
+  "expected": "0.938~0.940 (다양성 효과 있으면 개선, 둘 다 0.938이라 상관 높으면 동률)",
+  "score": "PENDING",
+  "kernel_version": 81,
+  "submitted_at": "PENDING",
+  "submit_command": "kaggle competitions submit -c birdclef-2026 -k ramkang/birdclef2026-effnet-5fold-blend -v 81 -f submission.csv -m 'trial_088 proto_dual: 자체학습+외부 ProtoSSM 앙상블 kernel v81'"
+}
