@@ -81,6 +81,8 @@
 | 82 | 2026-06-02 | trial_089 | eos9_fork. 공개 EoS.9 메가앙상블 fork(nina2025). kernel ramkang/birdclef-2026-eos9-fork v1 | **0.950** | ✅ **NEW BEST** (자체 0.938 천장을 fork로 돌파, +0.012) |
 | 83 | 2026-06-02 | trial_090 | yaroslav_fork. EoS 참조모델 fork(mtoshidesu/yaroslav-v221-tax). kernel ramkang/birdclef-2026-yaroslav-fork v1 | 0.950 | ➖ best 동률 (EoS 계열 공개 천장 0.950 확인) |
 | 84 | 2026-06-02 | trial_091 | pcen_fork. EoS+OOF Gated PCEN fork(pilkwang). kernel ramkang/birdclef-2026-eos-pcen-fork v1 | 0.950 | ➖ best 동률 (EoS 계열 공개 천장 0.950 확인) |
+| 85 | 2026-06-02 | trial_092 | raunak_fork. Multi-Model Ensemble fork(raunakdey07/v9). kernel ramkang/raunak-fork | 0.944 | ❌ -0.006 (다른 계열이지만 EoS보다 약함) |
+| 86 | 2026-06-02 | trial_093 | karnak_fork. Hierarchical Taxonomy PP fork(karnakbaevarthur). kernel ramkang/karnak-fork | 0.950 | ➖ best 동률 (공개 노트북 5개 fork 실측 → 0.950 공개 천장 확정) |
 | 60 | 2026-05-16 | trial_068 | mwf0 0.04→0.02 원복 (-2pp), pmix 0.09→0.07 (-2pp), Perch 0.72→0.76 (+4pp). EffNet 0.15 고정. kernel v55 | 0.934 | ➖ best 동률 (ralph it.18. Perch 증량도 포화 — weight space 전 방향 소진 확정) |
 | 59 | 2026-05-16 | trial_067 | mwf0 0.03→0.04 (+1pp), pmix 0.10→0.09. EffNet/Perch 고정(0.15/0.72). kernel v54 | 0.934 | ➖ best 동률 (ralph it.17. mwf0 0.04도 동률 — 증량 방향 포화 확정) |
 | 58 | 2026-05-15 | trial_066 | EffNet 0.19→0.15 원복, mwf0 0.02→0.03 (+1pp), pmix 0.11→0.10, Perch 0.72. kernel v53 | 0.934 | ➖ best 동률 (ralph it.16. mwf0 증량 LB 무효과) |
