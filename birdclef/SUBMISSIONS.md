@@ -78,6 +78,7 @@
 | 79 | 2026-06-01 | trial_086 | effnet_up. EffNet 0.05→0.10, Proto 0.45→0.40. kernel v78 | 0.937 | ❌ -0.001 (EffNet 기여 한계 확정, 비중↑ 역효과) |
 | 80 | 2026-06-01 | trial_087 | proto_tta. ProtoSSM TTA 5→7 shift, best weight 복원(Proto0.50/SED0.40/Perch0.10). kernel v79 | 0.938 | ➖ best 동률 (TTA 무효과, 4축 전부 포화 확정) |
 | 81 | 2026-06-01 | trial_088 | proto_dual. 자체학습+외부 ProtoSSM 추론 평균 앙상블(deepcopy+load). kernel v81 | 0.938 | ➖ best 동률 (dual 다양성 무효, 모든 레버 실측 소진) |
+| 82 | 2026-06-02 | trial_089 | eos9_fork. 공개 EoS.9 메가앙상블 fork(nina2025). kernel ramkang/birdclef-2026-eos9-fork v1 | **0.950** | ✅ **NEW BEST** (자체 0.938 천장을 fork로 돌파, +0.012) |
 | 60 | 2026-05-16 | trial_068 | mwf0 0.04→0.02 원복 (-2pp), pmix 0.09→0.07 (-2pp), Perch 0.72→0.76 (+4pp). EffNet 0.15 고정. kernel v55 | 0.934 | ➖ best 동률 (ralph it.18. Perch 증량도 포화 — weight space 전 방향 소진 확정) |
 | 59 | 2026-05-16 | trial_067 | mwf0 0.03→0.04 (+1pp), pmix 0.10→0.09. EffNet/Perch 고정(0.15/0.72). kernel v54 | 0.934 | ➖ best 동률 (ralph it.17. mwf0 0.04도 동률 — 증량 방향 포화 확정) |
 | 58 | 2026-05-15 | trial_066 | EffNet 0.19→0.15 원복, mwf0 0.02→0.03 (+1pp), pmix 0.11→0.10, Perch 0.72. kernel v53 | 0.934 | ➖ best 동률 (ralph it.16. mwf0 증량 LB 무효과) |

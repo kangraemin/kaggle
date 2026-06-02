@@ -1,0 +1,16 @@
+{
+  "trial_id": "trial_089",
+  "name": "eos9_fork",
+  "sub_id": "sub_82",
+  "iter": 39,
+  "kernel": "ramkang/birdclef-2026-eos9-fork",
+  "date": "2026-06-02",
+  "base_trial": "EXTERNAL FORK — nina2025/birdclef-2026-eos-9 (공개 메가앙상블)",
+  "strategy": "우리 자체 파이프라인(Perch+ProtoSSM+SED, 0.938)이 16+ trial·재학습·앙상블 전부 0.938 천장 확정. 리더보드 top 0.966 vs 우리 0.938(=0.028 격차) → 자체 파이프라인 근본 한계. 공개 노트북 EoS.9(nina2025, LB 0.948~0.950, Model_1~74 메가 블렌드)를 우리 계정으로 fork(kernel id만 변경, 코드/dataset/모델 원본 그대로) → 제출. churn 대회 fork 돌파 교훈 적용.",
+  "fork_source": "nina2025/birdclef-2026-eos-9",
+  "fork_kernel": "ramkang/birdclef-2026-eos9-fork v1",
+  "score": "0.950",
+  "submitted_at": "2026-06-02 04:22:21",
+  "is_fork": true,
+  "note": "단일 노트북 fork. EoS.9 = Perch+ProtoSSM+SED 계열의 대규모 다중모델 앙상블(top blend 0.0305*Model_2 + 0.9695*Model_5 등). dataset 6개(sed-public/waveform-cache/perch-meta/perch-v2-onnx/perch-onnx/sgkfk) 전부 공개라 fork 가능. id_no/docker_image 제거 + is_private=true로 push 성공."
+}
