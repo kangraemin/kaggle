@@ -84,7 +84,10 @@
 | 85 | 2026-06-02 | trial_092 | raunak_fork. Multi-Model Ensemble fork(raunakdey07/v9). kernel ramkang/raunak-fork | 0.944 | ❌ -0.006 (다른 계열이지만 EoS보다 약함) |
 | 86 | 2026-06-02 | trial_093 | karnak_fork. Hierarchical Taxonomy PP fork(karnakbaevarthur). kernel ramkang/karnak-fork | 0.950 | ➖ best 동률 (공개 노트북 5개 fork 실측 → 0.950 공개 천장 확정) |
 | 87 | 2026-06-03 | trial_094 | eos9_sword. EoS.9에 swordsman proto_cont(0.77/0.14) 전체 적용. kernel ramkang/eos9-sword | 0.950 | ➖ best 동률 (검증 개선도 hidden 무효) |
-| 88 | 2026-06-03 | trial_095 | eos9_tax. EoS.9 TAX_SMOOTHING genus0.20/class0.08 강화. kernel ramkang/eos9-tax | 0.950 | ➖ best 동률 (**7변형 전부 0.950 — 파이프라인 수학적 천장 확정**) |
+| 88 | 2026-06-03 | trial_095 | eos9_tax. EoS.9 TAX_SMOOTHING genus0.20/class0.08 강화. kernel ramkang/eos9-tax | 0.950 | ➖ best 동률 |
+| 89 | 2026-06-03 | trial_096 | eos9_mix. top-blend M51 0.021→0.35 / M74 0.967→0.638 균등화. kernel ramkang/eos9-mix | 0.950 | ➖ best 동률 |
+| 90 | 2026-06-03 | trial_097 | eos9_sed. base blend SED 40→45% (proto55/sed45). kernel ramkang/eos9-sed | 0.950 | ➖ best 동률 |
+| 91 | 2026-06-03 | trial_098 | eos9_all. sword+SED45+균등블렌드 조합. kernel ramkang/eos9-all | 0.950 | ➖ best 동률 (**10변형 전부 0.950 — 블렌드구조·base신호·후처리·조합 모두 천장. 06-03 제출한도 5/5 소진**) |
 | 60 | 2026-05-16 | trial_068 | mwf0 0.04→0.02 원복 (-2pp), pmix 0.09→0.07 (-2pp), Perch 0.72→0.76 (+4pp). EffNet 0.15 고정. kernel v55 | 0.934 | ➖ best 동률 (ralph it.18. Perch 증량도 포화 — weight space 전 방향 소진 확정) |
 | 59 | 2026-05-16 | trial_067 | mwf0 0.03→0.04 (+1pp), pmix 0.10→0.09. EffNet/Perch 고정(0.15/0.72). kernel v54 | 0.934 | ➖ best 동률 (ralph it.17. mwf0 0.04도 동률 — 증량 방향 포화 확정) |
 | 58 | 2026-05-15 | trial_066 | EffNet 0.19→0.15 원복, mwf0 0.02→0.03 (+1pp), pmix 0.11→0.10, Perch 0.72. kernel v53 | 0.934 | ➖ best 동률 (ralph it.16. mwf0 증량 LB 무효과) |
