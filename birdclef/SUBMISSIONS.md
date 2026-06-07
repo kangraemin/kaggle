@@ -1,5 +1,31 @@
 # Submissions — birdclef-2026
 
+## 🏁 최종 결과 (대회 종료 2026-06-03 23:59 UTC, private 공개)
+
+- **public 순위: 398 / 4085 팀 (상위 9.7%)** — 팀 Kangraemin
+- **private best: 0.94238** (eos9-all, sub 91) ← 우리 전체 최고
+- public best: 0.950 (EoS.9 fork 계열, sub 82~91)
+- 자체 파이프라인 천장: public 0.938 / private 0.93608 (trial_080)
+- top1: Nikita Babych 0.96720
+
+**public vs private 반전** (EoS 계열 변형 — public은 전부 0.950 동률, private에서 갈림):
+
+| 변형 (sub) | public | private |
+|---|---|---|
+| eos9-sword (87) — public 최고 | 0.95087 | 0.94138 ← private 최저 |
+| EoS.9 fork 원본 (82) | 0.95087 | 0.94138 |
+| EoS+PCEN (84) | 0.95095 | 0.94141 |
+| raunak v9 다른계열 (85) | 0.94415 | 0.94168 |
+| eos9-sed (90) | 0.95086 | 0.94169 |
+| yaroslav (83) | 0.95000 | 0.94175 |
+| eos9-tax (88) | 0.95046 | 0.94177 |
+| eos9-mix (89) | 0.95018 | 0.94180 |
+| **eos9-all (91) — 다축 조합** | 0.95034 | **0.94238 ← private 최고** |
+
+→ **public 최고 픽(sword)이 private 최저, public 비최고 다축조합(eos9-all)이 private 최고.** public 과적합 + 직교 보정 누적 이득. 상세: [README.md](README.md) "마감 후: public vs private 반전 분석".
+
+---
+
 | # | Date | Best Trial | Base | Public | Status |
 |---|------|------------|------|--------|--------|
 | 01 | 2026-03-31 | trial_007 | 0.912 fork | 0.912 | ✅ 첫 유효 제출 |
