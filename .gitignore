@@ -13,3 +13,6 @@ __pycache__/
 data/
 .gstack/
 birdclef/
+
+# ai-bouncer 런타임 상태
+.ai-bouncer/
