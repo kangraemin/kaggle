@@ -1,0 +1,492 @@
+[
+  {
+    "path": "ts-forecasting/submissions/sub_01/trial_001_lgbm_baseline/trial_001_lgbm_baseline.csv",
+    "size": 87082199,
+    "mtime_ns": 1774539120110630276,
+    "sha256": "624c482d0ef9aabe314a5d3b6911c1c487fcd99a681e49c7dea151d609303290",
+    "archive": "ts-forecasting/submissions/sub_01/trial_001_lgbm_baseline/trial_001_lgbm_baseline.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_002_lgbm_lags/trial_002_lgbm_lags.csv",
+    "size": 87132679,
+    "mtime_ns": 1774539552696555516,
+    "sha256": "a2ff5da0ee4013990ba7b1800da7a69551161a035200581c89e6fae7b1a3b6c9",
+    "archive": "ts-forecasting/submissions/sub_02/trial_002_lgbm_lags/trial_002_lgbm_lags.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_003_more_lags/trial_003_more_lags.csv",
+    "size": 86535642,
+    "mtime_ns": 1774540751785086302,
+    "sha256": "a91e85779e482b86e608ef6e46162c816e62f64854adf6ef03d847b011b65eae",
+    "archive": "ts-forecasting/submissions/sub_02/trial_003_more_lags/trial_003_more_lags.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_004_cross_horizon/trial_004_cross_horizon.csv",
+    "size": 87151166,
+    "mtime_ns": 1774542033388397952,
+    "sha256": "e1d544892eb9ea2b42b0c05f2b7d7f8430e93e36b8c77412a7fd7b442e33f2cd",
+    "archive": "ts-forecasting/submissions/sub_02/trial_004_cross_horizon/trial_004_cross_horizon.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_005_ewm/trial_005_ewm.csv",
+    "size": 86142117,
+    "mtime_ns": 1774540679834261571,
+    "sha256": "7258d2f7cfc6334d91ec0055bc5f976cb939d7524fdc02e9b9fa5a0e102a97db",
+    "archive": "ts-forecasting/submissions/sub_02/trial_005_ewm/trial_005_ewm.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_006_per_horizon/trial_006_per_horizon.csv",
+    "size": 86985578,
+    "mtime_ns": 1774542063417732455,
+    "sha256": "a76a101d9fac0e1d27252425e2ba32a62ef79c6d518db4d1c5416059a897826f",
+    "archive": "ts-forecasting/submissions/sub_02/trial_006_per_horizon/trial_006_per_horizon.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_007_all_features/trial_007_all_features.csv",
+    "size": 87106819,
+    "mtime_ns": 1774540764319667162,
+    "sha256": "31c6f4ed9288f00a6e42fe42351417e6d8b069d4600365b10e3c2df4096e3ea9",
+    "archive": "ts-forecasting/submissions/sub_02/trial_007_all_features/trial_007_all_features.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_009_hparam_tuning/trial_009_hparam_tuning.csv",
+    "size": 88040937,
+    "mtime_ns": 1774568474370632742,
+    "sha256": "b21228b7971fa2253d3baff7fd369fe66a5512e8ec87c0bc3ced0278579a2b4c",
+    "archive": "ts-forecasting/submissions/sub_02/trial_009_hparam_tuning/trial_009_hparam_tuning.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_010_target_enc/trial_010_target_enc.csv",
+    "size": 87693401,
+    "mtime_ns": 1774568669178049722,
+    "sha256": "c138b0f31a9fbdd8a7e49829a5df3f904fa373754f2ab45f48110277f19bbd26",
+    "archive": "ts-forecasting/submissions/sub_02/trial_010_target_enc/trial_010_target_enc.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_012_no_lag/trial_012_no_lag.csv",
+    "size": 88200526,
+    "mtime_ns": 1774617824640887136,
+    "sha256": "abe0670ceb60023fb06f30866243ac6f5d750dc79c685acbc125091dc6561166",
+    "archive": "ts-forecasting/submissions/sub_02/trial_012_no_lag/trial_012_no_lag.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_013_recursive/trial_013_recursive.csv",
+    "size": 86621183,
+    "mtime_ns": 1774616389052867707,
+    "sha256": "ad6812442380515493fb23494082098915fc745b34b3f85ca7da447bc2b673be",
+    "archive": "ts-forecasting/submissions/sub_02/trial_013_recursive/trial_013_recursive.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_014_hier_enc/trial_014_hier_enc.csv",
+    "size": 85262120,
+    "mtime_ns": 1774617939461953174,
+    "sha256": "e480fe30c42e600e8531e697a3dc04d4fbec5b3eedb4636b8438aee94c6e441d",
+    "archive": "ts-forecasting/submissions/sub_02/trial_014_hier_enc/trial_014_hier_enc.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_015_cold_start_val/trial_015_cold_start_val.csv",
+    "size": 85873259,
+    "mtime_ns": 1774618627964149586,
+    "sha256": "56026a50d54b1e90577d910d0bd36b1f6cfa6aa7ecc1fbc187aa8adfb9377088",
+    "archive": "ts-forecasting/submissions/sub_02/trial_015_cold_start_val/trial_015_cold_start_val.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_016_more_enc/trial_016_more_enc.csv",
+    "size": 86124907,
+    "mtime_ns": 1774619130681966281,
+    "sha256": "61f2780361ddcd23e5708ea7dbc9659d3d28551c1267b69c7c25e7825fed4ef8",
+    "archive": "ts-forecasting/submissions/sub_02/trial_016_more_enc/trial_016_more_enc.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_017_tuned/trial_017_tuned.csv",
+    "size": 85594158,
+    "mtime_ns": 1774619867452141714,
+    "sha256": "e49b0e58cf87c5f36f88b7860348901a75f0419c06864b3a85e64a988ca0fc3b",
+    "archive": "ts-forecasting/submissions/sub_02/trial_017_tuned/trial_017_tuned.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_018_code_enc/trial_018_code_enc.csv",
+    "size": 85868605,
+    "mtime_ns": 1774620640749853898,
+    "sha256": "05b924cdacc9b296fad746860537e745f6f8019d8e3d318dfc4b52ded1dc9f9f",
+    "archive": "ts-forecasting/submissions/sub_02/trial_018_code_enc/trial_018_code_enc.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_019_deeper/trial_019_tuned.csv",
+    "size": 85714680,
+    "mtime_ns": 1774621290559984570,
+    "sha256": "cf95b2a1fb2b1a2c00725d7b6f6e012623a81f6cab37791a1cea194fdbc12c13",
+    "archive": "ts-forecasting/submissions/sub_02/trial_019_deeper/trial_019_tuned.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_020_less_val/trial_020_tuned.csv",
+    "size": 85534056,
+    "mtime_ns": 1774622398025208055,
+    "sha256": "b9abede47385ea842d0d86b3d5359124b667d24ce20134988a5c3bdbd17770f8",
+    "archive": "ts-forecasting/submissions/sub_02/trial_020_less_val/trial_020_tuned.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_021_more_rounds/trial_021_patched_83EG.csv",
+    "size": 83709964,
+    "mtime_ns": 1774666461560626273,
+    "sha256": "220c89b85ae6854c8fee7523b90988bb92ac9ad58eed562fa43d7e4886aae1f1",
+    "archive": "ts-forecasting/submissions/sub_02/trial_021_more_rounds/trial_021_patched_83EG.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_021_more_rounds/trial_021_patched_v2.csv",
+    "size": 84576466,
+    "mtime_ns": 1774666533957754916,
+    "sha256": "9fc272816d12939bffc11e9f07857af3e0c74104e66d0fee3b3252cfa5fcdeed",
+    "archive": "ts-forecasting/submissions/sub_02/trial_021_more_rounds/trial_021_patched_v2.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_021_more_rounds/trial_021_tuned.csv",
+    "size": 85512440,
+    "mtime_ns": 1774623700168429613,
+    "sha256": "8b67ace7aebcbd04d8e87420d15029d0190b35b7f10093fc6f2d7ff8de186d5d",
+    "archive": "ts-forecasting/submissions/sub_02/trial_021_more_rounds/trial_021_tuned.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_022_split_model/trial_022_split_model.csv",
+    "size": 84030838,
+    "mtime_ns": 1774624475525199777,
+    "sha256": "f3cca51fa7db4bff36ccc83758d304c3c60b002630cc4c528f58b3ed9b39443e",
+    "archive": "ts-forecasting/submissions/sub_02/trial_022_split_model/trial_022_split_model.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_023_clustering/trial_023_clustering.csv",
+    "size": 86327316,
+    "mtime_ns": 1774625509287814505,
+    "sha256": "cc06ab20effb3d442d98a9a7255eaa307b2726b94b4fde395694f53d3a8a2319",
+    "archive": "ts-forecasting/submissions/sub_02/trial_023_clustering/trial_023_clustering.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_024_target_norm/trial_024_target_norm.csv",
+    "size": 84883435,
+    "mtime_ns": 1774625771748954765,
+    "sha256": "68fe6d88a60116663a64216dc647ebe8b7b24ecc8d16a05566555f8438142dec",
+    "archive": "ts-forecasting/submissions/sub_02/trial_024_target_norm/trial_024_target_norm.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_025_pseudo_label/trial_025_pseudo_label.csv",
+    "size": 88372853,
+    "mtime_ns": 1774625983514813615,
+    "sha256": "8e42f9621a1b26f84caca8e961d4587bc3980c734f87c3e480a252b7918aca48",
+    "archive": "ts-forecasting/submissions/sub_02/trial_025_pseudo_label/trial_025_pseudo_label.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_026_no_tsindex/trial_026_tuned.csv",
+    "size": 85762874,
+    "mtime_ns": 1774627384900556211,
+    "sha256": "4d4918d1d60a219f6c738e310c238aae6e88b9fb990b8d5d8cfa9be7e44b697a",
+    "archive": "ts-forecasting/submissions/sub_02/trial_026_no_tsindex/trial_026_tuned.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_027_huber/trial_027_tuned.csv",
+    "size": 85943569,
+    "mtime_ns": 1774627410168798650,
+    "sha256": "5cce21a48f73b27db4b36b72f6f6d13bbf223de30b36842e6c48a54bb9203660",
+    "archive": "ts-forecasting/submissions/sub_02/trial_027_huber/trial_027_tuned.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_028_feat_transform/trial_028_feat_transform.csv",
+    "size": 86008990,
+    "mtime_ns": 1774628169136643317,
+    "sha256": "1d36a395e4def839814c49cc39db78aff371626ec02d9ce449ff823e9c9d3e52",
+    "archive": "ts-forecasting/submissions/sub_02/trial_028_feat_transform/trial_028_feat_transform.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_029_cross_sectional/trial_029_cross_sectional.csv",
+    "size": 85773788,
+    "mtime_ns": 1774661669875542848,
+    "sha256": "7a7896cc05315a2b6543ecbcbcad293cade0f61ae049a02a49322ef70af93a90",
+    "archive": "ts-forecasting/submissions/sub_02/trial_029_cross_sectional/trial_029_cross_sectional.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_030_karpov_expanding/trial_030_karpov_expanding.csv",
+    "size": 85700436,
+    "mtime_ns": 1774664427366569708,
+    "sha256": "b52118339640dd43b9cbb7512fc987f08bb9789ada4edeb808c3b9b8df61af0f",
+    "archive": "ts-forecasting/submissions/sub_02/trial_030_karpov_expanding/trial_030_karpov_expanding.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_031_ts_val_improved/trial_031_ts_val_improved.csv",
+    "size": 86928150,
+    "mtime_ns": 1774669141532094859,
+    "sha256": "5ee963f6307fc157124b07345cb26acfcc0bebe02abd5fce091eddc2769f74f7",
+    "archive": "ts-forecasting/submissions/sub_02/trial_031_ts_val_improved/trial_031_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_032_feature_clip/trial_032_ts_val_improved.csv",
+    "size": 86903279,
+    "mtime_ns": 1774670028656698423,
+    "sha256": "ca4c0c724cff0f91cde4847c6c7631950d71caa9baa5b423801661ae1705150b",
+    "archive": "ts-forecasting/submissions/sub_02/trial_032_feature_clip/trial_032_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_033_last_y/trial_033_ts_val_improved.csv",
+    "size": 86856881,
+    "mtime_ns": 1774713684085151973,
+    "sha256": "bfe61b532251493ab128508695942ca6fab0c0569ff718f65dedd97b0586763c",
+    "archive": "ts-forecasting/submissions/sub_02/trial_033_last_y/trial_033_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_034_more_lags/hybrid_034_021.csv",
+    "size": 84688816,
+    "mtime_ns": 1774716009892259539,
+    "sha256": "5adc93b468824b265b34a9d0bee7bdc0af1fdb3837343de4547affcb745c9e8c",
+    "archive": "ts-forecasting/submissions/sub_02/trial_034_more_lags/hybrid_034_021.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_034_more_lags/trial_034_035_blended.csv",
+    "size": 84725539,
+    "mtime_ns": 1774715746084547424,
+    "sha256": "b89d642730bc92b7df28c3a5a9a6f4af9ea0b833cb03e52c9179cac25dbc2975",
+    "archive": "ts-forecasting/submissions/sub_02/trial_034_more_lags/trial_034_035_blended.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_034_more_lags/trial_034_ts_val_improved.csv",
+    "size": 87269270,
+    "mtime_ns": 1774714267890609335,
+    "sha256": "8226fb101e449dd1a6fb5a78a4767b0b460e447996d4def4b07e654869dfe82b",
+    "archive": "ts-forecasting/submissions/sub_02/trial_034_more_lags/trial_034_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_035_group_stats/trial_035_ts_val_improved.csv",
+    "size": 86883414,
+    "mtime_ns": 1774715589369647504,
+    "sha256": "381d25a0146fb9f2bed6458b4bfd74ec41213963f06e2326fbe0649a96a52941",
+    "archive": "ts-forecasting/submissions/sub_02/trial_035_group_stats/trial_035_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_036_recursive/trial_036_ts_val_improved.csv",
+    "size": 87270440,
+    "mtime_ns": 1774717311737182802,
+    "sha256": "e96519630e64ae546a2fe6579396f40f74daa287f273ffb1eddec88ad58f134c",
+    "archive": "ts-forecasting/submissions/sub_02/trial_036_recursive/trial_036_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_037_rolling/trial_037_ts_val_improved.csv",
+    "size": 87317674,
+    "mtime_ns": 1774716427115623365,
+    "sha256": "b1280ea09ed14ea0ebc4eb4fd68631a0b0df53622143354b180985664909b3f8",
+    "archive": "ts-forecasting/submissions/sub_02/trial_037_rolling/trial_037_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_038_full/hybrid_038_021.csv",
+    "size": 84686647,
+    "mtime_ns": 1774717259351703131,
+    "sha256": "a0666745be0208d2efb5b75f1f7e8525a457f965bb699ff6d313fbcf29b67c7a",
+    "archive": "ts-forecasting/submissions/sub_02/trial_038_full/hybrid_038_021.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_038_full/trial_038_ts_val_improved.csv",
+    "size": 86889605,
+    "mtime_ns": 1774716972394901725,
+    "sha256": "4cdafb9dfa19ca74c1b94ad15be721b39a4815baeaed39bc2bb7dfd669cb9a51",
+    "archive": "ts-forecasting/submissions/sub_02/trial_038_full/trial_038_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_039_mixed_val/trial_039_ts_val_improved.csv",
+    "size": 86757911,
+    "mtime_ns": 1774717622540010126,
+    "sha256": "f85276f43a425626fa9d790d659fb2b2c0875a08df4809f7620f631265c2dcc0",
+    "archive": "ts-forecasting/submissions/sub_02/trial_039_mixed_val/trial_039_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_040_more_coldstart/trial_040_ts_val_improved.csv",
+    "size": 86861550,
+    "mtime_ns": 1774720933785605095,
+    "sha256": "cb14aaef8de341e8cd48d1aef280c30b946b0f473cbbd17ba3d5c370a98d22e3",
+    "archive": "ts-forecasting/submissions/sub_02/trial_040_more_coldstart/trial_040_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_041_subcode/trial_041_ts_val_improved.csv",
+    "size": 86688133,
+    "mtime_ns": 1774721382555126444,
+    "sha256": "cbdc0ca68494a201f5ecac3f72af516fbcb795234dd5ac0a6a7ebec9333bd069",
+    "archive": "ts-forecasting/submissions/sub_02/trial_041_subcode/trial_041_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_042_deeper/trial_042_ts_val_improved.csv",
+    "size": 86399130,
+    "mtime_ns": 1774750994353505176,
+    "sha256": "c7cfff06eda8c33fb91003eacfdd664821f418954914810d14922115498233e7",
+    "archive": "ts-forecasting/submissions/sub_02/trial_042_deeper/trial_042_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_043_coldstart20/trial_043_ts_val_improved.csv",
+    "size": 86403257,
+    "mtime_ns": 1774751277913554734,
+    "sha256": "e8681de329d8c470708db06aff94bde9e746b8ed175d898d7d711fd5cce84f08",
+    "archive": "ts-forecasting/submissions/sub_02/trial_043_coldstart20/trial_043_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_044_test_stats/trial_044_ts_val_improved.csv",
+    "size": 87271536,
+    "mtime_ns": 1774751546046866909,
+    "sha256": "8e9d9600ef085c95cda6cd01763382aa96eaf7f4e12c2807063f977d36eecba0",
+    "archive": "ts-forecasting/submissions/sub_02/trial_044_test_stats/trial_044_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_045_tuned_params/trial_045_ts_val_improved.csv",
+    "size": 86588074,
+    "mtime_ns": 1774752292374474955,
+    "sha256": "28cbafd80204065598dca9544a19c676784db339fcb886ac00d876e5655b1f48",
+    "archive": "ts-forecasting/submissions/sub_02/trial_045_tuned_params/trial_045_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_046_min_child/trial_046_ts_val_improved.csv",
+    "size": 87326838,
+    "mtime_ns": 1774752626554766294,
+    "sha256": "1ecd67fa59b47669be3a48b3b1af02829a0af297e014cd1c054e5b675b0565db",
+    "archive": "ts-forecasting/submissions/sub_02/trial_046_min_child/trial_046_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_047_feat_frac/trial_047_ts_val_improved.csv",
+    "size": 86450534,
+    "mtime_ns": 1774753196640416501,
+    "sha256": "7f79755394ff479bf225db1719cdeaf82cba3b60a3dc60c5de16fb0f13c3a9e0",
+    "archive": "ts-forecasting/submissions/sub_02/trial_047_feat_frac/trial_047_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_048_median/trial_048_ts_val_improved.csv",
+    "size": 87249034,
+    "mtime_ns": 1774753532862314336,
+    "sha256": "e397bfd8705f3653f9f3d2f0846e15aec356097f5bbcf1f26140c1e350c5d16a",
+    "archive": "ts-forecasting/submissions/sub_02/trial_048_median/trial_048_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_049_ar_pred/trial_049_ts_val_improved.csv",
+    "size": 86939687,
+    "mtime_ns": 1774754165228559073,
+    "sha256": "c3b9017ef94e4eb22133756af39c28fe51f560bfa85fbdd574749ea1d7824ea7",
+    "archive": "ts-forecasting/submissions/sub_02/trial_049_ar_pred/trial_049_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_050_weight_clip/ensemble_042_045_050.csv",
+    "size": 86334195,
+    "mtime_ns": 1774754643095836992,
+    "sha256": "abd44da01ed6cd1d2fbe2ed0c48a2cefbf446b7daec3d69b4079eb2483a31ce8",
+    "archive": "ts-forecasting/submissions/sub_02/trial_050_weight_clip/ensemble_042_045_050.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_050_weight_clip/trial_050_ts_val_improved.csv",
+    "size": 86993342,
+    "mtime_ns": 1774754469796831454,
+    "sha256": "0e5c3c291feee36ec1cd7b163f875f938d63573db24ed5c1ed1df38315d61e28",
+    "archive": "ts-forecasting/submissions/sub_02/trial_050_weight_clip/trial_050_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_051_clip99/trial_051_ts_val_improved.csv",
+    "size": 86954393,
+    "mtime_ns": 1774754795723611485,
+    "sha256": "8dfe813b47c819c83b629a70273cb8af79872188ad0c06dd22582efae77a4bc4",
+    "archive": "ts-forecasting/submissions/sub_02/trial_051_clip99/trial_051_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_052_series_len/trial_052_ts_val_improved.csv",
+    "size": 86822142,
+    "mtime_ns": 1774755052132873861,
+    "sha256": "51a186ac6ae664f0668b586493b15a46eab148bf1c03bee151e555489ffa0391",
+    "archive": "ts-forecasting/submissions/sub_02/trial_052_series_len/trial_052_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_053_clip95/trial_053_ts_val_improved.csv",
+    "size": 86849688,
+    "mtime_ns": 1774755175222898014,
+    "sha256": "9aa262786efec89f0cb21b71e3891c91b4994d1523f31ad603008a71b06d5936",
+    "archive": "ts-forecasting/submissions/sub_02/trial_053_clip95/trial_053_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_054_sqrt_weight/trial_054_ts_val_improved.csv",
+    "size": 85912824,
+    "mtime_ns": 1774755957745946848,
+    "sha256": "314ab5f4b5b135464acd4e2c58366c654fd1b60f83934c61dbf498663ced04f6",
+    "archive": "ts-forecasting/submissions/sub_02/trial_054_sqrt_weight/trial_054_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_055_log/trial_055_ts_val_improved.csv",
+    "size": 85228755,
+    "mtime_ns": 1774757972316083962,
+    "sha256": "fe98fa8b051910bec21ac2cc8ed7bf03b53dc25c3f5ea6e175914121bc7ae84d",
+    "archive": "ts-forecasting/submissions/sub_02/trial_055_log/trial_055_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_056_quarter/trial_056_ts_val_improved.csv",
+    "size": 85792904,
+    "mtime_ns": 1774757579850571494,
+    "sha256": "64ebd9c997fc74edc1845e404c0c99b6d2b8b3dfa71c31a71f23b0831dbb4695",
+    "archive": "ts-forecasting/submissions/sub_02/trial_056_quarter/trial_056_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_057_w01/trial_057_ts_val_improved.csv",
+    "size": 85125042,
+    "mtime_ns": 1774759005115238626,
+    "sha256": "ce5e307f978ab86fc4f8c9d0c1886d7cb2efedd1b5ccd6d56889702947be1f0b",
+    "archive": "ts-forecasting/submissions/sub_02/trial_057_w01/trial_057_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_058_w005/trial_058_ts_val_improved.csv",
+    "size": 85164819,
+    "mtime_ns": 1774760863811805198,
+    "sha256": "62181d15985821edec478a5881cf0bc9895abe561264bdfb4f7cb3111824b79d",
+    "archive": "ts-forecasting/submissions/sub_02/trial_058_w005/trial_058_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_059_w001/trial_059_ts_val_improved.csv",
+    "size": 85333165,
+    "mtime_ns": 1774762454340304440,
+    "sha256": "e80391bb206af17949a17a9c8617cdac282e410494a2a19c34f9340f18a3f7f9",
+    "archive": "ts-forecasting/submissions/sub_02/trial_059_w001/trial_059_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_060_cs10/trial_060_ts_val_improved.csv",
+    "size": 85121546,
+    "mtime_ns": 1774776375902225960,
+    "sha256": "47710679d977e47a4d22c6ee9c6b9b66a87730c654dddff9d214f11f6fb5b119",
+    "archive": "ts-forecasting/submissions/sub_02/trial_060_cs10/trial_060_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_062_diff/trial_062_ts_val_improved.csv",
+    "size": 85530145,
+    "mtime_ns": 1774783228327132152,
+    "sha256": "63ae83c7c01fb512756a9d3a77ba392ec8d9ed7823e237bffa80f33046568ca3",
+    "archive": "ts-forecasting/submissions/sub_02/trial_062_diff/trial_062_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_063_quantile/trial_063_ts_val_improved.csv",
+    "size": 85432191,
+    "mtime_ns": 1774782209229983443,
+    "sha256": "8d54ba157a8cddda7dd526ed7fa139dd3662a41e94714d17da9b47fedab7b0bc",
+    "archive": "ts-forecasting/submissions/sub_02/trial_063_quantile/trial_063_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_064_pure_coldstart/trial_064_ts_val_improved.csv",
+    "size": 85173775,
+    "mtime_ns": 1774783537590831772,
+    "sha256": "0ea7aff8602a71447d457f4e7181d9e3b139fa0448cf231fd7e77c1cbca53134",
+    "archive": "ts-forecasting/submissions/sub_02/trial_064_pure_coldstart/trial_064_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_065_w003/trial_065_ts_val_improved.csv",
+    "size": 85096415,
+    "mtime_ns": 1774791732041427260,
+    "sha256": "86d4acedc49f3aae21d1bcd394a1aa3a50703258e81107c3a633bfe4e953b7c8",
+    "archive": "ts-forecasting/submissions/sub_02/trial_065_w003/trial_065_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_066_w007/trial_066_ts_val_improved.csv",
+    "size": 84808618,
+    "mtime_ns": 1774791819499434831,
+    "sha256": "1c968be6e0ff975faf6d114366bbfc73edc3a0e446f4242583727ea5ad8a4e6b",
+    "archive": "ts-forecasting/submissions/sub_02/trial_066_w007/trial_066_ts_val_improved.csv.gz"
+  },
+  {
+    "path": "ts-forecasting/submissions/sub_02/trial_067_no_group/trial_067_ts_val_improved.csv",
+    "size": 84827779,
+    "mtime_ns": 1774794217551259873,
+    "sha256": "f35dee9b90dd5ee239e7b262fe45e08309dca27006b961630fea9c15a063e2bc",
+    "archive": "ts-forecasting/submissions/sub_02/trial_067_no_group/trial_067_ts_val_improved.csv.gz"
+  }
+]
